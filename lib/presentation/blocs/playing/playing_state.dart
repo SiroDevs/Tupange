@@ -1,11 +1,11 @@
-part of 'puzzle_bloc.dart';
+part of 'playing_bloc.dart';
 
 enum PuzzleStatus { incomplete, complete }
 
 enum TileMovementStatus { nothingTapped, cannotBeMoved, moved }
 
-class PuzzleState extends Equatable {
-  const PuzzleState({
+class PlayingState extends Equatable {
+  const PlayingState({
     this.puzzle = const Puzzle(tiles: []),
     this.puzzleStatus = PuzzleStatus.incomplete,
     this.tileMovementStatus = TileMovementStatus.nothingTapped,
@@ -22,7 +22,7 @@ class PuzzleState extends Equatable {
   int get numberOfTilesLeft => puzzle.tiles.length - numberOfCorrectTiles - 1;
   final int numberOfMoves;
 
-  PuzzleState copyWith({
+  PlayingState copyWith({
     Puzzle? puzzle,
     PuzzleStatus? puzzleStatus,
     TileMovementStatus? tileMovementStatus,
@@ -32,7 +32,7 @@ class PuzzleState extends Equatable {
     bool? isAutoSolving,
     bool? showHelp,
   }) {
-    return PuzzleState(
+    return PlayingState(
       puzzle: puzzle ?? this.puzzle,
       puzzleStatus: puzzleStatus ?? this.puzzleStatus,
       tileMovementStatus: tileMovementStatus ?? this.tileMovementStatus,

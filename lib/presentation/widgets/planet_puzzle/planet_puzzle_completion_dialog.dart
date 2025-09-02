@@ -10,7 +10,7 @@ import '../../blocs/timer/timer_bloc.dart';
 import '../../cubits/dashboard/planet_selection_cubit.dart';
 import '../../cubits/dashboard/level_selection_cubit.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import '../stylized_button.dart';
 import '../stylized_container.dart';
@@ -66,7 +66,7 @@ class _PlanetPuzzleCompletionDialogSmall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final secondsElapsed = context.read<TimerBloc>().state.secondsElapsed;
-    final totalMoves = context.read<PuzzleBloc>().state.numberOfMoves;
+    final totalMoves = context.read<PlayingBloc>().state.numberOfMoves;
     final planet = context.read<PlanetSelectionCubit>().planet;
     final autoSolverSteps = context.read<PuzzleHelperCubit>().autoSolverSteps;
     final level = context.read<LevelSelectionCubit>().puzzleSize;
@@ -342,7 +342,7 @@ class _PlanetPuzzleCompletionDialogLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final secondsElapsed = context.read<TimerBloc>().state.secondsElapsed;
-    final totalMoves = context.read<PuzzleBloc>().state.numberOfMoves;
+    final totalMoves = context.read<PlayingBloc>().state.numberOfMoves;
     final planet = context.read<PlanetSelectionCubit>().planet;
     final autoSolverSteps = context.read<PuzzleHelperCubit>().autoSolverSteps;
     final level = context.read<LevelSelectionCubit>().puzzleSize;

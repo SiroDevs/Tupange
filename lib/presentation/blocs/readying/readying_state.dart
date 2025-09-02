@@ -1,4 +1,4 @@
-part of 'planet_puzzle_bloc.dart';
+part of 'readying_bloc.dart';
 
 enum PlanetPuzzleStatus {
   notStarted,
@@ -6,8 +6,8 @@ enum PlanetPuzzleStatus {
   started,
 }
 
-class PlanetPuzzleState extends Equatable {
-  const PlanetPuzzleState({
+class ReadyingState extends Equatable {
+  const ReadyingState({
     required this.secondsToBegin,
     this.isCountdownRunning = false,
   });
@@ -28,11 +28,11 @@ class PlanetPuzzleState extends Equatable {
   @override
   List<Object> get props => [isCountdownRunning, secondsToBegin];
 
-  PlanetPuzzleState copyWith({
+  ReadyingState copyWith({
     bool? isCountdownRunning,
     int? secondsToBegin,
   }) {
-    return PlanetPuzzleState(
+    return ReadyingState(
       isCountdownRunning: isCountdownRunning ?? this.isCountdownRunning,
       secondsToBegin: secondsToBegin ?? this.secondsToBegin,
     );

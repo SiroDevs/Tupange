@@ -1,0 +1,33 @@
+part of 'readying_bloc.dart';
+
+abstract class ReadyingEvent extends Equatable {
+  const ReadyingEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class ResetEvent extends ReadyingEvent {
+  const ResetEvent();
+}
+
+class CountdownStarted extends ReadyingEvent {
+  const CountdownStarted();
+}
+
+class CountdownTicked extends ReadyingEvent {
+  const CountdownTicked();
+}
+
+class CountdownStopped extends ReadyingEvent {
+  const CountdownStopped();
+}
+
+class CountdownReset extends ReadyingEvent {
+  const CountdownReset({this.secondsToBegin});
+
+  final int? secondsToBegin;
+
+  @override
+  List<Object?> get props => [secondsToBegin];
+}

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../data/models/tile.dart';
 import '../../../core/utils/app_logger.dart';
 import '../../../core/utils/constants.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../../theme/themes/puzzle_theme.dart';
 import '../../widgets/planet_puzzle/planet_puzzle_board.dart';
 import '../../widgets/planet_puzzle/planet_puzzle_info.dart';
@@ -23,7 +23,7 @@ abstract class BoardSize {
 }
 
 class PlanetPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
-  double _getPercentageOfPuzzleSolved(PuzzleState puzzleState) {
+  double _getPercentageOfPuzzleSolved(PlayingState puzzleState) {
     final tiles = puzzleState.puzzle.tiles;
 
     /// let empty puzzle be always 100% solved
@@ -41,7 +41,7 @@ class PlanetPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
   }
 
   @override
-  Widget backgroundBuilder(PuzzleTheme theme, PuzzleState puzzleState) {
+  Widget backgroundBuilder(PuzzleTheme theme, PlayingState puzzleState) {
     final percentageSolved = _getPercentageOfPuzzleSolved(puzzleState);
     AppLogger.log('PlanetPuzzleLayoutDelegate :: $percentageSolved');
 

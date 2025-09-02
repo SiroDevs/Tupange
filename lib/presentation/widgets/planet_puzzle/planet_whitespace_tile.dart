@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/tile.dart';
 import '../../../core/utils/app_logger.dart';
-import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import 'planet_puzzle_tile.dart';
 
 class PlanetWhitespaceTile extends StatelessWidget {
@@ -13,7 +13,7 @@ class PlanetWhitespaceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final status = context.select((PlanetPuzzleBloc bloc) => bloc.state.status);
+    final status = context.select((ReadyingBloc bloc) => bloc.state.status);
     final hasStarted = status == PlanetPuzzleStatus.started;
 
     AppLogger.log('PlanetWhitespaceTile: hasStarted $hasStarted');

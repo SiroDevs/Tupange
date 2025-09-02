@@ -5,7 +5,7 @@ import '../../data/models/position.dart';
 import '../../data/models/tile.dart';
 import '../utils/app_logger.dart';
 import '../utils/constants.dart';
-import '../../presentation/blocs/puzzle/puzzle_bloc.dart';
+import '../../presentation/blocs/playing/playing_bloc.dart';
 import '../../presentation/cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import 'solver_tile.dart';
 
@@ -23,7 +23,7 @@ extension ListHelper on List<SolverTile> {
 }
 
 class PuzzleSolver {
-  final PuzzleBloc puzzleBloc;
+  final PlayingBloc puzzleBloc;
   final PuzzleHelperCubit puzzleHelperCubit;
 
   PuzzleSolver({

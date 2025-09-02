@@ -9,12 +9,12 @@ import '../../../core/utils/app_logger.dart';
 import '../../../data/models/tile.dart';
 import '../../../core/utils/utils.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/puzzle_helper/puzzle_init_cubit.dart';
-import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
+import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import '../../layout/planet_puzzle/planet_puzzle_layout_delegate.dart';
 import '../../layout/utils/app_breakpoints.dart';
 import '../../theme/bloc/theme_bloc.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../shake_animator.dart';
 import '../stylized_text.dart';
 
@@ -107,7 +107,7 @@ class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
     final cubitState = context.select((PuzzleInitCubit cubit) => cubit.state);
     final isReady = cubitState is PuzzleInitReady;
 
-    final puzzleBloc = context.select((PuzzleBloc bloc) => bloc);
+    final puzzleBloc = context.select((PlayingBloc bloc) => bloc);
     final puzzleIncomplete =
         puzzleBloc.state.puzzleStatus == PuzzleStatus.incomplete;
 
@@ -118,7 +118,7 @@ class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
 
     AppLogger.log('PlanetPuzzleTile: updated: isAutoSolving: $isAutoSolving');
 
-    final status = context.select((PlanetPuzzleBloc bloc) => bloc.state.status);
+    final status = context.select((ReadyingBloc bloc) => bloc.state.status);
     final hasStarted = status == PlanetPuzzleStatus.started;
 
     final movementDuration =
@@ -167,7 +167,7 @@ class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
               child: GestureDetector(
                 onTap: () {
                   if (canPress) {
-                    context.read<PuzzleBloc>().add(TileTapped(widget.tile));
+                    context.read<PlayingBloc>().add(TileTapped(widget.tile));
                   }
                 },
                 child: SizedBox.square(

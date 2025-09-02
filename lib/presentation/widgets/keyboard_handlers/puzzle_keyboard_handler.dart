@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/tile.dart';
-import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/puzzle_helper/puzzle_init_cubit.dart';
+import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
 
 class PuzzleKeyboardHandler extends StatefulWidget {
   final Widget child;
@@ -32,7 +32,7 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
 
   void _onStart(bool hasStarted) {
     context.read<TimerBloc>().add(const TimerReset());
-    context.read<PlanetPuzzleBloc>().add(PlanetCountdownReset(
+    context.read<ReadyingBloc>().add(CountdownReset(
           secondsToBegin: hasStarted ? 5 : 3,
         ));
   }
@@ -48,7 +48,7 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   void _onRestart() {
     _onStart(true);
     context
-        .read<PuzzleBloc>()
+        .read<PlayingBloc>()
         .add(const PuzzleInitialized(shufflePuzzle: false));
   }
 
@@ -66,16 +66,16 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
       final physicalKey = event.data.physicalKey;
 
       final puzzleInitState = context.read<PuzzleInitCubit>().state;
-      final planetPuzzleState = context.read<PlanetPuzzleBloc>().state;
+      final planetPlayingState = context.read<ReadyingBloc>().state;
 
       final isAutoSolving =
           context.read<PuzzleHelperCubit>().state.isAutoSolving;
 
       final isReady = puzzleInitState is PuzzleInitReady;
-      final hasStarted = planetPuzzleState.status == PlanetPuzzleStatus.started;
-      final isLoading = planetPuzzleState.status == PlanetPuzzleStatus.loading;
+      final hasStarted = planetPlayingState.status == PlanetPuzzleStatus.started;
+      final isLoading = planetPlayingState.status == PlanetPuzzleStatus.loading;
 
-      final puzzleBloc = context.read<PuzzleBloc>();
+      final puzzleBloc = context.read<PlayingBloc>();
 
       final puzzle = puzzleBloc.state.puzzle;
       final puzzleIncomplete =
@@ -118,7 +118,7 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
       }
 
       if (tile != null && canPress) {
-        context.read<PuzzleBloc>().add(TileTapped(tile));
+        context.read<PlayingBloc>().add(TileTapped(tile));
       }
     }
   }

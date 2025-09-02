@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
-import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../animated_text.dart';
 import '../stylized_text.dart';
 
@@ -16,9 +16,9 @@ class PlanetPuzzleStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((PuzzleBloc bloc) => bloc.state);
+    final state = context.select((PlayingBloc bloc) => bloc.state);
 
-    return BlocListener<PlanetPuzzleBloc, PlanetPuzzleState>(
+    return BlocListener<ReadyingBloc, ReadyingState>(
       listener: (context, state) {
         if (!state.isCountdownRunning) {
           return;
@@ -35,7 +35,7 @@ class PlanetPuzzleStats extends StatelessWidget {
 
         // on every tick, we shuffle the puzzle
         if (state.secondsToBegin >= 1 && state.secondsToBegin <= 3) {
-          context.read<PuzzleBloc>().add(const PuzzleReset());
+          context.read<PlayingBloc>().add(const PuzzleReset());
         }
       },
       child: ResponsiveLayoutBuilder(
@@ -52,7 +52,7 @@ class PlanetPuzzleStats extends StatelessWidget {
 
 class _PuzzleStats extends StatelessWidget {
   final ResponsiveLayoutSize layoutSize;
-  final PuzzleState puzzleState;
+  final PlayingState puzzleState;
 
   const _PuzzleStats({
     Key? key,
@@ -69,7 +69,7 @@ class _PuzzleStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((PlanetPuzzleBloc bloc) => bloc.state);
+    final state = context.select((ReadyingBloc bloc) => bloc.state);
     final secondsElapsed = context.select(
       (TimerBloc bloc) => bloc.state.secondsElapsed,
     );

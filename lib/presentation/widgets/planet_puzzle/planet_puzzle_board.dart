@@ -7,8 +7,8 @@ import '../../../core/utils/constants.dart';
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/helpers/modal_helpers.dart';
 import '../../../core/utils/app_logger.dart';
-import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../layout/planet_puzzle/planet_puzzle_layout_delegate.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
@@ -37,7 +37,7 @@ class _PlanetPuzzleBoardState extends State<PlanetPuzzleBoard> {
 
     Timer(kMS300, () {
       // after dialog finishes, reset the puzzle to initial state
-      context.read<PlanetPuzzleBloc>().add(const PlanetPuzzleResetEvent());
+      context.read<ReadyingBloc>().add(const ResetEvent());
     });
 
     // show dialog
@@ -52,7 +52,7 @@ class _PlanetPuzzleBoardState extends State<PlanetPuzzleBoard> {
           BlocProvider.value(value: context.read<PlanetSelectionCubit>()),
           BlocProvider.value(value: context.read<PuzzleHelperCubit>()),
           BlocProvider.value(value: context.read<TimerBloc>()),
-          BlocProvider.value(value: context.read<PuzzleBloc>()),
+          BlocProvider.value(value: context.read<PlayingBloc>()),
         ],
         child: PlanetPuzzleCompletionDialog(),
       ),
@@ -67,8 +67,8 @@ class _PlanetPuzzleBoardState extends State<PlanetPuzzleBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PuzzleBloc, PuzzleState>(
-      listener: (BuildContext context, PuzzleState state) {
+    return BlocListener<PlayingBloc, PlayingState>(
+      listener: (BuildContext context, PlayingState state) {
         if (state.puzzleStatus == PuzzleStatus.complete) {
           _completePuzzleTimer = Timer(kMS500, () {
             _onPuzzleCompletionDialog(context);

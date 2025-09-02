@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
-import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import '../../../core/utils/app_logger.dart';
 import '../../../core/utils/constants.dart';
 import '../../../core/utils/utils.dart';
@@ -11,12 +11,12 @@ import '../../../core/utils/utils.dart';
 part 'puzzle_init_state.dart';
 
 class PuzzleInitCubit extends Cubit<PuzzleInitState> {
-  final PlanetPuzzleBloc _planetPuzzleBloc;
+  final ReadyingBloc _planetPlayingBloc;
   final int _puzzleSize;
 
   int get _lastTileKey => _puzzleSize * _puzzleSize - 1;
 
-  PuzzleInitCubit(this._puzzleSize, this._planetPuzzleBloc)
+  PuzzleInitCubit(this._puzzleSize, this._planetPlayingBloc)
       : super(const PuzzleInitLoading());
 
   final Map<int, GlobalKey> _globalKeyMap = {};
@@ -63,7 +63,7 @@ class PuzzleInitCubit extends Cubit<PuzzleInitState> {
 
   void onInit(int tileKey) {
     final hasStarted =
-        _planetPuzzleBloc.state.status == PlanetPuzzleStatus.started;
+        _planetPlayingBloc.state.status == PlanetPuzzleStatus.started;
 
     AppLogger.log('puzzle_init_cubit: onInit: hasStarted: $hasStarted');
 

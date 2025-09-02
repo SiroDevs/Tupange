@@ -1,18 +1,18 @@
-part of 'puzzle_bloc.dart';
+part of 'playing_bloc.dart';
 
 enum PuzzleAutoSolveState {
   start,
   stop,
 }
 
-abstract class PuzzleEvent extends Equatable {
-  const PuzzleEvent();
+abstract class PlayingEvent extends Equatable {
+  const PlayingEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class PuzzleInitialized extends PuzzleEvent {
+class PuzzleInitialized extends PlayingEvent {
   const PuzzleInitialized({required this.shufflePuzzle});
 
   final bool shufflePuzzle;
@@ -21,7 +21,7 @@ class PuzzleInitialized extends PuzzleEvent {
   List<Object> get props => [shufflePuzzle];
 }
 
-class TileTapped extends PuzzleEvent {
+class TileTapped extends PlayingEvent {
   const TileTapped(this.tile);
 
   final Tile tile;
@@ -30,6 +30,6 @@ class TileTapped extends PuzzleEvent {
   List<Object> get props => [tile];
 }
 
-class PuzzleReset extends PuzzleEvent {
+class PuzzleReset extends PlayingEvent {
   const PuzzleReset();
 }

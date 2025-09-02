@@ -4,16 +4,16 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../core/audio/cubit/audio_player_cubit.dart';
-import '../../widgets/shake_animator.dart';
 import '../../../data/models/position.dart';
 import '../../../data/models/puzzle.dart';
 import '../../../data/models/tile.dart';
 import '../../../core/utils/app_logger.dart';
+import '../../widgets/shake_animator.dart';
 
-part 'puzzle_event.dart';
-part 'puzzle_state.dart';
+part 'playing_event.dart';
+part 'playing_state.dart';
 
-class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
+class PlayingBloc extends Bloc<PlayingEvent, PlayingState> {
   final AudioPlayerCubit _audioPlayerCubit;
   final int _size;
   int get size => _size;
@@ -32,8 +32,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     _isAutoSolving = false;
   }
 
-  PuzzleBloc(this._size, this._audioPlayerCubit, {this.random})
-      : super(const PuzzleState()) {
+  PlayingBloc(this._size, this._audioPlayerCubit, {this.random})
+      : super(const PlayingState()) {
     on<PuzzleInitialized>(_onPuzzleInitialized);
     on<TileTapped>(_onTileTapped);
     on<PuzzleReset>(_onPuzzleReset);
@@ -69,11 +69,11 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   void _onPuzzleInitialized(
     PuzzleInitialized event,
-    Emitter<PuzzleState> emit,
+    Emitter<PlayingState> emit,
   ) {
     final puzzle = _generatePuzzle(_size, shuffle: event.shufflePuzzle);
     emit(
-      PuzzleState(
+      PlayingState(
         puzzle: puzzle,
         numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
       ),
@@ -82,7 +82,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   void _onTileTapped(
     TileTapped event,
-    Emitter<PuzzleState> emit,
+    Emitter<PlayingState> emit,
   ) {
     final tappedTile = event.tile;
     final isPuzzleIncomplete = state.puzzleStatus == PuzzleStatus.incomplete;
@@ -98,7 +98,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       final mutablePuzzle = Puzzle(tiles: [...state.puzzle.tiles]);
       final puzzle = mutablePuzzle.moveTiles(tappedTile, []);
       if (puzzle.isComplete()) {
-        AppLogger.log('PuzzleBloc: puzzle.isComplete()');
+        AppLogger.log('PlayingBloc: puzzle.isComplete()');
         emit(
           state.copyWith(
             puzzle: puzzle.sort(),
@@ -136,11 +136,11 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   void _onPuzzleReset(
     PuzzleReset event,
-    Emitter<PuzzleState> emit,
+    Emitter<PlayingState> emit,
   ) {
     final puzzle = _generatePuzzle(_size);
     emit(
-      PuzzleState(
+      PlayingState(
         puzzle: puzzle.sort(),
         numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
       ),
