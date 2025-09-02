@@ -1,137 +1,86 @@
 part of 'home_screen.dart';
 
-class HomeDetailsSmall extends StatelessWidget {
+class HomeSmall extends StatelessWidget {
   final Widget child;
 
-  const HomeDetailsSmall({
-    super.key,
-    required this.child,
-  });
+  const HomeSmall({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    return ScrollableSolarSystem(solarSystem: child);
+    return child;
   }
 }
 
-class HomeDetailsMedium extends StatelessWidget {
+class HomeMedium extends StatelessWidget {
   final Widget child;
 
-  const HomeDetailsMedium({
-    super.key,
-    required this.child,
-  });
+  const HomeMedium({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    return ScrollableSolarSystem(solarSystem: child);
+    return child;
   }
 }
 
-class ScrollableSolarSystem extends StatefulWidget {
-  final Widget solarSystem;
+class HomeDetails extends StatelessWidget {
+  final List<Category> categories;
+  final List<Game> games;
 
-  const ScrollableSolarSystem({
-    super.key,
-    required this.solarSystem,
-  });
-
-  @override
-  State<ScrollableSolarSystem> createState() => _ScrollableSolarSystemState();
-}
-
-class _ScrollableSolarSystemState extends State<ScrollableSolarSystem> {
-  final _controller = ScrollController();
-
-  double get width => MediaQuery.of(context).size.width;
-
-  double _scrollOffset = 0.0;
-
-  void _scrollListener() {
-    _scrollOffset = _controller.offset;
-  }
-
-  void _moveToOffset() {
-    _controller.animateTo(
-      _scrollOffset,
-      duration: AppConstants.kMS350,
-      curve: Curves.easeInOut,
-    );
-  }
-
-  void _onMoveNext() {
-    _scrollOffset =
-        math.min(AppBreakpoints.medium - width, _scrollOffset + width);
-    _moveToOffset();
-  }
-
-  void _onMovePrev() {
-    _scrollOffset = math.max(0.0, _scrollOffset - width);
-    _moveToOffset();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(_scrollListener);
-  }
-
-  @override
-  void dispose() {
-    _controller.removeListener(_scrollListener);
-    _controller.dispose();
-    super.dispose();
-  }
+  const HomeDetails({super.key, required this.categories, required this.games});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // solar system
-        SingleChildScrollView(
-          controller: _controller,
-          physics: const ClampingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            width: AppBreakpoints.medium,
-            child: widget.solarSystem,
-          ),
-        ),
-
-        // control buttons
-        Align(
-          alignment: AppConstants.kFOBottomCenter,
-          child: ScrollButtons(onPrevious: _onMovePrev, onNext: _onMoveNext),
-        ),
-      ],
-    );
-  }
-}
-
-class HomeDetailsLarge extends StatelessWidget {
-  final DashboardReady state;
-
-  const HomeDetailsLarge({
-    super.key,
-    required this.state,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        // sun
-        const SunWidget(
-          key: Key('Sun'),
-        ),
-
-        // orbits
-        ...state.orbits.map<Widget>((orbit) => orbit.widget),
-
-        // planets
-        ...(state).orbits.map<Widget>((orbit) => orbit.planet.widget),
-      ],
+    final screenHeigth = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    double aspectRatio = 3;
+    if (isMobile) {
+      aspectRatio = (screenHeigth - 350) / screenWidth;
+    } else {
+      aspectRatio = (screenWidth / screenHeigth) * 1.7;
+    }
+    
+    return SizedBox(
+      child: LayoutBuilder(
+        builder: (ctx, dimens) {
+          return CarouselSlider(
+            options: CarouselOptions(
+              aspectRatio: aspectRatio,
+              enlargeCenterPage: true,
+              enableInfiniteScroll: false,
+              initialPage: 0,
+              autoPlay: true,
+            ),
+            items: categories.map((category) {
+              return Builder(
+                builder: (BuildContext ctx) {
+                  return MenuCarousel(
+                    category: category,
+                    height: dimens.maxHeight,
+                    onPressed: () {
+                      context.read<AudioPlayerCubit>().clickAudio();
+                      context
+                          .read<CategorySelectionCubit>()
+                          .onSelected(category);
+                      var selectedGames = games
+                          .where(
+                            (game) => game.category == category.id,
+                          )
+                          .toList();
+                      if (selectedGames.isNotEmpty) {
+                        CartCard.show(
+                          ctx: context,
+                          category: category,
+                          games: selectedGames,
+                        );
+                      }
+                    },
+                  );
+                },
+              );
+            }).toList(),
+          );
+        },
+      ),
     );
   }
 }

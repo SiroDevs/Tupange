@@ -6,7 +6,7 @@ import 'package:gap/gap.dart';
 import '../../../../core/l10n/l10n.dart';
 import '../../../core/utils/utils.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/dashboard/planet_selection_cubit.dart';
+import '../../cubits/home/planet_selection_cubit.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
 import '../stylized_icon.dart';
 import '../stylized_text.dart';

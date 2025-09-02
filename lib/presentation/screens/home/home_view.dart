@@ -7,146 +7,64 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => HomeViewState();
 }
 
-class HomeViewState extends State<HomeView>
-    with WidgetsBindingObserver, TickerProviderStateMixin {
+class HomeViewState extends State<HomeView> {
   Size get size => MediaQuery.of(context).size;
+  List<Category> categories = [];
+  List<Game> games = [];
 
   @override
   void initState() {
     super.initState();
     context.read<AudioPlayerCubit>().playThemeMusic();
-    WidgetsBinding.instance.addObserver(this);
-    context.read<PlanetOrbitalAnimationCubit>().setTickerProvider(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-    final s = size;
-    if (s.width > AppBreakpoints.medium) {
-      context.read<HomeBloc>().add(DashboardResized(s));
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final state = context.select((HomeBloc bloc) => bloc.state);
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (state is HomeFetchedState) {
+          categories = state.categories;
+          games = state.games;
+        } else if (state is HomeFailureState) {
+          CustomSnackbar.show(context, state.feedback);
+        }
+      },
+      builder: (context, state) {
+        var mainContainer = Column(
+          children: [
+            const Gap(35),
+            const HeaderWidget(),
+            ResponsiveLayoutBuilder(
+              small: (_, Widget? child) => HomeSmall(child: child!),
+              medium: (_, Widget? child) => HomeMedium(child: child!),
+              large: (_, Widget? child) => child!,
+              child: (_) => HomeDetails(
+                categories: categories,
+                games: games,
+              ),
+            ).center(),
+          ],
+        );
 
-    if (state is DashboardLoading) {
-      return const SizedBox.shrink();
-    }
-
-    return DashboardKeyboardHandler(
-      orbits: (state as DashboardReady).orbits,
-      child: Background(
-        child: SizedBox.fromSize(
+        return SizedBox.fromSize(
           size: size,
-          child: Stack(
-            children: [
-              // solar system
-              ResponsiveLayoutBuilder(
-                small: (_, Widget? child) => HomeDetailsSmall(child: child!),
-                medium: (_, Widget? child) =>
-                    HomeDetailsMedium(child: child!),
-                large: (_, Widget? child) => child!,
-                child: (_) => HomeDetailsLarge(state: state),
-              ),
-
-              // header
-              const HeaderWidget(),
-
-              // music control
-              ResponsiveLayoutBuilder(
-                small: (_, __) => const SizedBox.shrink(),
-                medium: (_, __) => const SizedBox.shrink(),
-                large: (_, __) => const Align(
-                  alignment: AppConstants.kFOTopRight,
-                  child: AudioControl(),
-                ),
-              ),
-
-              // planet animation pause/play button
-              const Align(
-                alignment: AppConstants.kFOBottomRight,
-                child: _PlanetAnimationToggleButton(),
-              ),
-
-              // info button
-              ResponsiveLayoutBuilder(
-                small: (_, __) => const Align(
-                  alignment: AppConstants.kFOBottomLeft,
-                  child: _InfoButton(),
-                ),
-                medium: (_, __) => const Align(
-                  alignment: AppConstants.kFOTopLeft,
-                  child: _InfoButton(),
-                ),
-                large: (_, __) => const Align(
-                  alignment: AppConstants.kFOTopLeft,
-                  child: _InfoButton(),
-                ),
-              ),
-            ],
+          child: state.maybeWhen(
+            orElse: () => mainContainer,
+            failure: (feedback) => EmptyState(
+              //title: l10n.habitChooserFailure,
+              showRetry: true,
+              //onRetry: () => bloc.add(const FetchData()),
+            ),
+            loading: () => LoadingProgress(),
+            fetched: (categories, games) => mainContainer,
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _InfoButton extends StatelessWidget {
-  const _InfoButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return StylizedButton(
-      onPressed: () {
-        InfoCard.show(context: context);
+        );
       },
-      child: const StylizedContainer(
-        padding: EdgeInsets.all(12.0),
-        color: Colors.greenAccent,
-        child: StylizedIcon(
-          icon: FontAwesomeIcons.info,
-          size: 15.0,
-          offset: 1.0,
-          strokeWidth: 5.0,
-        ),
-      ),
-    );
-  }
-}
-
-class _PlanetAnimationToggleButton extends StatelessWidget {
-  const _PlanetAnimationToggleButton();
-
-  @override
-  Widget build(BuildContext context) {
-    final state =
-        context.select((PlanetSelectionHelperCubit cubit) => cubit.state);
-
-    final bool isPaused = state.isPaused;
-
-    return StylizedButton(
-      onPressed: () {
-        context.read<PlanetSelectionHelperCubit>().onPlanetMovementToggle();
-      },
-      child: StylizedContainer(
-        color: isPaused ? Colors.grey : Colors.blueAccent,
-        padding: const EdgeInsets.all(12.0),
-        child: StylizedIcon(
-          icon: isPaused ? FontAwesomeIcons.pause : FontAwesomeIcons.play,
-          size: 15.0,
-          offset: 1.0,
-          strokeWidth: 5.0,
-        ),
-      ),
     );
   }
 }

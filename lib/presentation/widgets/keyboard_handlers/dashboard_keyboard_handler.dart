@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tupange/data/models/orbit.dart';
-import '../../cubits/dashboard/level_selection_cubit.dart';
-import '../../cubits/dashboard/planet_selection_cubit.dart';
-import '../../cubits/dashboard/planet_selection_helper_cubit.dart';
+import '../../cubits/home/level_selection_cubit.dart';
+import '../../cubits/home/planet_selection_cubit.dart';
+import '../../cubits/home/planet_selection_helper_cubit.dart';
 
 import '../info_card/info_card.dart';
 

@@ -1,26 +1,93 @@
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/constants/pref_constants.dart';
+import '../../../core/di/injectable.dart';
+import '../../../data/models/category.dart';
 import '../../../data/models/coordinate.dart';
+import '../../../data/models/game.dart';
 import '../../../data/models/orbit.dart';
 import '../../../data/models/planet.dart';
 import '../../../core/constants/app_constants.dart';
-import '../../cubits/dashboard/planet_orbital_animation_cubit.dart';
+import '../../../data/sources/raw_data.dart';
+import '../../../domain/repository/database_repository.dart';
+import '../../../domain/repository/preferences_repository.dart';
+import '../../cubits/home/planet_orbital_animation_cubit.dart';
 import '../../../core/constants/app_breakpoints.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
+part 'home_bloc.freezed.dart';
+
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final PlanetOrbitalAnimationCubit _planetAnimationCubit;
 
-  HomeBloc(this._planetAnimationCubit) : super(DashboardLoading()) {
-    on<DashboardInitialized>(_onDashboardInit);
-    on<DashboardResized>(_onDashboardResized);
+  HomeBloc(this._planetAnimationCubit) : super(_HomeState()) {
+    on<HomeInit>(_onHomeInit);
+    on<HomeResize>(_onHomeResize);
+    on<FetchData>(_onFetchData);
+    on<SaveData>(_onSaveData);
   }
 
+  final _dbRepo = getIt<DatabaseRepository>();
+  final _prefsRepo = getIt<PreferencesRepository>();
+
+  void _onFetchData(
+    FetchData event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(const HomeLoadingState());
+    bool isDataLoaded = _prefsRepo.getPrefBool(PrefConstants.isDataLoadedKey);
+    if (!isDataLoaded) _initDatabase();
+
+    List<Category> categories = await _dbRepo.fetchCategories();
+    List<Game> games = await _dbRepo.fetchGames();
+    if (categories.isEmpty || games.isEmpty) {
+      _initDatabase();
+      categories = await _dbRepo.fetchCategories();
+      games = await _dbRepo.fetchGames();
+    }
+
+    emit(HomeFetchedState(categories, games));
+  }
+
+  void _initDatabase() async {
+    for (final category in RawData.categories) {
+      await _dbRepo.saveCategory(category: category);
+    }
+
+    for (final game in RawData.games) {
+      await _dbRepo.saveGame(game: game);
+    }
+    _prefsRepo.setPrefBool(PrefConstants.isDataLoadedKey, true);
+  }
+
+  void _onSaveData(
+    SaveData event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(const HomeLoadingState());
+
+    await _dbRepo.removeAllCategories();
+    await _dbRepo.removeAllGames();
+
+    for (final category in event.categories) {
+      await _dbRepo.saveCategory(category: category);
+    }
+
+    for (final game in event.games) {
+      await _dbRepo.saveGame(game: game);
+    }
+
+    await Future<void>.delayed(const Duration(seconds: 10));
+    _prefsRepo.setPrefBool(PrefConstants.isOnboardedKey, true);
+
+    emit(const HomeSuccessState());
+  }
+  
   PlanetType _getPlanetTypeAt(int index) {
     return PlanetType.values[index];
   }
@@ -62,18 +129,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  void _onDashboardResized(
-    DashboardResized event,
+  void _onHomeResize(
+    HomeResize event,
     Emitter<HomeState> emit,
   ) {
-    // generate new orbits
     final orbits = _generateOrbits(event.size);
 
-    emit(DashboardReady(orbits));
+    emit(HomeLoadedState(orbits));
   }
 
-  void _onDashboardInit(
-    DashboardInitialized event,
+  void _onHomeInit(
+    HomeInit event,
     Emitter<HomeState> emit,
   ) {
     Size size = event.size;
@@ -82,12 +148,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       size = Size(AppBreakpoints.medium, event.size.height);
     }
 
-    // generate orbits
     final orbits = _generateOrbits(size);
-
-    // init the animations for planets
     _planetAnimationCubit.initAnimators(orbits);
 
-    emit(DashboardReady(orbits));
+    emit(HomeLoadedState(orbits));
   }
 }

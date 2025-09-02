@@ -103,6 +103,7 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
   }
 
   void playThemeMusic() {
+    _themeMusicPlayer.setReleaseMode(ReleaseMode.loop);
     unawaited(_themeMusicPlayer.play(_themeMusicSource));
   }
 
@@ -148,8 +149,10 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
     }
   }
 
-  void buttonClickAudio() {
-    if (_isSoundEffectEnabled) unawaited(_buttonClickPlayer.replay(_buttonClickSource));
+  void clickAudio() {
+    if (_isSoundEffectEnabled) {
+      unawaited(_buttonClickPlayer.replay(_buttonClickSource));
+    }
   }
 
   void beginCountDown() {
@@ -157,10 +160,12 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
   }
 
   void onVisibilityShown() {
-    if (_isSoundEffectEnabled) unawaited(_visibilityPlayer.replay(_visibilitySource));
+    if (_isSoundEffectEnabled)
+      unawaited(_visibilityPlayer.replay(_visibilitySource));
   }
 
   void completion() {
-    if (_isSoundEffectEnabled) unawaited(_completionPlayer.replay(_completionSource));
+    if (_isSoundEffectEnabled)
+      unawaited(_completionPlayer.replay(_completionSource));
   }
 }

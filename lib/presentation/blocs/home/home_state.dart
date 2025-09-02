@@ -1,19 +1,19 @@
 part of 'home_bloc.dart';
 
-abstract class HomeState extends Equatable {
-  const HomeState();
+@freezed
+class HomeState with _$HomeState {
+  const factory HomeState.initial() = _HomeState;
 
-  @override
-  List<Object> get props => [];
-}
+  const factory HomeState.loaded(List<Orbit> orbits) = HomeLoadedState;
 
-class DashboardLoading extends HomeState {}
+  const factory HomeState.loading() = HomeLoadingState;
 
-class DashboardReady extends HomeState {
-  final List<Orbit> orbits;
+  const factory HomeState.success() = HomeSuccessState;
 
-  const DashboardReady(this.orbits);
+  const factory HomeState.fetched(
+    List<Category> categories,
+    List<Game> games,
+  ) = HomeFetchedState;
 
-  @override
-  List<Object> get props => [orbits];
+  const factory HomeState.failure(String feedback) = HomeFailureState;
 }

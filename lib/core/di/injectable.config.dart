@@ -15,7 +15,7 @@ import 'package:tupange/core/di/injectable.dart' as _i1048;
 import 'package:tupange/data/sources/local/app_database.dart' as _i402;
 import 'package:tupange/domain/repository/auth_repository.dart' as _i588;
 import 'package:tupange/domain/repository/database_repository.dart' as _i534;
-import 'package:tupange/domain/repository/preferences_repository.dart' as _i245;
+import 'package:tupange/domain/repository/preferences_repository.dart' as _i390;
 
 const String _prod = 'prod';
 
@@ -45,8 +45,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.provideDatabaseRepository(gh<_i402.AppDatabase>()),
       registerFor: {_prod},
     );
-    gh.singleton<_i245.PreferencesRepository>(
-        () => _i245.PreferencesRepository(gh<_i460.SharedPreferences>()));
+    gh.singleton<_i390.PreferencesRepository>(
+        () => _i390.PreferencesRepository(gh<_i460.SharedPreferences>()));
     return this;
   }
 }

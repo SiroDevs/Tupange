@@ -12,8 +12,8 @@ import '../../blocs/playing/playing_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../layout/planet_puzzle/planet_puzzle_layout_delegate.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/dashboard/level_selection_cubit.dart';
-import '../../cubits/dashboard/planet_selection_cubit.dart';
+import '../../cubits/home/level_selection_cubit.dart';
+import '../../cubits/home/planet_selection_cubit.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
 import 'planet_puzzle_completion_dialog.dart';
 

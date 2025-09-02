@@ -1,17 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import '../../../../core/utils/utils.dart';
-import '../../../../../../core/l10n/l10n.dart';
-
-import '../../../widgets/controls/audio_control.dart';
-import '../../../widgets/stylized_button.dart';
-import '../../../widgets/stylized_container.dart';
-import '../../../widgets/stylized_text.dart';
-import '../../../layout/utils/responsive_layout_builder.dart';
-import '../../../../data/models/puzzle.dart';
-import '../../../../core/constants/app_constants.dart';
-import '../../../cubits/dashboard/level_selection_cubit.dart';
+part of '../home_screen.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({super.key});
@@ -99,11 +86,10 @@ class _SegmentedControl extends StatelessWidget {
   final ValueChanged<PuzzleLevel> onValueChanged;
 
   const _SegmentedControl({
-    Key? key,
     required this.groupValue,
     required this.children,
     required this.onValueChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

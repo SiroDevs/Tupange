@@ -9,10 +9,10 @@ class StylizedButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   StylizedButton({
-    Key? key,
+    super.key,
     required this.child,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final _buttonPressedVn = ValueNotifier<bool>(false);
 
@@ -26,7 +26,7 @@ class StylizedButton extends StatelessWidget {
   }
 
   void _onPressConfirm(BuildContext context) {
-    context.read<AudioPlayerCubit>().buttonClickAudio();
+    context.read<AudioPlayerCubit>().clickAudio();
     onPressed?.call();
   }
 
