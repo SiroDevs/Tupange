@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/utils/constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/helpers/modal_helpers.dart';
 import '../../../core/utils/app_logger.dart';
@@ -35,7 +35,7 @@ class _PlanetPuzzleBoardState extends State<PlanetPuzzleBoard> {
     // play completion audio
     context.read<AudioPlayerCubit>().completion();
 
-    Timer(kMS300, () {
+    Timer(AppConstants.kMS300, () {
       // after dialog finishes, reset the puzzle to initial state
       context.read<ReadyingBloc>().add(const ResetEvent());
     });
@@ -70,23 +70,23 @@ class _PlanetPuzzleBoardState extends State<PlanetPuzzleBoard> {
     return BlocListener<PlayingBloc, PlayingState>(
       listener: (BuildContext context, PlayingState state) {
         if (state.puzzleStatus == PuzzleStatus.complete) {
-          _completePuzzleTimer = Timer(kMS500, () {
+          _completePuzzleTimer = Timer(AppConstants.kMS500, () {
             _onPuzzleCompletionDialog(context);
           });
         }
       },
       child: ResponsiveLayoutBuilder(
         small: (_, Widget? child) => _PuzzleBoard(
-          child: child,
           size: BoardSize.small,
+          child: child,
         ),
         medium: (_, Widget? child) => _PuzzleBoard(
-          child: child,
           size: BoardSize.medium,
+          child: child,
         ),
         large: (_, Widget? child) => _PuzzleBoard(
-          child: child,
           size: BoardSize.large,
+          child: child,
         ),
         child: (_) => Stack(children: widget.tiles),
       ),
@@ -99,10 +99,9 @@ class _PuzzleBoard extends StatelessWidget {
   final Widget? child;
 
   const _PuzzleBoard({
-    Key? key,
     this.child,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

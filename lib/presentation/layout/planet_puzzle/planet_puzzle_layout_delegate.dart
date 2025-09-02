@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../data/models/tile.dart';
 import '../../../core/utils/app_logger.dart';
-import '../../../core/utils/constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../blocs/playing/playing_bloc.dart';
 import '../../theme/themes/puzzle_theme.dart';
 import '../../widgets/planet_puzzle/planet_puzzle_board.dart';
@@ -50,7 +50,7 @@ class PlanetPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
     return Stack(
       children: [
         ColorFiltered(
-          colorFilter: kGreyscaleColorFilter,
+          colorFilter: AppConstants.kGreyscaleColorFilter,
           child: landscapeWidget,
         ),
 
@@ -58,7 +58,7 @@ class PlanetPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         /// we hide the first 30% of the following widget
         ClipRect(
           child: AnimatedAlign(
-            duration: percentageSolved > 0.85 ? kMS800 : kS4,
+            duration: percentageSolved > 0.85 ? AppConstants.kMS800 : AppConstants.kS4,
             alignment: Alignment.centerLeft,
             widthFactor: percentageSolved,
             child: landscapeWidget,

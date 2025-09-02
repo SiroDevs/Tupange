@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tupange/core/utils/constants.dart';
+import 'package:tupange/core/constants/app_constants.dart';
 
 import '../layout/utils/responsive_layout_builder.dart';
 import 'stylized_button.dart';
@@ -98,7 +98,7 @@ class _LargeDialogBodyState extends State<_LargeDialogBody> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_timer?.isActive == true) _timer?.cancel();
-      _timer = Timer(kMS50, () {
+      _timer = Timer(AppConstants.kMS50, () {
         dialogSizeVn.value =
             (dialogKey.currentContext?.findRenderObject() as RenderBox?)?.size;
       });

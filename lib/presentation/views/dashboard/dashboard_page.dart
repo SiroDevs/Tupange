@@ -15,7 +15,7 @@ import '../../widgets/stylized_container.dart';
 import '../../widgets/stylized_icon.dart';
 import '../../layout/utils/app_breakpoints.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
-import '../../../core/utils/constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../cubits/dashboard/level_selection_cubit.dart';
 import '../../cubits/dashboard/planet_selection_cubit.dart';
 import '../../cubits/dashboard/planet_selection_helper_cubit.dart';
@@ -122,29 +122,29 @@ class _DashboardViewState extends State<_DashboardView>
                 small: (_, __) => const SizedBox.shrink(),
                 medium: (_, __) => const SizedBox.shrink(),
                 large: (_, __) => const Align(
-                  alignment: kFOTopRight,
+                  alignment: AppConstants.kFOTopRight,
                   child: AudioControl(),
                 ),
               ),
 
               // planet animation pause/play button
               const Align(
-                alignment: kFOBottomRight,
+                alignment: AppConstants.kFOBottomRight,
                 child: _PlanetAnimationToggleButton(),
               ),
 
               // info button
               ResponsiveLayoutBuilder(
                 small: (_, __) => const Align(
-                  alignment: kFOBottomLeft,
+                  alignment: AppConstants.kFOBottomLeft,
                   child: _InfoButton(),
                 ),
                 medium: (_, __) => const Align(
-                  alignment: kFOTopLeft,
+                  alignment: AppConstants.kFOTopLeft,
                   child: _InfoButton(),
                 ),
                 large: (_, __) => const Align(
-                  alignment: kFOTopLeft,
+                  alignment: AppConstants.kFOTopLeft,
                   child: _InfoButton(),
                 ),
               ),
@@ -261,7 +261,7 @@ class _ScrollableSolarSystemState extends State<_ScrollableSolarSystem> {
   void _moveToOffset() {
     _controller.animateTo(
       _scrollOffset,
-      duration: kMS350,
+      duration: AppConstants.kMS350,
       curve: Curves.easeInOut,
     );
   }
@@ -307,7 +307,7 @@ class _ScrollableSolarSystemState extends State<_ScrollableSolarSystem> {
 
         // control buttons
         Align(
-          alignment: kFOBottomCenter,
+          alignment: AppConstants.kFOBottomCenter,
           child: ScrollButtons(onPrevious: _onMovePrev, onNext: _onMoveNext),
         ),
       ],

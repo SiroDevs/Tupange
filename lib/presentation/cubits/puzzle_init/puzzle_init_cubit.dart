@@ -5,7 +5,7 @@ import 'package:rive/rive.dart';
 
 import '../../blocs/readying/readying_bloc.dart';
 import '../../../core/utils/app_logger.dart';
-import '../../../core/utils/constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/utils.dart';
 
 part 'puzzle_init_state.dart';
@@ -49,7 +49,7 @@ class PuzzleInitCubit extends Cubit<PuzzleInitState> {
 
   void _startAnimating() async {
     // for performance reasons
-    await Future.delayed(kMS250);
+    await Future.delayed(AppConstants.kMS250);
 
     _riveController.forEach((_, controller) {
       controller.reset();

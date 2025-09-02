@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../presentation/widgets/app_dialog.dart';
-import '../utils/constants.dart';
+import '../constants/app_constants.dart';
 
 /// Displays the [AppDialog] above the current contents of the app.
 Future<T?> showAppDialog<T>({
@@ -26,7 +26,7 @@ Future<T?> showAppDialog<T>({
           ),
         );
       },
-      transitionDuration: kMS300,
+      transitionDuration: AppConstants.kMS300,
       barrierDismissible: barrierDismissible,
       barrierLabel: barrierLabel,
       context: context,

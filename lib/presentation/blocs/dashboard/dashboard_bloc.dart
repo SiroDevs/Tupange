@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import '../../../data/models/coordinate.dart';
 import '../../../data/models/orbit.dart';
 import '../../../data/models/planet.dart';
-import '../../../core/utils/constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../cubits/dashboard/planet_orbital_animation_cubit.dart';
 import '../../layout/utils/app_breakpoints.dart';
 
@@ -26,11 +26,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   double _getPlanetSizeAt(int index, Size size) {
-    return size.width * 0.055 * kPlanetSizeFactor[_getPlanetTypeAt(index)]!;
+    return size.width * 0.055 * AppConstants.kPlanetSizeFactor[_getPlanetTypeAt(index)]!;
   }
 
   List<Orbit> _generateOrbits(Size size) {
-    const int totalPlanets = kTotalPlanets;
+    const int totalPlanets = AppConstants.kTotalPlanets;
     final firstRadius = size.width * 0.50;
     final steps = (size.width - firstRadius / 2) / (totalPlanets - 1);
 

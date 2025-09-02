@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/planet.dart';
 import '../../views/playing/playing_page.dart';
 import '../../../core/utils/app_logger.dart';
-import '../../../core/utils/constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/utils.dart';
 import 'level_selection_cubit.dart';
 
@@ -47,7 +47,7 @@ class PlanetSelectionCubit extends Cubit<PlanetSelectionState> {
           opacity: anim,
           child: child,
         ),
-        transitionDuration: kMS800,
+        transitionDuration: AppConstants.kMS800,
       ),
     );
   }

@@ -10,7 +10,7 @@ import '../../../widgets/stylized_container.dart';
 import '../../../widgets/stylized_text.dart';
 import '../../../layout/utils/responsive_layout_builder.dart';
 import '../../../../data/models/puzzle.dart';
-import '../../../../core/utils/constants.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../cubits/dashboard/level_selection_cubit.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -33,7 +33,7 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: kFOTopCenter,
+      alignment: AppConstants.kFOTopCenter,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'core/utils/constants.dart';
+import 'core/constants/app_constants.dart';
 import 'core/audio/bloc/audio_control_bloc.dart';
 import 'core/audio/cubit/audio_player_cubit.dart';
 import 'presentation/widgets/keyboard_handlers/app_keyboard_handler.dart';
@@ -48,7 +48,7 @@ class MyAppState extends State<MyApp> {
             GlobalWidgetsLocalizations.delegate,
           ],
           title: 'Tupange',
-          theme: ThemeData(fontFamily: kFontFamily),
+          theme: ThemeData(fontFamily: AppConstants.kFontFamily),
           home: const LoadingPage(),
         ),
       ),

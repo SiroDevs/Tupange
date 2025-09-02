@@ -4,18 +4,17 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import '../../../../data/models/position.dart';
-import '../../../../core/utils/constants.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/utils/utils.dart';
 
-const Duration _animationTick = kMS200;
+const Duration _animationTick = AppConstants.kMS200;
 const int _fallOffset = 2;
 
 class Loading extends StatefulWidget {
   final int n;
   final double tileSize;
-  Loading({Key? key, this.n = 3, this.tileSize = 30.0})
-      : assert(n.isOdd),
-        super(key: key);
+  Loading({super.key, this.n = 3, this.tileSize = 30.0})
+      : assert(n.isOdd);
 
   @override
   State<Loading> createState() => _LoadingState();

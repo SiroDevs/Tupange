@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../../core/l10n/l10n.dart';
-import '../../../core/utils/constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
 import '../../layout/utils/app_assets.dart';
@@ -32,7 +32,7 @@ class LoadingPage extends StatelessWidget {
         pageBuilder: (_, __, ___) => page,
         transitionsBuilder: (_, anim, __, child) =>
             FadeTransition(opacity: anim, child: child),
-        transitionDuration: kMS800,
+        transitionDuration: AppConstants.kMS800,
       ),
     );
   }
@@ -118,11 +118,10 @@ class _LoadingPageSmall extends StatelessWidget {
   final VoidCallback onStartPressed;
 
   const _LoadingPageSmall({
-    Key? key,
     required this.isReady,
     required this.isInitialized,
     required this.onStartPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -133,8 +132,8 @@ class _LoadingPageSmall extends StatelessWidget {
         children: [
           // show asset
           Expanded(
-            child: Image.asset(AppAssets.planetsImage),
             flex: 5,
+            child: Image.asset(AppAssets.planetsImage),
           ),
 
           // show rest body
@@ -159,12 +158,11 @@ class _MainBody extends StatelessWidget {
   final VoidCallback onPressed;
 
   const _MainBody({
-    Key? key,
     this.isLarge = false,
     required this.isInitialized,
     required this.isReady,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +186,7 @@ class _MainBody extends StatelessWidget {
           children: [
             // loading animation
             AnimatedSwitcher(
-              duration: kMS300,
+              duration: AppConstants.kMS300,
               switchInCurve: Curves.easeInOut,
               switchOutCurve: Curves.easeInOut,
               child: !isInitialized
@@ -218,7 +216,7 @@ class _MainBody extends StatelessWidget {
 
             // loading animation
             AnimatedOpacity(
-              duration: kMS300,
+              duration: AppConstants.kMS300,
               opacity: isReady ? 1.0 : 0.0,
               child: Loading(
                 key: ValueKey(isReady),

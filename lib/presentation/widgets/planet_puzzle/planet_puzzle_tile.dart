@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart' as rive;
 
-import '../../../core/utils/constants.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/app_logger.dart';
 import '../../../data/models/tile.dart';
 import '../../../core/utils/utils.dart';
@@ -92,7 +92,7 @@ class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
     super.initState();
     themeBloc = context.read<ThemeBloc>();
     puzzleInitCubit = context.read<PuzzleInitCubit>();
-    _timer = Timer(kMS800, _buildChild);
+    _timer = Timer(AppConstants.kMS800, _buildChild);
   }
 
   @override
@@ -122,7 +122,7 @@ class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
     final hasStarted = status == PlanetPuzzleStatus.started;
 
     final movementDuration =
-        status == PlanetPuzzleStatus.loading ? kMS800 : kMS350;
+        status == PlanetPuzzleStatus.loading ? AppConstants.kMS800 : AppConstants.kMS350;
 
     final canPress = hasStarted && puzzleIncomplete && !isAutoSolving;
 
@@ -147,7 +147,7 @@ class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
         child: AnimatedScale(
           scale: scale,
           curve: Curves.easeInOut,
-          duration: kMS250,
+          duration: AppConstants.kMS250,
           alignment: FractionalOffset(
             ((correctX + 1 / 2) * offset) / size,
             ((correctY + 1 / 2) * offset) / size,
@@ -183,7 +183,7 @@ class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
                             return isInCorrectPosition
                                 ? child
                                 : ColorFiltered(
-                                    colorFilter: kGreyscaleColorFilter,
+                                    colorFilter: AppConstants.kGreyscaleColorFilter,
                                     child: child,
                                   );
                           },
@@ -246,8 +246,8 @@ class _HelpWidget extends StatelessWidget {
         ((correctY + 1 / 2) * offset) - containerSize / 2,
       ),
       child: AnimatedSwitcher(
-        duration: kMS250,
-        reverseDuration: kMS250,
+        duration: AppConstants.kMS250,
+        reverseDuration: AppConstants.kMS250,
         switchInCurve: Curves.easeInOut,
         switchOutCurve: Curves.easeInOut,
         child: showHelp

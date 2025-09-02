@@ -4,10 +4,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../helpers/audio_player.dart';
 import '../../../presentation/layout/utils/app_assets.dart';
+import '../../constants/app_constants.dart';
+import '../../helpers/audio_player.dart';
 import '../../utils/app_logger.dart';
-import '../../utils/constants.dart';
 import '../bloc/audio_control_bloc.dart';
 
 part 'audio_player_state.dart';
@@ -52,8 +52,6 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
   // tile tap player
   final Map<int, AudioPlayer> _tileTapSuccess = {};
   final Map<int, AudioPlayer> _tileTapError = {};
-  // final AudioPlayer _tileTapPlayerSuccess = getAudioPlayer();
-  // final AudioPlayer _tileTapPlayerError = getAudioPlayer();
 
   Timer? _timer;
 
@@ -62,42 +60,30 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
   }
 
   void _init() {
-    // do audio initializations after showing loading screen
-    // to avoid freeze screen
-    _timer = Timer(kMS200, () async {
-      // theme music setup
+    _timer = Timer(AppConstants.kMS200, () async {
       await _themeMusicPlayer.setSource(_themeMusicSource);
       await _themeMusicPlayer.setVolume(_maxThemeVolume);
 
-      // after the large part of audio is loaded, we can emit audio player ready,
-      // the web app won't freeze the UI anymore - for these small audio files
       emit(const AudioPlayerReady());
 
-      // button click
       await _buttonClickPlayer.setSource(_buttonClickSource);
       await _buttonClickPlayer.setVolume(_clickVolume);
 
-      // visibility click
       await _visibilityPlayer.setSource(_visibilitySource);
       await _visibilityPlayer.setVolume(_visibilityVolume);
 
-      // count down begin
       await _countDownBeginPlayer.setSource(_countDownBeginSource);
       await _countDownBeginPlayer.setVolume(_countDownVolume);
 
-      // completion
       await _completionPlayer.setSource(_completionSource);
       await _completionPlayer.setVolume(_completionVolume);
 
-      // tile tap
       for (int i = 0; i < _maxTiles; i++) {
-        // tile tap success
         final tileTapSuccess = getAudioPlayer();
         await tileTapSuccess.setSource(_tileTapSucessSource);
         await tileTapSuccess.setVolume(_tapVolume);
         _tileTapSuccess[i] = tileTapSuccess;
 
-        // tile tap error
         final tileTapError = getAudioPlayer();
         await tileTapError.setSource(_tileTapErrorSource);
         await tileTapError.setVolume(_tapVolume);
