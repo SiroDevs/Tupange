@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import '../animated_text.dart';
-import '../stylized_icon.dart';
-import '../stylized_text.dart';
-import '../../../../core/l10n/l10n.dart';
-import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/planet_puzzle/planet_fact_cubit.dart';
 
+import '../../../../core/l10n/l10n.dart';
+import '../../../core/utils/utils.dart';
+import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import '../../cubits/dashboard/planet_selection_cubit.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
-import '../../../core/utils/utils.dart';
+import '../stylized_icon.dart';
+import '../stylized_text.dart';
 
 class PlanetPuzzleInfo extends StatelessWidget {
-  const PlanetPuzzleInfo({Key? key}) : super(key: key);
+  const PlanetPuzzleInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +32,10 @@ class PlanetPuzzleInfo extends StatelessWidget {
         return SizedBox(
           width: isSmall ? null : 500.0,
           height: isLarge
-              ? 250
+              ? 200
               : isSmall
-                  ? 160
-                  : 180,
+                  ? 60
+                  : 120,
           child: Column(
             crossAxisAlignment:
                 isLarge ? CrossAxisAlignment.start : CrossAxisAlignment.center,
@@ -50,16 +48,6 @@ class PlanetPuzzleInfo extends StatelessWidget {
                   color: Colors.white,
                   letterSpacing: 1.0,
                 ),
-              ),
-
-              // gap
-              const Spacer(),
-
-              // description
-              _FactWidget(
-                key: const Key('planet-fact-widget'),
-                isLarge: isLarge,
-                isSmall: isSmall,
               ),
 
               // gap
@@ -102,47 +90,6 @@ class PlanetPuzzleInfo extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _FactWidget extends StatelessWidget {
-  final bool isLarge;
-  final bool isSmall;
-
-  const _FactWidget({
-    Key? key,
-    required this.isLarge,
-    required this.isSmall,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final state = context.select((PlanetFactCubit cubit) => cubit.state);
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          context.read<PlanetFactCubit>().newFact();
-        },
-        child: AppAnimatedWidget(
-          showOnComplete: true,
-          key: ValueKey(state.fact),
-          child: Text(
-            state.fact,
-            textAlign: isLarge ? TextAlign.start : TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: isSmall
-                  ? 16.0
-                  : isLarge
-                      ? 24.0
-                      : 20.0,
-              letterSpacing: 1.5,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

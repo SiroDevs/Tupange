@@ -44,98 +44,31 @@ abstract class Utils {
   static String planetName(PlanetType type, BuildContext context) {
     switch (type) {
       case PlanetType.mercury:
-        return context.l10n.mercury;
+        return "mercury";
 
       case PlanetType.venus:
-        return context.l10n.venus;
+        return "venus";
 
       case PlanetType.earth:
-        return context.l10n.earth;
+        return "earth";
 
       case PlanetType.mars:
-        return context.l10n.mars;
+        return "mars";
 
       case PlanetType.jupiter:
-        return context.l10n.jupiter;
+        return "jupiter";
 
       case PlanetType.saturn:
-        return context.l10n.saturn;
+        return "saturn";
 
       case PlanetType.uranus:
-        return context.l10n.uranus;
+        return "uranus";
 
       case PlanetType.neptune:
-        return context.l10n.neptune;
+        return "neptune";
 
       case PlanetType.pluto:
-        return context.l10n.pluto;
-    }
-  }
-
-  static List<String> planetFacts(PlanetType type, BuildContext context) {
-    switch (type) {
-      case PlanetType.mercury:
-        return [
-          context.l10n.mercuryFact1,
-          context.l10n.mercuryFact2,
-          context.l10n.mercuryFact3
-        ];
-
-      case PlanetType.venus:
-        return [
-          context.l10n.venusFact1,
-          context.l10n.venusFact2,
-          context.l10n.venusFact3
-        ];
-
-      case PlanetType.earth:
-        return [
-          context.l10n.earthFact1,
-          context.l10n.earthFact2,
-          context.l10n.earthFact3
-        ];
-
-      case PlanetType.mars:
-        return [
-          context.l10n.marsFact1,
-          context.l10n.marsFact2,
-          context.l10n.marsFact3
-        ];
-
-      case PlanetType.jupiter:
-        return [
-          context.l10n.jupiterFact1,
-          context.l10n.jupiterFact2,
-          context.l10n.jupiterFact3
-        ];
-
-      case PlanetType.saturn:
-        return [
-          context.l10n.saturnFact1,
-          context.l10n.saturnFact2,
-          context.l10n.saturnFact3
-        ];
-
-      case PlanetType.uranus:
-        return [
-          context.l10n.uranusFact1,
-          context.l10n.uranusFact2,
-          context.l10n.uranusFact3
-        ];
-
-      case PlanetType.neptune:
-        return [
-          context.l10n.neptuneFact1,
-          context.l10n.neptuneFact2,
-          context.l10n.neptuneFact3
-        ];
-
-      case PlanetType.pluto:
-        return [
-          context.l10n.plutoFact1,
-          context.l10n.plutoFact2,
-          context.l10n.plutoFact3
-        ];
+        return "pluto";
     }
   }
 

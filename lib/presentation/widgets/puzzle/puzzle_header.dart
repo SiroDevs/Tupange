@@ -51,7 +51,7 @@ class PuzzleHeader extends StatelessWidget {
                       ),
                       isSmall ? const Gap(12.0) : const Gap(24.0),
                       StylizedText(
-                        text: context.l10n.solarSystem,
+                        text: context.l10n.home,
                         strokeWidth: isSmall ? 5.0 : 6.0,
                         offset: isSmall ? 1.0 : 2.0,
                         fontSize: isSmall ? 16.0 : 22.0,

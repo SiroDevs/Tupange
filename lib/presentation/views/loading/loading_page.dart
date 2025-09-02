@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../../core/l10n/l10n.dart';
@@ -182,37 +181,6 @@ class _MainBody extends StatelessWidget {
               strokeColor: Colors.white,
             ),
             const Gap(4.0),
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Text(
-                  context.l10n.loadingScreenSubTitle1,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.90),
-                    letterSpacing: 1.2,
-                    fontSize: isLarge ? 20.0 : 15.0,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isLarge ? 8.0 : 4.0,
-                  ),
-                  child: Icon(
-                    FontAwesomeIcons.solidHeart,
-                    color: Colors.redAccent,
-                    size: isLarge ? 24.0 : 20.0,
-                  ),
-                ),
-                Text(
-                  context.l10n.loadingScreenSubTitle2,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.90),
-                    letterSpacing: 1.2,
-                    fontSize: isLarge ? 20.0 : 15.0,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
 

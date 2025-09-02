@@ -8,7 +8,6 @@ import '../../../data/models/ticker.dart';
 import '../../cubits/dashboard/level_selection_cubit.dart';
 import '../../cubits/dashboard/planet_selection_cubit.dart';
 import '../../blocs/readying/readying_bloc.dart';
-import '../../cubits/planet_puzzle/planet_fact_cubit.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
@@ -60,12 +59,6 @@ class PlayingPage extends StatelessWidget {
         BlocProvider(
           create: (_) => TimerBloc(
             ticker: const Ticker(),
-          ),
-        ),
-        BlocProvider(
-          create: (_) => PlanetFactCubit(
-            planetType: context.read<PlanetSelectionCubit>().planet.type,
-            context: context,
           ),
         ),
       ],
