@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/models/tile.dart';
-import '../../../presentation/blocs/puzzle/puzzle_bloc.dart';
-import '../../../presentation/theme/themes/puzzle_theme.dart';
 import '../../../presentation/widgets/controls/puzzle_control.dart';
 import '../../../presentation/widgets/puzzle/game_puzzle_tile.dart';
 import '../../../presentation/widgets/puzzle/game_whitespace_tile.dart';
 import '../../../presentation/widgets/puzzle/puzzle_board.dart';
 import '../../../presentation/widgets/puzzle/puzzle_info.dart';
 import '../../../presentation/widgets/puzzle/puzzle_stats.dart';
-import '../../utils/app_utils.dart';
-import '../../utils/constants/app_constants.dart';
 import '../utils/responsive_gap.dart';
-import 'landscape_widget.dart';
 import 'puzzle_layout_delegate.dart';
 
 abstract class BoardSize {
@@ -22,48 +17,6 @@ abstract class BoardSize {
 }
 
 class GameLayoutDelegate extends PuzzleLayoutDelegate {
-  double _getPercentageOfPuzzleSolved(PuzzleState puzzleState) {
-    final tiles = puzzleState.puzzle.tiles;
-
-    /// let empty puzzle be always 100% solved
-    if (tiles.isEmpty) return 1.0;
-
-    int correctlyPlaced = 0;
-
-    for (final tile in tiles) {
-      if (tile.currentPosition == tile.correctPosition) {
-        correctlyPlaced++;
-      }
-    }
-
-    return correctlyPlaced / (tiles.length);
-  }
-
-  @override
-  Widget backgroundBuilder(PuzzleTheme theme, PuzzleState puzzleState) {
-    final percentageSolved = _getPercentageOfPuzzleSolved(puzzleState);
-    AppUtils.logger('PuzzleLayoutDelegate :: $percentageSolved');
-
-    final landscapeWidget = LandscapeWidget(theme: theme);
-
-    return Stack(
-      children: [
-        ColorFiltered(
-          colorFilter: AppConstants.kGreyscaleColorFilter,
-          child: landscapeWidget,
-        ),
-
-        ClipRect(
-          child: AnimatedAlign(
-            duration: percentageSolved > 0.85 ? AppConstants.kMS800 : AppConstants.kS4,
-            alignment: Alignment.centerLeft,
-            widthFactor: percentageSolved,
-            child: landscapeWidget,
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget boardBuilder(int size, List<Widget> tiles) {

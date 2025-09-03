@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/helpers/modal_helpers.dart';
 import '../../../core/layout/utils/responsive_layout_builder.dart';
+import '../../../core/layout/delegates/game_layout_delegate.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/constants/app_constants.dart';
 import '../../blocs/timer/timer_bloc.dart';
@@ -14,7 +15,6 @@ import '../../cubits/audio/audio_player_cubit.dart';
 import '../../cubits/level/level_selection_cubit.dart';
 import '../../cubits/game/game_selection_cubit.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../../core/layout/delegates/game_layout_delegate.dart';
 import 'puzzle_completion_dialog.dart';
 
 class PuzzleBoard extends StatefulWidget {

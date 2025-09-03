@@ -72,41 +72,23 @@ class _PuzzleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-
     return Background(
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return Stack(
-            children: [
-              // background
-              BlocBuilder<PuzzleBloc, PuzzleState>(
-                bloc: context.read<PuzzleBloc>(),
-                builder: (_, puzzleState) {
-                  return theme.puzzleLayoutDelegate.backgroundBuilder(
-                    theme,
-                    puzzleState,
-                  );
-                },
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
               ),
-
-              // main body
-              SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
-                  ),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PuzzleHeader(),
-                      PuzzleSections(),
-                    ],
-                  ),
-                ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PuzzleHeader(),
+                  PuzzleSections(),
+                ],
               ),
-            ],
+            ),
           );
         },
       ),

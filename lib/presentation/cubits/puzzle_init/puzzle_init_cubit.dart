@@ -70,7 +70,6 @@ class PuzzleInitCubit extends Cubit<PuzzleInitState> {
     }
 
     if (hasstarted && tileKey == _lastTileKey - 1) {
-      // during the game, if screen is resized
       _startAnimating();
     }
   }

@@ -22,14 +22,14 @@ class _BackgroundState extends State<Background> with WidgetsBindingObserver {
   final _random = math.Random();
 
   Size? _lastSize;
-  List<Position>? _BubblePositions;
-  late List<double> _BubbleSizes;
-  late List<double> _BubbleRotations;
+  List<Position>? _bubblePositions;
+  late List<double> _bubbleSizes;
+  late List<double> _bubbleRotations;
 
   List<Position> _generatePositions(int n, {required Size currentSize}) {
-    if (_lastSize == null || _BubblePositions == null) {
+    if (_lastSize == null || _bubblePositions == null) {
       // as no last size is available, generate new positions
-      _BubblePositions = List<Position>.generate(
+      _bubblePositions = List<Position>.generate(
         n,
         (i) => Position(
           x: _random.nextInt(currentSize.width.toInt()),
@@ -37,17 +37,16 @@ class _BackgroundState extends State<Background> with WidgetsBindingObserver {
         ),
       );
     } else {
-      // as this is a re-size of window, redistribute the existing positions, to fit well in the new resized window
-      _BubblePositions = List<Position>.generate(
+      _bubblePositions = List<Position>.generate(
         n,
         (i) => Position(
-          x: _BubblePositions![i].x * currentSize.width ~/ _lastSize!.width,
-          y: _BubblePositions![i].y * currentSize.height ~/ _lastSize!.height,
+          x: _bubblePositions![i].x * currentSize.width ~/ _lastSize!.width,
+          y: _bubblePositions![i].y * currentSize.height ~/ _lastSize!.height,
         ),
       );
     }
 
-    return _BubblePositions!;
+    return _bubblePositions!;
   }
 
   List<Bubble> _makeBubbles(int n) {
@@ -63,8 +62,8 @@ class _BackgroundState extends State<Background> with WidgetsBindingObserver {
       (i) => Bubble(
         value: i,
         pos: positions[i],
-        size: _BubbleSizes[i],
-        rotation: _BubbleRotations[i],
+        size: _bubbleSizes[i],
+        rotation: _bubbleRotations[i],
       ),
     );
   }
@@ -82,12 +81,12 @@ class _BackgroundState extends State<Background> with WidgetsBindingObserver {
   }
 
   void _initBubbleVariables() {
-    _BubbleSizes = List.generate(
+    _bubbleSizes = List.generate(
       AppConstants.kNoBubbles,
       (i) => math.max(_random.nextDouble(), AppConstants.kBubblePercentage) * AppConstants.kBubbleSize,
     );
 
-    _BubbleRotations = List.generate(
+    _bubbleRotations = List.generate(
       AppConstants.kNoBubbles,
       (i) => _random.nextDouble() * math.pi,
     );

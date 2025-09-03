@@ -33,13 +33,12 @@ class PuzzleInfo extends StatelessWidget {
           height: isLarge
               ? 250
               : isSmall
-                  ? 160
-                  : 180,
+                  ? 50
+                  : 150,
           child: Column(
             crossAxisAlignment:
                 isLarge ? CrossAxisAlignment.start : CrossAxisAlignment.center,
             children: [
-              // title
               Text(
                 game.title!,
                 style: TextStyle(
@@ -49,10 +48,8 @@ class PuzzleInfo extends StatelessWidget {
                 ),
               ),
 
-              // gap
               const Spacer(),
 
-              // puzzle optimize label
               context.read<PuzzleHelperCubit>().state.optimized
                   ? Tooltip(
                       message: context.l10n.optimizedDescription,
