@@ -30,10 +30,10 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
     super.dispose();
   }
 
-  void _onStart(bool hasStarted) {
+  void _onstart(bool hasstarted) {
     context.read<TimerBloc>().add(const TimerReset());
     context.read<GamePuzzleBloc>().add(PlanetCountdownReset(
-          secondsToBegin: hasStarted ? 5 : 3,
+          secondsToBegin: hasstarted ? 5 : 3,
         ));
   }
 
@@ -46,14 +46,14 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   }
 
   void _onRestart() {
-    _onStart(true);
+    _onstart(true);
     context
         .read<PuzzleBloc>()
         .add(const PuzzleInitialized(shufflePuzzle: false));
   }
 
   /// For the puzzle, the following keyboard events are important
-  /// [Space] Start / Auto Solve / Stop
+  /// [Space] start / Auto Solve / Stop
   /// [R] key -> restart
   /// [V] key -> toggle visibility of helpers (numbers)
   /// [UpArrow] key -> move whitespace up
@@ -72,7 +72,7 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
           context.read<PuzzleHelperCubit>().state.isAutoSolving;
 
       final isReady = puzzleInitState is PuzzleInitReady;
-      final hasStarted = planetPuzzleState.status == GamePuzzleStatus.started;
+      final hasstarted = planetPuzzleState.status == GamePuzzleStatus.started;
       final isLoading = planetPuzzleState.status == GamePuzzleStatus.loading;
 
       final puzzleBloc = context.read<PuzzleBloc>();
@@ -81,7 +81,7 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
       final puzzleIncomplete =
           puzzleBloc.state.puzzleStatus == PuzzleStatus.incomplete;
 
-      final canPress = hasStarted && puzzleIncomplete && !isAutoSolving;
+      final canPress = hasstarted && puzzleIncomplete && !isAutoSolving;
 
       Tile? tile;
 
@@ -91,17 +91,17 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
         /// 2. puzzle is loading
         if (!isReady || isLoading) return;
 
-        if (hasStarted && puzzleIncomplete) {
+        if (hasstarted && puzzleIncomplete) {
           _onAutoSolve(
             isAutoSolving
                 ? PuzzleAutoSolveState.stop
                 : PuzzleAutoSolveState.start,
           );
         } else {
-          _onStart(hasStarted);
+          _onstart(hasstarted);
         }
       } else if (physicalKey == PhysicalKeyboardKey.keyR) {
-        if (!hasStarted || isAutoSolving) return;
+        if (!hasstarted || isAutoSolving) return;
         _onRestart();
       } else if (physicalKey == PhysicalKeyboardKey.keyV) {
         context.read<PuzzleHelperCubit>().onHelpToggle();

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart' as rive;
 
 import '../../../core/layout/utils/app_breakpoints.dart';
+import '../../../core/layout/delegates/game_layout_delegate.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/constants/app_constants.dart';
 import '../../../data/models/tile.dart';
@@ -14,7 +15,6 @@ import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../general/shake_animator.dart';
-import '../../../core/layout/delegates/game_layout_delegate.dart';
 import 'help_widget.dart';
 
 class GamePuzzleTile extends StatefulWidget {
@@ -56,16 +56,15 @@ class _GamePuzzleTileState extends State<GamePuzzleTile> {
 
   _buildChild() {
     final theme = themeBloc.state.theme;
+    // final game = themeBloc.state.;
 
     if (context.read<PuzzleHelperCubit>().state.optimized) {
-      // if we need to play optimized puzzle, just show images, instead of animations
       childVn.value = KeyWidget(
         key: puzzleInitCubit.getGlobalKey(widget.tile.value),
         child: Image.asset(theme.placeholderAssetForTile),
       );
       puzzleInitCubit.onInit(widget.tile.value);
     } else {
-      // show animations if we don't wanna play optimized puzzle
       childVn.value = KeyWidget(
         key: puzzleInitCubit.getGlobalKey(widget.tile.value),
         child: rive.RiveAnimation.asset(
@@ -118,12 +117,12 @@ class _GamePuzzleTileState extends State<GamePuzzleTile> {
     AppUtils.logger('PuzzleTile: updated: isAutoSolving: $isAutoSolving');
 
     final status = context.select((GamePuzzleBloc bloc) => bloc.state.status);
-    final hasStarted = status == GamePuzzleStatus.started;
+    final hasstarted = status == GamePuzzleStatus.started;
 
     final movementDuration =
         status == GamePuzzleStatus.loading ? AppConstants.kMS800 : AppConstants.kMS350;
 
-    final canPress = hasStarted && puzzleIncomplete && !isAutoSolving;
+    final canPress = hasstarted && puzzleIncomplete && !isAutoSolving;
 
     final offset = size / widget.tile.puzzleSize;
     final x = widget.tile.currentPosition.x;

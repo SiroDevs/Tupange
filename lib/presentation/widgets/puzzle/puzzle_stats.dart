@@ -24,16 +24,14 @@ class PuzzleStats extends StatelessWidget {
           return;
         }
 
-        // play shuffling sound
         if (state.secondsToBegin == 3) {
           context.read<AudioPlayerCubit>().beginCountDown();
         }
 
         if (state.status == GamePuzzleStatus.started) {
-          context.read<TimerBloc>().add(const TimerStarted());
+          context.read<TimerBloc>().add(const Timerstarted());
         }
 
-        // on every tick, we shuffle the puzzle
         if (state.secondsToBegin >= 1 && state.secondsToBegin <= 3) {
           context.read<PuzzleBloc>().add(const PuzzleReset());
         }
@@ -55,10 +53,9 @@ class _PuzzleStats extends StatelessWidget {
   final PuzzleState puzzleState;
 
   const _PuzzleStats({
-    Key? key,
     required this.layoutSize,
     required this.puzzleState,
-  }) : super(key: key);
+  });
 
   String _getDurationLabel(Duration duration, BuildContext context) {
     final hours = duration.inHours.toString();

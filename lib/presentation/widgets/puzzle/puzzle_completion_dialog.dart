@@ -139,7 +139,7 @@ class PuzzleCompletionDialogSmall extends StatelessWidget {
               const Gap(38.0),
 
               // star
-              WinStarWidget(
+              WinstarWidget(
                 star: AppUtils.getScore(
                   secondsTaken: secondsElapsed,
                   totalSteps: totalMoves,

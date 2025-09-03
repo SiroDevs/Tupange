@@ -6,7 +6,7 @@ import '../utils/constants/app_constants.dart';
 Future<T?> showAppDialog<T>({
   required BuildContext context,
   required Widget child,
-    bool sameSize = false,
+  bool sameSize = false,
   bool barrierDismissible = true,
   String barrierLabel = '',
 }) =>

@@ -14,11 +14,11 @@ class GameWhitespaceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = context.select((GamePuzzleBloc bloc) => bloc.state.status);
-    final hasStarted = status == GamePuzzleStatus.started;
+    final hasstarted = status == GamePuzzleStatus.started;
 
-    AppUtils.logger('GameWhitespaceTile: hasStarted $hasStarted');
+    AppUtils.logger('GameWhitespaceTile: hasstarted $hasstarted');
 
-    return hasStarted
+    return hasstarted
         ? const SizedBox.shrink()
         : GamePuzzleTile(
             key: ValueKey(tile.value),

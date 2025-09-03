@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/models/game.dart';
-import '../themes/puzzle_theme_one.dart';
 import '../themes/puzzle_theme.dart';
 
 part 'theme_event.dart';
@@ -10,11 +9,15 @@ part 'theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   static PuzzleTheme _getTheme(Game game) {
-    return PuzzleThemeOne();
+    return GamingPuzzleTheme().copyWith(
+      assetForTile: game.image,
+      backgroundAsset: game.image,
+      placeholderAssetForTile: game.image,
+      placeholderThumbnail: game.image,
+    );
   }
 
-  ThemeBloc({required Game game})
-      : super(ThemeState(theme: _getTheme(game))) {
+  ThemeBloc({required Game game}) : super(ThemeState(theme: _getTheme(game))) {
     on<ThemeChangedEvent>(_onThemeChanged);
   }
 

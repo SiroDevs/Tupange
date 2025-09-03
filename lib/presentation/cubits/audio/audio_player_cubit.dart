@@ -116,7 +116,7 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
     _audioBloc.stream.listen(_onAudioControlStateChanged);
   }
 
-  void onBackToSolarSystem() {
+  void onBackToHome() {
     // stop count down sound effect
     _countDownBeginPlayer.stop();
 
@@ -174,7 +174,7 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
     }
   }
 
-  void buttonClickAudio() {
+  void clickAudio() {
     if (_isSoundEffectEnabled) unawaited(_buttonClickPlayer.replay(_buttonClickSource));
   }
 

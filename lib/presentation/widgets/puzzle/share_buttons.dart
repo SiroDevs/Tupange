@@ -114,17 +114,17 @@ class ScoreTile extends StatelessWidget {
   }
 }
 
-class WinStarWidget extends StatelessWidget {
-  static const maxStar = 5;
+class WinstarWidget extends StatelessWidget {
+  static const maxBubble = 5;
   final int star;
 
-  const WinStarWidget({super.key, this.star = 5});
+  const WinstarWidget({super.key, this.star = 5});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: List<Widget>.generate(maxStar, (index) {
+      children: List<Widget>.generate(maxBubble, (index) {
         return StylizedIcon(
           size: 32.0,
           icon: FontAwesomeIcons.star,

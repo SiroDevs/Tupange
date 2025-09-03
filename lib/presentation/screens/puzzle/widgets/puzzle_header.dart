@@ -14,7 +14,7 @@ import '../../../../core/layout/utils/responsive_layout_builder.dart';
 import '../../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 
 class PuzzleHeader extends StatelessWidget {
-  const PuzzleHeader({Key? key}) : super(key: key);
+  const PuzzleHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class PuzzleHeader extends StatelessWidget {
               StylizedButton(
                 key: ValueKey(isSmall),
                 onPressed: () {
-                  context.read<AudioPlayerCubit>().onBackToSolarSystem();
+                  context.read<AudioPlayerCubit>().onBackToHome();
                   Navigator.pop(context);
                 },
                 child: StylizedContainer(
@@ -51,7 +51,7 @@ class PuzzleHeader extends StatelessWidget {
                       ),
                       isSmall ? const Gap(12.0) : const Gap(24.0),
                       StylizedText(
-                        text: context.l10n.solarSystem,
+                        text: context.l10n.home,
                         strokeWidth: isSmall ? 5.0 : 6.0,
                         offset: isSmall ? 1.0 : 2.0,
                         fontSize: isSmall ? 16.0 : 22.0,

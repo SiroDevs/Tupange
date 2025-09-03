@@ -24,7 +24,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   bool _isAutoSolving = false;
 
-  void onAutoSolvingStarted() {
+  void onAutoSolvingstarted() {
     _isAutoSolving = true;
   }
 

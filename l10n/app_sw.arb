@@ -25,7 +25,7 @@
   },
   "start": "Anza",
   "@start": {
-    "description": "Start Button text"
+    "description": "start Button text"
   },
   "dashboardHeading": "Anza mpango wowote",
   "@dashboardHeading": {
@@ -115,13 +115,13 @@
   "@whitespaceRight": {
     "description": "Move whitespace right"
   },
-  "backToSolarSystem": "Rudi kwenye mfumo wa jua",
-  "@backToSolarSystem": {
+  "backToHome": "Rudi Nyumbani",
+  "@backToHome": {
     "description": "Quit puzzle screen and go back to dashboard"
   },
-  "solarSystem": "Mfumo wa Jua",
-  "@solarSystem": {
-    "description": "Solar System"
+  "home": "Nyumbani",
+  "@home": {
+    "description": "Home"
   },
   "stop": "Simamisha",
   "@stop": {
@@ -149,7 +149,7 @@
   },
   "notStarted": "Haijaanza",
   "@notStarted": {
-    "description": "Not Started - puzzle stats"
+    "description": "Not started - puzzle stats"
   },
   "puzzleStats": "{timeText} | Hatua {numberOfMoves}",
   "@puzzleStats": {

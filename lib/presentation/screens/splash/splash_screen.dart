@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/constants/app_assets.dart';
 import '../../../core/utils/constants/app_constants.dart';
 import '../../cubits/audio/audio_player_cubit.dart';
-import '../../cubits/loading/assetcache_cubit.dart';
 import '../../navigator/route_names.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -51,7 +50,6 @@ class SplashScreenState extends State<SplashScreen> {
     return BlocConsumer<AudioPlayerCubit, AudioPlayerState>(
       listener: (context, state) {
         if (state is AudioPlayerReady) {
-          context.read<AssetcacheCubit>().startCache(context);
           nextScreen();
         }
       },

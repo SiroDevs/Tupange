@@ -9,7 +9,6 @@ import 'presentation/blocs/auth/auth_bloc.dart';
 import 'core/l10n/l10n.dart';
 import 'domain/repository/auth_repository.dart';
 import 'core/utils/constants/app_constants.dart';
-import 'presentation/cubits/loading/assetcache_cubit.dart';
 import 'presentation/navigator/main_navigator.dart';
 import 'presentation/widgets/keyboard_handlers/app_keyboard_handler.dart';
 
@@ -70,7 +69,6 @@ class AppViewState extends State<AppView> {
             context.read<AudioControlBloc>(),
           ),
         ),
-        BlocProvider(create: (_) => AssetcacheCubit()),
       ],
       child: AppKeyboardHandler(
         child: MaterialApp(

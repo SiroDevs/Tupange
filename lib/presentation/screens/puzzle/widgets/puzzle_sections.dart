@@ -7,7 +7,7 @@ import 'puzzle_board.dart';
 import '../../../theme/bloc/theme_bloc.dart';
 
 class PuzzleSections extends StatefulWidget {
-  const PuzzleSections({Key? key}) : super(key: key);
+  const PuzzleSections({super.key});
 
   @override
   State<PuzzleSections> createState() => _PuzzleSectionsState();
@@ -26,7 +26,7 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
           children: [
             const Gap(16.0),
             theme.puzzleLayoutDelegate.infoBuilder(),
-            const Gap(32.0),
+            const Gap(20.0),
             theme.puzzleLayoutDelegate.statsBuilder(),
             child!,
             theme.puzzleLayoutDelegate.controlBuilder(),
@@ -49,7 +49,6 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
       ),
       large: (_, Widget? child) => Row(
         children: [
-          // title, stats, control buttons
           Expanded(
             child: Column(
               children: [

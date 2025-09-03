@@ -12,7 +12,7 @@ import '../../../presentation/widgets/puzzle/puzzle_stats.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/constants/app_constants.dart';
 import '../utils/responsive_gap.dart';
-import '../utils/responsive_layout_builder.dart';
+import 'landscape_widget.dart';
 import 'puzzle_layout_delegate.dart';
 
 abstract class BoardSize {
@@ -44,7 +44,7 @@ class GameLayoutDelegate extends PuzzleLayoutDelegate {
     final percentageSolved = _getPercentageOfPuzzleSolved(puzzleState);
     AppUtils.logger('PuzzleLayoutDelegate :: $percentageSolved');
 
-    final landscapeWidget = _LandscapeWidget(theme: theme);
+    final landscapeWidget = LandscapeWidget(theme: theme);
 
     return Stack(
       children: [
@@ -53,8 +53,6 @@ class GameLayoutDelegate extends PuzzleLayoutDelegate {
           child: landscapeWidget,
         ),
 
-        /// If `percentageSolved` is 30% then
-        /// we hide the first 30% of the following widget
         ClipRect(
           child: AnimatedAlign(
             duration: percentageSolved > 0.85 ? AppConstants.kMS800 : AppConstants.kS4,
@@ -113,36 +111,4 @@ class GameLayoutDelegate extends PuzzleLayoutDelegate {
 
   @override
   List<Object?> get props => [];
-}
-
-class _LandscapeWidget extends StatelessWidget {
-  final PuzzleTheme theme;
-  const _LandscapeWidget({required this.theme});
-
-  @override
-  Widget build(BuildContext context) {
-    return ResponsiveLayoutBuilder(
-      key: const Key('game_landscape'),
-      small: (_, Widget? child) => Align(
-        alignment: Alignment.bottomCenter,
-        child: Image.asset(
-          theme.backgroundAsset,
-          height: 120.0,
-          fit: BoxFit.cover,
-        ),
-      ),
-      medium: (_, Widget? child) => child!,
-      large: (_, Widget? child) => child!,
-      child: (_) => Align(
-        alignment: Alignment.bottomCenter,
-        child: Builder(builder: (context) {
-          return Image.asset(
-            theme.backgroundAsset,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.fitWidth,
-          );
-        }),
-      ),
-    );
-  }
 }

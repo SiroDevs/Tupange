@@ -58,9 +58,11 @@ class AppConstants {
   static const kFOBottomCenter = FractionalOffset(0.50, 0.98);
 
 // background
-  static const kBaseStarSize = 10.0;
-  static const kMinStarPercentage = 0.20;
-  static const kNoStars = 40;
+  static const kBubbleSize = 30.0;
+  static const kBaseBubbleSize = 10.0;
+  static const kBubblePercentage = 0.5;
+  static const kMinBubblePercentage = 0.20;
+  static const kNoBubbles = 40;
   static const kBackgroundGradient = [
     Color(0xff0a0826),
     Color(0xff251f45),

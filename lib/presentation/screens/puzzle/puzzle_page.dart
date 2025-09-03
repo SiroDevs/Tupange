@@ -61,12 +61,6 @@ class PuzzlePage extends StatelessWidget {
             ticker: const Ticker(),
           ),
         ),
-        // BlocProvider(
-        //   create: (_) => PuzzleFactCubit(
-        //     planetType: context.read<GameSelectionCubit>().game.type,
-        //     context: context,
-        //   ),
-        // ),
       ],
       child: const _PuzzleView(),
     );
@@ -79,7 +73,6 @@ class _PuzzleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-    // final state = context.select((PuzzleBloc bloc) => bloc.state);
 
     return Background(
       child: LayoutBuilder(

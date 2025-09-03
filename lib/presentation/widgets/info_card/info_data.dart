@@ -91,7 +91,7 @@ abstract class AppShortcutData {
             ),
             InfoPair(
               titleText: 'ESC',
-              description: context.l10n.backToSolarSystem,
+              description: context.l10n.backToHome,
             ),
           ],
         ),

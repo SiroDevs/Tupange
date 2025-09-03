@@ -6,9 +6,7 @@ import 'package:tupange/core/l10n/l10n.dart';
 
 import '../../../core/layout/utils/responsive_layout_builder.dart';
 import '../../cubits/game/game_selection_cubit.dart';
-import '../../cubits/puzzle_fact/puzzle_fact_cubit.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../general/animated_text.dart';
 import '../general/stylized_icon.dart';
 import '../general/stylized_text.dart';
 
@@ -54,16 +52,6 @@ class PuzzleInfo extends StatelessWidget {
               // gap
               const Spacer(),
 
-              // description
-              _FactWidget(
-                key: const Key('game-fact-widget'),
-                isLarge: isLarge,
-                isSmall: isSmall,
-              ),
-
-              // gap
-              const Spacer(),
-
               // puzzle optimize label
               context.read<PuzzleHelperCubit>().state.optimized
                   ? Tooltip(
@@ -101,47 +89,6 @@ class PuzzleInfo extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _FactWidget extends StatelessWidget {
-  final bool isLarge;
-  final bool isSmall;
-
-  const _FactWidget({
-    super.key,
-    required this.isLarge,
-    required this.isSmall,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final state = context.select((PuzzleFactCubit cubit) => cubit.state);
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          context.read<PuzzleFactCubit>().newFact();
-        },
-        child: AppAnimatedWidget(
-          showOnComplete: true,
-          key: ValueKey(state.fact),
-          child: Text(
-            state.fact,
-            textAlign: isLarge ? TextAlign.start : TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: isSmall
-                  ? 16.0
-                  : isLarge
-                      ? 24.0
-                      : 20.0,
-              letterSpacing: 1.5,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

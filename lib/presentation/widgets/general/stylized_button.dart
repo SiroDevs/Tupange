@@ -26,7 +26,7 @@ class StylizedButton extends StatelessWidget {
   }
 
   void _onPressConfirm(BuildContext context) {
-    context.read<AudioPlayerCubit>().buttonClickAudio();
+    context.read<AudioPlayerCubit>().clickAudio();
     onPressed?.call();
   }
 

@@ -55,7 +55,7 @@ class HomeDetails extends StatelessWidget {
                     category: category,
                     height: dimens.maxHeight,
                     onPressed: () {
-                      context.read<AudioPlayerCubit>().buttonClickAudio();
+                      context.read<AudioPlayerCubit>().clickAudio();
                       context
                           .read<CategorySelectionCubit>()
                           .onSelected(category);
@@ -66,7 +66,7 @@ class HomeDetails extends StatelessWidget {
                           .toList();
                       if (selectedGames.isNotEmpty) {
                         CartCard.show(
-                          context: context,
+                          ctx: context,
                           category: category,
                           games: selectedGames,
                         );

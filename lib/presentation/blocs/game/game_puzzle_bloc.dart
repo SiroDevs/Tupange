@@ -20,7 +20,7 @@ class GamePuzzleBloc extends Bloc<GamePuzzleEvent, PlanetPuzzleState> {
     required Ticker ticker,
   })  : _ticker = ticker,
         super(PlanetPuzzleState(secondsToBegin: secondsToBegin)) {
-    on<PlanetCountdownStarted>(_onCountdownStarted);
+    on<PlanetCountdownstarted>(_onCountdownstarted);
     on<PlanetCountdownTicked>(_onCountdownTicked);
     on<PlanetCountdownStopped>(_onCountdownStopped);
     on<PlanetCountdownReset>(_onCountdownReset);
@@ -43,8 +43,8 @@ class GamePuzzleBloc extends Bloc<GamePuzzleEvent, PlanetPuzzleState> {
         _ticker.tick().listen((_) => add(const PlanetCountdownTicked()));
   }
 
-  void _onCountdownStarted(
-    PlanetCountdownStarted event,
+  void _onCountdownstarted(
+    PlanetCountdownstarted event,
     Emitter<PlanetPuzzleState> emit,
   ) {
     _startTicker();

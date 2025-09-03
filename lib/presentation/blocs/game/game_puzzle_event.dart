@@ -11,8 +11,8 @@ class PlanetPuzzleResetEvent extends GamePuzzleEvent {
   const PlanetPuzzleResetEvent();
 }
 
-class PlanetCountdownStarted extends GamePuzzleEvent {
-  const PlanetCountdownStarted();
+class PlanetCountdownstarted extends GamePuzzleEvent {
+  const PlanetCountdownstarted();
 }
 
 class PlanetCountdownTicked extends GamePuzzleEvent {

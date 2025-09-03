@@ -60,16 +60,16 @@ class PuzzleInitCubit extends Cubit<PuzzleInitState> {
   }
 
   void onInit(int tileKey) {
-    final hasStarted =
+    final hasstarted =
         _planetPuzzleBloc.state.status == GamePuzzleStatus.started;
 
-    AppUtils.logger('puzzle_init_cubit: onInit: hasStarted: $hasStarted');
+    AppUtils.logger('puzzle_init_cubit: onInit: hasstarted: $hasstarted');
 
     if (tileKey == _lastTileKey) {
       _startAnimating();
     }
 
-    if (hasStarted && tileKey == _lastTileKey - 1) {
+    if (hasstarted && tileKey == _lastTileKey - 1) {
       // during the game, if screen is resized
       _startAnimating();
     }
