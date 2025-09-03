@@ -11,7 +11,7 @@ class HomeViewState extends State<HomeView> {
   Size get size => MediaQuery.of(context).size;
   List<Category> categories = [];
   List<Game> games = [];
-  
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +37,7 @@ class HomeViewState extends State<HomeView> {
       builder: (context, state) {
         var mainContainer = Column(
           children: [
+            const Gap(35),
             const HeaderWidget(),
             ResponsiveLayoutBuilder(
               small: (_, Widget? child) => HomeSmall(child: child!),
@@ -46,9 +47,10 @@ class HomeViewState extends State<HomeView> {
                 categories: categories,
                 games: games,
               ),
-            ),
+            ).center(),
           ],
         );
+
         return SizedBox.fromSize(
           size: size,
           child: state.maybeWhen(

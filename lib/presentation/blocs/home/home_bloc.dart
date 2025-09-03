@@ -37,6 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       for (final game in RawData.games) {
         await _dbRepo.saveGame(game: game);
       }
+      _prefsRepo.setPrefBool(PrefConstants.isDataLoadedKey, true);
     }
 
     List<Category> categories = await _dbRepo.fetchCategories();

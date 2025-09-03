@@ -5,6 +5,7 @@ import '../../../widgets/general/stylized_text.dart';
 
 class MenuCarousel extends StatelessWidget {
   final Category category;
+  final int noOfGames;
   final double height;
   final bool isLarge;
   final VoidCallback? onPressed;
@@ -14,6 +15,7 @@ class MenuCarousel extends StatelessWidget {
     this.isLarge = false,
     required this.category,
     required this.height,
+    this.noOfGames = 0,
     this.onPressed,
   });
 

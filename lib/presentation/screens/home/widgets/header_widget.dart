@@ -57,7 +57,7 @@ class HeaderWidget extends StatelessWidget {
             },
           ),
 
-          const Gap(32.0),
+          const Gap(30),
 
           BlocBuilder<LevelSelectionCubit, LevelSelectionState>(
             builder: (context, state) {
@@ -73,7 +73,7 @@ class HeaderWidget extends StatelessWidget {
             },
           ),
 
-          const Gap(32),
+          const Gap(25),
 
           ResponsiveLayoutBuilder(
             small: (_, Widget? child) => child!,
@@ -81,6 +81,8 @@ class HeaderWidget extends StatelessWidget {
             large: (_, __) => const SizedBox.shrink(),
             child: (_) => const AudioControl(),
           ),
+
+          const Gap(20),
         ],
       ),
     );

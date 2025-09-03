@@ -3,6 +3,7 @@ abstract class AppAssets {
   static const _audioBase = 'audio';
   
   // theme music
+  static const themeMusic0 = '$_audioBase/theme0.mp3';
   static const themeMusic1 = '$_audioBase/theme1.mp3';
   static const themeMusic2 = '$_audioBase/theme2.mp3';
   static const themeMusic3 = '$_audioBase/theme3.mp3';

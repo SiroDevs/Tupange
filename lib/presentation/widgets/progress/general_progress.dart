@@ -104,7 +104,7 @@ class LoadingProgress extends StatelessWidget {
   final String title;
   const LoadingProgress({
     super.key,
-    this.title = 'Processing data ...',
+    this.title = '',
   });
 
   @override

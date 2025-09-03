@@ -1,8 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 import '../../../core/layout/utils/responsive_layout_builder.dart';
+import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/constants/app_assets.dart';
 import '../../../data/models/category.dart';
 import '../../../data/models/game.dart';

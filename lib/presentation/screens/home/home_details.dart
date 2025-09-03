@@ -30,12 +30,19 @@ class HomeDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeigth = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    double aspectRatio = 2.7;
+    if (isMobile) {
+      aspectRatio = (screenHeigth - 350) / screenWidth;
+    }
+
     return SizedBox(
       child: LayoutBuilder(
         builder: (ctx, dimens) {
           return CarouselSlider(
             options: CarouselOptions(
-              aspectRatio: 2.7,
+              aspectRatio: aspectRatio,
               enlargeCenterPage: true,
               enableInfiniteScroll: false,
               initialPage: 0,
