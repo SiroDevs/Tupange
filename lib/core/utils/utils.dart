@@ -18,7 +18,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../data/models/planet.dart';
 import '../../data/models/position.dart';
-import '../../presentation/layout/utils/app_assets.dart';
+import '../constants/app_assets.dart';
 
 const _paddingOffset = 5.0;
 const _roundOffset = 15.0;

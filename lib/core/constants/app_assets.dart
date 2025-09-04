@@ -16,10 +16,23 @@ abstract class AppAssets {
   static const tileTapError = '$_audioBase/tile_tap_error.mp3';
 
   // image assets
+  static const _iconBase = 'assets/icons';
   static const _imageBase = 'assets/images';
+
+  static const appIcon = '$_iconBase/app_icon.png';
+  static const imgZeroState = '$_iconBase/app_icon.png';
 
   // loading screen images
   static const planetsImage = '$_imageBase/planets.png';
+  static const nairobiImg = '$_imageBase/nairobi.jpg';
+
+  // theme music
+  static const themeMusic0 = '$_audioBase/theme0.mp3';
+  static const themeMusic1 = '$_audioBase/theme1.mp3';
+  static const themeMusic2 = '$_audioBase/theme2.mp3';
+  static const themeMusic3 = '$_audioBase/theme3.mp3';
+
+  static const introMusic = '$_audioBase/intro.mp3';
 
   // dashboard images
   static const sunImage = '$_imageBase/sun.png';

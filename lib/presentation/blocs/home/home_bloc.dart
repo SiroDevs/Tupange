@@ -8,15 +8,15 @@ import '../../../data/models/orbit.dart';
 import '../../../data/models/planet.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../cubits/dashboard/planet_orbital_animation_cubit.dart';
-import '../../layout/utils/app_breakpoints.dart';
+import '../../../core/constants/app_breakpoints.dart';
 
-part 'dashboard_event.dart';
-part 'dashboard_state.dart';
+part 'home_event.dart';
+part 'home_state.dart';
 
-class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
+class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final PlanetOrbitalAnimationCubit _planetAnimationCubit;
 
-  DashboardBloc(this._planetAnimationCubit) : super(DashboardLoading()) {
+  HomeBloc(this._planetAnimationCubit) : super(DashboardLoading()) {
     on<DashboardInitialized>(_onDashboardInit);
     on<DashboardResized>(_onDashboardResized);
   }
@@ -64,7 +64,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   void _onDashboardResized(
     DashboardResized event,
-    Emitter<DashboardState> emit,
+    Emitter<HomeState> emit,
   ) {
     // generate new orbits
     final orbits = _generateOrbits(event.size);
@@ -74,7 +74,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   void _onDashboardInit(
     DashboardInitialized event,
-    Emitter<DashboardState> emit,
+    Emitter<HomeState> emit,
   ) {
     Size size = event.size;
 

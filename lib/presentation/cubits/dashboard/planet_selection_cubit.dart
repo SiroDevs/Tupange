@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/planet.dart';
-import '../../views/playing/playing_page.dart';
+import '../../screens/playing/playing_screen.dart';
 import '../../../core/utils/app_logger.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/utils/utils.dart';
@@ -35,7 +35,7 @@ class PlanetSelectionCubit extends Cubit<PlanetSelectionState> {
           BlocProvider.value(value: _levelSelectionCubit),
           BlocProvider.value(value: this),
         ],
-        child: const PlayingPage(key: Key('puzzle-page')),
+        child: const PlayingScreen(key: Key('puzzle-page')),
       ),
     );
 

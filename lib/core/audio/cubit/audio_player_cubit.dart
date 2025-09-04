@@ -4,7 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../presentation/layout/utils/app_assets.dart';
+import '../../constants/app_assets.dart';
 import '../../constants/app_constants.dart';
 import '../../helpers/audio_player.dart';
 import '../../utils/app_logger.dart';

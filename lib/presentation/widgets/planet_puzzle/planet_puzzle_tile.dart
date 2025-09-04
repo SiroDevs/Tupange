@@ -12,7 +12,7 @@ import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
 import '../../blocs/readying/readying_bloc.dart';
 import '../../layout/planet_puzzle/planet_puzzle_layout_delegate.dart';
-import '../../layout/utils/app_breakpoints.dart';
+import '../../../core/constants/app_breakpoints.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../../blocs/playing/playing_bloc.dart';
 import '../shake_animator.dart';

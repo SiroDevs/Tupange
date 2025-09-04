@@ -1,4 +1,4 @@
-import '../../layout/utils/app_assets.dart';
+import '../../../core/constants/app_assets.dart';
 import 'planet_puzzle_theme.dart';
 
 class UranusPuzzleTheme extends PlanetPuzzleTheme {

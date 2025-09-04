@@ -6,9 +6,9 @@ import '../../../../../core/l10n/l10n.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
-import '../../layout/utils/app_assets.dart';
+import '../../../core/constants/app_assets.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
-import '../dashboard/dashboard_page.dart';
+import '../home/home_screen.dart';
 import '../../widgets/background/background.dart';
 import '../../widgets/stylized_button.dart';
 import '../../widgets/stylized_container.dart';
@@ -16,15 +16,15 @@ import '../../widgets/stylized_text.dart';
 import '../../cubits/loading/assetcache_cubit.dart';
 import 'widgets/loading.dart';
 
-class LoadingPage extends StatelessWidget {
-  const LoadingPage({super.key});
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({super.key});
 
   void _move(BuildContext context) async {
     /// we can play the theme music only upon the first interaction
     /// due to chrome policy: https://goo.gl/xX8pDD
     context.read<AudioPlayerCubit>().playThemeMusic();
 
-    final page = await Utils.buildPageAsync(const DashboardPage());
+    final page = await Utils.buildPageAsync(const HomeScreen());
 
     Navigator.pushReplacement(
       context,
@@ -58,14 +58,14 @@ class LoadingPage extends StatelessWidget {
               children: [
                 // body
                 ResponsiveLayoutBuilder(
-                  small: (_, __) => _LoadingPageSmall(
+                  small: (_, __) => _LoadingScreenSmall(
                     isInitialized: isInitialized,
                     isReady: isReady,
                     onStartPressed: () => _move(context),
                   ),
                   medium: (_, Widget? child) => child!,
                   large: (_, Widget? child) => child!,
-                  child: (_) => _LoadingPageLarge(
+                  child: (_) => _LoadingScreenLarge(
                     isInitialized: isInitialized,
                     isReady: isReady,
                     onStartPressed: () => _move(context),
@@ -80,17 +80,16 @@ class LoadingPage extends StatelessWidget {
   }
 }
 
-class _LoadingPageLarge extends StatelessWidget {
+class _LoadingScreenLarge extends StatelessWidget {
   final bool isReady;
   final bool isInitialized;
   final VoidCallback onStartPressed;
 
-  const _LoadingPageLarge({
-    Key? key,
+  const _LoadingScreenLarge({
     required this.isReady,
     required this.isInitialized,
     required this.onStartPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +111,12 @@ class _LoadingPageLarge extends StatelessWidget {
   }
 }
 
-class _LoadingPageSmall extends StatelessWidget {
+class _LoadingScreenSmall extends StatelessWidget {
   final bool isReady;
   final bool isInitialized;
   final VoidCallback onStartPressed;
 
-  const _LoadingPageSmall({
+  const _LoadingScreenSmall({
     required this.isReady,
     required this.isInitialized,
     required this.onStartPressed,

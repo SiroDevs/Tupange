@@ -13,7 +13,7 @@ enum Direction { left, right, up, down }
 
 enum SpecialCaseGroup { topRight, bottomLeft, none }
 
-const _stepDuration = kMS150;
+const _stepDuration = AppConstants.kMS150;
 
 extension ListHelper on List<SolverTile> {
   SolverTile whitespace() => firstWhere((e) => e.isWhitespace);
@@ -652,7 +652,7 @@ class PuzzleSolver {
 
     _takeStep(_lastStep);
 
-    Timer(kMS50, () {
+    Timer(AppConstants.kMS50, () {
       // stopped due to puzzle completion
       _onAutoSolvingStopped();
     });

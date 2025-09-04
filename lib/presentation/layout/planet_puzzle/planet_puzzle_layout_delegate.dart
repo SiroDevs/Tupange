@@ -14,7 +14,7 @@ import '../../widgets/controls/puzzle_control.dart';
 import '../delegates/puzzle_layout_delegate.dart';
 import '../utils/responsive_gap.dart';
 import '../utils/responsive_layout_builder.dart';
-import '../utils/app_assets.dart';
+import '../../../core/constants/app_assets.dart';
 
 abstract class BoardSize {
   static double small = 312;

@@ -17,8 +17,8 @@ import '../../widgets/puzzle/puzzle_sections.dart';
 import '../../blocs/playing/playing_bloc.dart';
 import '../../widgets/background/background.dart';
 
-class PlayingPage extends StatelessWidget {
-  const PlayingPage({super.key});
+class PlayingScreen extends StatelessWidget {
+  const PlayingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
