@@ -1,13 +1,13 @@
-part of 'puzzle_bloc.dart';
+part of 'playing_bloc.dart';
 
-enum PuzzleStatus { incomplete, complete }
+enum PlayingStatus { incomplete, complete }
 
 enum TileMovementStatus { nothingTapped, cannotBeMoved, moved }
 
-class PuzzleState extends Equatable {
-  const PuzzleState({
+class PlayingState extends Equatable {
+  const PlayingState({
     this.puzzle = const Puzzle(tiles: []),
-    this.puzzleStatus = PuzzleStatus.incomplete,
+    this.playingStatus = PlayingStatus.incomplete,
     this.tileMovementStatus = TileMovementStatus.nothingTapped,
     this.numberOfCorrectTiles = 0,
     this.numberOfMoves = 0,
@@ -15,16 +15,16 @@ class PuzzleState extends Equatable {
   });
 
   final Puzzle puzzle;
-  final PuzzleStatus puzzleStatus;
+  final PlayingStatus playingStatus;
   final TileMovementStatus tileMovementStatus;
   final Tile? lastTappedTile;
   final int numberOfCorrectTiles;
   int get numberOfTilesLeft => puzzle.tiles.length - numberOfCorrectTiles - 1;
   final int numberOfMoves;
 
-  PuzzleState copyWith({
+  PlayingState copyWith({
     Puzzle? puzzle,
-    PuzzleStatus? puzzleStatus,
+    PlayingStatus? playingStatus,
     TileMovementStatus? tileMovementStatus,
     int? numberOfCorrectTiles,
     int? numberOfMoves,
@@ -32,9 +32,9 @@ class PuzzleState extends Equatable {
     bool? isAutoSolving,
     bool? showHelp,
   }) {
-    return PuzzleState(
+    return PlayingState(
       puzzle: puzzle ?? this.puzzle,
-      puzzleStatus: puzzleStatus ?? this.puzzleStatus,
+      playingStatus: playingStatus ?? this.playingStatus,
       tileMovementStatus: tileMovementStatus ?? this.tileMovementStatus,
       numberOfCorrectTiles: numberOfCorrectTiles ?? this.numberOfCorrectTiles,
       numberOfMoves: numberOfMoves ?? this.numberOfMoves,
@@ -45,7 +45,7 @@ class PuzzleState extends Equatable {
   @override
   List<Object?> get props => [
         puzzle,
-        puzzleStatus,
+        playingStatus,
         tileMovementStatus,
         numberOfCorrectTiles,
         numberOfMoves,

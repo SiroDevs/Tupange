@@ -5,31 +5,31 @@ import 'package:equatable/equatable.dart';
 
 import '../../../data/models/ticker.dart';
 
-part 'game_puzzle_event.dart';
-part 'game_puzzle_state.dart';
+part 'readying_event.dart';
+part 'readying_state.dart';
 
-class GamePuzzleBloc extends Bloc<GamePuzzleEvent, PlanetPuzzleState> {
+class ReadyingBloc extends Bloc<ReadyingEvent, ReadyingState> {
   final int secondsToBegin;
 
   final Ticker _ticker;
 
   StreamSubscription<int>? _tickerSubscription;
 
-  GamePuzzleBloc({
+  ReadyingBloc({
     required this.secondsToBegin,
     required Ticker ticker,
   })  : _ticker = ticker,
-        super(PlanetPuzzleState(secondsToBegin: secondsToBegin)) {
-    on<PlanetCountdownstarted>(_onCountdownstarted);
-    on<PlanetCountdownTicked>(_onCountdownTicked);
-    on<PlanetCountdownStopped>(_onCountdownStopped);
-    on<PlanetCountdownReset>(_onCountdownReset);
-    on<PlanetPuzzleResetEvent>(_onPlanetPuzzleResetEvent);
+        super(ReadyingState(secondsToBegin: secondsToBegin)) {
+    on<Countdownstarted>(_onCountdownstarted);
+    on<CountdownTicked>(_onCountdownTicked);
+    on<CountdownStopped>(_onCountdownStopped);
+    on<CountdownReset>(_onCountdownReset);
+    on<ReadyingResetEvent>(_onReadyingResetEvent);
   }
 
-  void _onPlanetPuzzleResetEvent(
-    PlanetPuzzleResetEvent event,
-    Emitter<PlanetPuzzleState> emit,
+  void _onReadyingResetEvent(
+    ReadyingResetEvent event,
+    Emitter<ReadyingState> emit,
   ) {
     emit(state.copyWith(
       secondsToBegin: secondsToBegin,
@@ -40,12 +40,12 @@ class GamePuzzleBloc extends Bloc<GamePuzzleEvent, PlanetPuzzleState> {
   void _startTicker() {
     _tickerSubscription?.cancel();
     _tickerSubscription =
-        _ticker.tick().listen((_) => add(const PlanetCountdownTicked()));
+        _ticker.tick().listen((_) => add(const CountdownTicked()));
   }
 
   void _onCountdownstarted(
-    PlanetCountdownstarted event,
-    Emitter<PlanetPuzzleState> emit,
+    Countdownstarted event,
+    Emitter<ReadyingState> emit,
   ) {
     _startTicker();
     emit(
@@ -57,8 +57,8 @@ class GamePuzzleBloc extends Bloc<GamePuzzleEvent, PlanetPuzzleState> {
   }
 
   void _onCountdownTicked(
-    PlanetCountdownTicked event,
-    Emitter<PlanetPuzzleState> emit,
+    CountdownTicked event,
+    Emitter<ReadyingState> emit,
   ) {
     if (state.secondsToBegin == 0) {
       _tickerSubscription?.pause();
@@ -69,8 +69,8 @@ class GamePuzzleBloc extends Bloc<GamePuzzleEvent, PlanetPuzzleState> {
   }
 
   void _onCountdownStopped(
-    PlanetCountdownStopped event,
-    Emitter<PlanetPuzzleState> emit,
+    CountdownStopped event,
+    Emitter<ReadyingState> emit,
   ) {
     _tickerSubscription?.pause();
     emit(
@@ -82,8 +82,8 @@ class GamePuzzleBloc extends Bloc<GamePuzzleEvent, PlanetPuzzleState> {
   }
 
   void _onCountdownReset(
-    PlanetCountdownReset event,
-    Emitter<PlanetPuzzleState> emit,
+    CountdownReset event,
+    Emitter<ReadyingState> emit,
   ) {
     _startTicker();
     emit(

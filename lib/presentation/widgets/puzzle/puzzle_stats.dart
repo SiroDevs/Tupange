@@ -5,8 +5,8 @@ import 'package:tupange/core/l10n/l10n.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/layout/utils/responsive_layout_builder.dart';
 import '../../blocs/timer/timer_bloc.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
-import '../../blocs/game/game_puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import '../../cubits/audio/audio_player_cubit.dart';
 import '../general/animated_text.dart';
 import '../general/stylized_text.dart';
@@ -16,9 +16,9 @@ class PuzzleStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((PuzzleBloc bloc) => bloc.state);
+    final state = context.select((PlayingBloc bloc) => bloc.state);
 
-    return BlocListener<GamePuzzleBloc, PlanetPuzzleState>(
+    return BlocListener<ReadyingBloc, ReadyingState>(
       listener: (context, state) {
         if (!state.isCountdownRunning) {
           return;
@@ -28,12 +28,12 @@ class PuzzleStats extends StatelessWidget {
           context.read<AudioPlayerCubit>().beginCountDown();
         }
 
-        if (state.status == GamePuzzleStatus.started) {
+        if (state.status == ReadyingStatus.started) {
           context.read<TimerBloc>().add(const Timerstarted());
         }
 
         if (state.secondsToBegin >= 1 && state.secondsToBegin <= 3) {
-          context.read<PuzzleBloc>().add(const PuzzleReset());
+          context.read<PlayingBloc>().add(const PuzzleReset());
         }
       },
       child: ResponsiveLayoutBuilder(
@@ -50,7 +50,7 @@ class PuzzleStats extends StatelessWidget {
 
 class _PuzzleStats extends StatelessWidget {
   final ResponsiveLayoutSize layoutSize;
-  final PuzzleState puzzleState;
+  final PlayingState puzzleState;
 
   const _PuzzleStats({
     required this.layoutSize,
@@ -66,7 +66,7 @@ class _PuzzleStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.select((GamePuzzleBloc bloc) => bloc.state);
+    final state = context.select((ReadyingBloc bloc) => bloc.state);
     final secondsElapsed = context.select(
       (TimerBloc bloc) => bloc.state.secondsElapsed,
     );
@@ -93,7 +93,7 @@ class _PuzzleStats extends StatelessWidget {
       }
     }
 
-    if (state.status == GamePuzzleStatus.notStarted) {
+    if (state.status == ReadyingStatus.notStarted) {
       textToShow = context.l10n.notStarted;
     }
 

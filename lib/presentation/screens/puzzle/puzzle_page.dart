@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../data/models/puzzle.dart';
 import '../../../data/models/ticker.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
-import '../../blocs/game/game_puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../../cubits/audio/audio_player_cubit.dart';
-import '../../cubits/level/level_selection_cubit.dart';
 import '../../cubits/game/game_selection_cubit.dart';
+import '../../cubits/level/level_selection_cubit.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
 import '../../theme/bloc/theme_bloc.dart';
@@ -25,7 +25,7 @@ class PuzzlePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => GamePuzzleBloc(
+          create: (context) => ReadyingBloc(
             secondsToBegin: context.read<LevelSelectionCubit>().puzzleSize,
             ticker: const Ticker(),
           ),
@@ -33,18 +33,18 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (context) => PuzzleInitCubit(
             context.read<LevelSelectionCubit>().puzzleSize,
-            context.read<GamePuzzleBloc>(),
+            context.read<ReadyingBloc>(),
           ),
         ),
         BlocProvider(
-          create: (context) => PuzzleBloc(
+          create: (context) => PlayingBloc(
             context.read<LevelSelectionCubit>().puzzleSize,
             context.read<AudioPlayerCubit>(),
           )..add(const PuzzleInitialized(shufflePuzzle: false)),
         ),
         BlocProvider(
           create: (context) => PuzzleHelperCubit(
-            context.read<PuzzleBloc>(),
+            context.read<PlayingBloc>(),
             context.read<AudioPlayerCubit>(),
             optimized: AppUtils.isOptimizedPuzzle() ||
                 context.read<LevelSelectionCubit>().puzzleLevel ==

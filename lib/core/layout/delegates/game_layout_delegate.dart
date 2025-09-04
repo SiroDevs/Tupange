@@ -54,7 +54,7 @@ class GameLayoutDelegate extends PuzzleLayoutDelegate {
 
   @override
   Widget tileBuilder(Tile tile) {
-    return GamePuzzleTile(key: ValueKey(tile.value), tile: tile);
+    return ReadyingTile(key: ValueKey(tile.value), tile: tile);
   }
 
   @override

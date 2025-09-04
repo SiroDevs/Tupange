@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../core/solver/puzzle_solver.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../audio/audio_player_cubit.dart';
 
 part 'puzzle_helper_state.dart';
@@ -16,7 +16,7 @@ class PuzzleHelperCubit extends Cubit<PuzzleHelperState> {
   final AudioPlayerCubit audioPlayerCubit;
 
   PuzzleHelperCubit(
-    PuzzleBloc puzzleBloc,
+    PlayingBloc puzzleBloc,
     this.audioPlayerCubit, {
     final bool optimized = false,
   }) : super(PuzzleHelperState(optimized: optimized)) {

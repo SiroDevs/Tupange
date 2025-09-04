@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_utils.dart';
 import '../../../../data/models/tile.dart';
 import '../../../blocs/timer/timer_bloc.dart';
-import '../../../blocs/puzzle/puzzle_bloc.dart';
+import '../../../blocs/playing/playing_bloc.dart';
 import '../../../theme/bloc/theme_bloc.dart';
 import '../../../widgets/keyboard_handlers/puzzle_keyboard_handler.dart';
 
@@ -14,16 +14,16 @@ class PuzzleBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-    final puzzle = context.select((PuzzleBloc bloc) => bloc.state.puzzle);
+    final puzzle = context.select((PlayingBloc bloc) => bloc.state.puzzle);
 
     final size = puzzle.getDimension();
     if (size == 0) return const Center(child: CircularProgressIndicator());
 
     return PuzzleKeyboardHandler(
-      child: BlocListener<PuzzleBloc, PuzzleState>(
+      child: BlocListener<PlayingBloc, PlayingState>(
         listener: (context, state) {
-          if (state.puzzleStatus == PuzzleStatus.complete) {
-            AppUtils.logger('PuzzleBoard: PuzzleStatus.complete');
+          if (state.playingStatus == PlayingStatus.complete) {
+            AppUtils.logger('PuzzleBoard: PlayingStatus.complete');
             context.read<TimerBloc>().add(const TimerStopped());
           }
         },

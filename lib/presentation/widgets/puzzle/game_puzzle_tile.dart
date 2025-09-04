@@ -9,24 +9,24 @@ import '../../../core/layout/delegates/game_layout_delegate.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/constants/app_constants.dart';
 import '../../../data/models/tile.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
-import '../../blocs/game/game_puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../general/shake_animator.dart';
 import 'help_widget.dart';
 
-class GamePuzzleTile extends StatefulWidget {
+class ReadyingTile extends StatefulWidget {
   final Tile tile;
 
-  const GamePuzzleTile({super.key, required this.tile});
+  const ReadyingTile({super.key, required this.tile});
 
   @override
-  State<GamePuzzleTile> createState() => _GamePuzzleTileState();
+  State<ReadyingTile> createState() => _ReadyingTileState();
 }
 
-class _GamePuzzleTileState extends State<GamePuzzleTile> {
+class _ReadyingTileState extends State<ReadyingTile> {
   final childVn = ValueNotifier<Widget?>(null);
   late ThemeBloc themeBloc;
   late PuzzleInitCubit puzzleInitCubit;
@@ -105,9 +105,9 @@ class _GamePuzzleTileState extends State<GamePuzzleTile> {
     final cubitState = context.select((PuzzleInitCubit cubit) => cubit.state);
     final isReady = cubitState is PuzzleInitReady;
 
-    final puzzleBloc = context.select((PuzzleBloc bloc) => bloc);
+    final puzzleBloc = context.select((PlayingBloc bloc) => bloc);
     final puzzleIncomplete =
-        puzzleBloc.state.puzzleStatus == PuzzleStatus.incomplete;
+        puzzleBloc.state.playingStatus == PlayingStatus.incomplete;
 
     final puzzleHelperState =
         context.select((PuzzleHelperCubit cubit) => cubit.state);
@@ -116,11 +116,11 @@ class _GamePuzzleTileState extends State<GamePuzzleTile> {
 
     AppUtils.logger('PuzzleTile: updated: isAutoSolving: $isAutoSolving');
 
-    final status = context.select((GamePuzzleBloc bloc) => bloc.state.status);
-    final hasstarted = status == GamePuzzleStatus.started;
+    final status = context.select((ReadyingBloc bloc) => bloc.state.status);
+    final hasstarted = status == ReadyingStatus.started;
 
     final movementDuration =
-        status == GamePuzzleStatus.loading ? AppConstants.kMS800 : AppConstants.kMS350;
+        status == ReadyingStatus.loading ? AppConstants.kMS800 : AppConstants.kMS350;
 
     final canPress = hasstarted && puzzleIncomplete && !isAutoSolving;
 
@@ -165,7 +165,7 @@ class _GamePuzzleTileState extends State<GamePuzzleTile> {
               child: GestureDetector(
                 onTap: () {
                   if (canPress) {
-                    context.read<PuzzleBloc>().add(TileTapped(widget.tile));
+                    context.read<PlayingBloc>().add(TileTapped(widget.tile));
                   }
                 },
                 child: SizedBox.square(

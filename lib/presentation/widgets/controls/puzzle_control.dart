@@ -4,8 +4,8 @@ import 'package:gap/gap.dart';
 
 import '../../../core/l10n/l10n.dart';
 import '../../../core/layout/utils/responsive_layout_builder.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
-import '../../blocs/game/game_puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
@@ -18,7 +18,7 @@ class PuzzleControl extends StatelessWidget {
 
   void _onstart(BuildContext context, bool hasstarted) {
     context.read<TimerBloc>().add(const TimerReset());
-    context.read<GamePuzzleBloc>().add(PlanetCountdownReset(
+    context.read<ReadyingBloc>().add(CountdownReset(
           secondsToBegin: hasstarted ? 5 : 3,
         ));
   }
@@ -34,7 +34,7 @@ class PuzzleControl extends StatelessWidget {
   void _onRestart(BuildContext context) {
     _onstart(context, true);
     context
-        .read<PuzzleBloc>()
+        .read<PlayingBloc>()
         .add(const PuzzleInitialized(shufflePuzzle: false));
   }
 
@@ -44,9 +44,9 @@ class PuzzleControl extends StatelessWidget {
         context.select((PuzzleInitCubit cubit) => cubit.state);
     final isReady = puzzleInitState is PuzzleInitReady;
 
-    final status = context.select((GamePuzzleBloc bloc) => bloc.state.status);
-    final hasstarted = status == GamePuzzleStatus.started;
-    final isLoading = status == GamePuzzleStatus.loading;
+    final status = context.select((ReadyingBloc bloc) => bloc.state.status);
+    final hasstarted = status == ReadyingStatus.started;
+    final isLoading = status == ReadyingStatus.loading;
 
     final puzzleHelperState =
         context.select((PuzzleHelperCubit cubit) => cubit.state);
@@ -73,7 +73,6 @@ class PuzzleControl extends StatelessWidget {
           key: Key(isLarge.toString()),
           mainAxisSize: MainAxisSize.min,
           children: [
-            // auto solve / pause (pause auto solve) / start
             StylizedButton(
               key: Key('puzzle_control_${hasstarted}_${isLoading}_$isReady'),
               onPressed: () {

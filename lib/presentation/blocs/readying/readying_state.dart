@@ -1,13 +1,13 @@
-part of 'game_puzzle_bloc.dart';
+part of 'readying_bloc.dart';
 
-enum GamePuzzleStatus {
+enum ReadyingStatus {
   notStarted,
   loading,
   started,
 }
 
-class PlanetPuzzleState extends Equatable {
-  const PlanetPuzzleState({
+class ReadyingState extends Equatable {
+  const ReadyingState({
     required this.secondsToBegin,
     this.isCountdownRunning = false,
   });
@@ -19,20 +19,20 @@ class PlanetPuzzleState extends Equatable {
   final int secondsToBegin;
 
   /// The status of the current puzzle.
-  GamePuzzleStatus get status => isCountdownRunning && secondsToBegin > 0
-      ? GamePuzzleStatus.loading
+  ReadyingStatus get status => isCountdownRunning && secondsToBegin > 0
+      ? ReadyingStatus.loading
       : (secondsToBegin == 0
-          ? GamePuzzleStatus.started
-          : GamePuzzleStatus.notStarted);
+          ? ReadyingStatus.started
+          : ReadyingStatus.notStarted);
 
   @override
   List<Object> get props => [isCountdownRunning, secondsToBegin];
 
-  PlanetPuzzleState copyWith({
+  ReadyingState copyWith({
     bool? isCountdownRunning,
     int? secondsToBegin,
   }) {
-    return PlanetPuzzleState(
+    return ReadyingState(
       isCountdownRunning: isCountdownRunning ?? this.isCountdownRunning,
       secondsToBegin: secondsToBegin ?? this.secondsToBegin,
     );

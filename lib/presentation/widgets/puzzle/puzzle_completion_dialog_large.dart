@@ -7,7 +7,7 @@ import 'package:tupange/core/l10n/l10n.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/puzzle_utils.dart';
 import '../../blocs/timer/timer_bloc.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
 import '../../cubits/game/game_selection_cubit.dart';
 import '../../cubits/level/level_selection_cubit.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
@@ -25,7 +25,7 @@ class PuzzleCompletionDialogLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final secondsElapsed = context.read<TimerBloc>().state.secondsElapsed;
-    final totalMoves = context.read<PuzzleBloc>().state.numberOfMoves;
+    final totalMoves = context.read<PlayingBloc>().state.numberOfMoves;
     final game = context.read<GameSelectionCubit>().game;
     final autoSolverSteps = context.read<PuzzleHelperCubit>().autoSolverSteps;
     final level = context.read<LevelSelectionCubit>().puzzleSize;

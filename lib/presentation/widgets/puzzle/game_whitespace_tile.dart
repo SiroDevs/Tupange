@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/app_utils.dart';
 import '../../../data/models/tile.dart';
-import '../../blocs/game/game_puzzle_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import 'game_puzzle_tile.dart';
 
 class GameWhitespaceTile extends StatelessWidget {
@@ -13,14 +13,14 @@ class GameWhitespaceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final status = context.select((GamePuzzleBloc bloc) => bloc.state.status);
-    final hasstarted = status == GamePuzzleStatus.started;
+    final status = context.select((ReadyingBloc bloc) => bloc.state.status);
+    final hasstarted = status == ReadyingStatus.started;
 
     AppUtils.logger('GameWhitespaceTile: hasstarted $hasstarted');
 
     return hasstarted
         ? const SizedBox.shrink()
-        : GamePuzzleTile(
+        : ReadyingTile(
             key: ValueKey(tile.value),
             tile: tile,
           );

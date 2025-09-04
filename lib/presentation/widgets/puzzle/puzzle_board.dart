@@ -9,8 +9,8 @@ import '../../../core/layout/delegates/game_layout_delegate.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../../core/utils/constants/app_constants.dart';
 import '../../blocs/timer/timer_bloc.dart';
-import '../../blocs/puzzle/puzzle_bloc.dart';
-import '../../blocs/game/game_puzzle_bloc.dart';
+import '../../blocs/playing/playing_bloc.dart';
+import '../../blocs/readying/readying_bloc.dart';
 import '../../cubits/audio/audio_player_cubit.dart';
 import '../../cubits/level/level_selection_cubit.dart';
 import '../../cubits/game/game_selection_cubit.dart';
@@ -37,7 +37,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
 
     Timer(AppConstants.kMS300, () {
       // after dialog finishes, reset the puzzle to initial state
-      context.read<GamePuzzleBloc>().add(const PlanetPuzzleResetEvent());
+      context.read<ReadyingBloc>().add(const ReadyingResetEvent());
     });
 
     // show dialog
@@ -52,7 +52,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
           BlocProvider.value(value: context.read<GameSelectionCubit>()),
           BlocProvider.value(value: context.read<PuzzleHelperCubit>()),
           BlocProvider.value(value: context.read<TimerBloc>()),
-          BlocProvider.value(value: context.read<PuzzleBloc>()),
+          BlocProvider.value(value: context.read<PlayingBloc>()),
         ],
         child: PuzzleCompletionDialog(),
       ),
@@ -67,9 +67,9 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PuzzleBloc, PuzzleState>(
-      listener: (BuildContext context, PuzzleState state) {
-        if (state.puzzleStatus == PuzzleStatus.complete) {
+    return BlocListener<PlayingBloc, PlayingState>(
+      listener: (BuildContext context, PlayingState state) {
+        if (state.playingStatus == PlayingStatus.complete) {
           _completePuzzleTimer = Timer(AppConstants.kMS500, () {
             _onPuzzleCompletionDialog(context);
           });
