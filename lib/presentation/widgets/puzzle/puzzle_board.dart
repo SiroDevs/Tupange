@@ -1,110 +1,58 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/helpers/modal_helpers.dart';
-import '../../../core/layout/utils/responsive_layout_builder.dart';
-import '../../../core/layout/delegates/game_layout_delegate.dart';
-import '../../../core/utils/app_utils.dart';
-import '../../../core/utils/constants/app_constants.dart';
+import '../../../data/models/tile.dart';
+import '../../../core/utils/app_logger.dart';
+import '../../blocs/puzzle/puzzle_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
-import '../../blocs/playing/playing_bloc.dart';
-import '../../blocs/readying/readying_bloc.dart';
-import '../../cubits/audio/audio_player_cubit.dart';
-import '../../cubits/level/level_selection_cubit.dart';
-import '../../cubits/game/game_selection_cubit.dart';
-import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import 'puzzle_completion_dialog.dart';
+import '../../theme/bloc/theme_bloc.dart';
+import '../keyboard_handlers/puzzle_keyboard_handler.dart';
 
-class PuzzleBoard extends StatefulWidget {
-  final List<Widget> tiles;
-
-  const PuzzleBoard({super.key, required this.tiles});
-
-  @override
-  State<PuzzleBoard> createState() => _PuzzleBoardState();
-}
-
-class _PuzzleBoardState extends State<PuzzleBoard> {
-  Timer? _completePuzzleTimer;
-
-  void _onPuzzleCompletionDialog(BuildContext context) async {
-    AppUtils.logger('PuzzleBoard: _onPuzzleCompletionDialog');
-
-    // play completion audio
-    context.read<AudioPlayerCubit>().completion();
-
-    Timer(AppConstants.kMS300, () {
-      // after dialog finishes, reset the puzzle to initial state
-      context.read<ReadyingBloc>().add(const ReadyingResetEvent());
-    });
-
-    // show dialog
-    showAppDialog(
-      context: context,
-
-      /// for medium and large screen, same size
-      sameSize: true,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider.value(value: context.read<LevelSelectionCubit>()),
-          BlocProvider.value(value: context.read<GameSelectionCubit>()),
-          BlocProvider.value(value: context.read<PuzzleHelperCubit>()),
-          BlocProvider.value(value: context.read<TimerBloc>()),
-          BlocProvider.value(value: context.read<PlayingBloc>()),
-        ],
-        child: PuzzleCompletionDialog(),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _completePuzzleTimer?.cancel();
-    super.dispose();
-  }
+class PuzzleBoard extends StatelessWidget {
+  const PuzzleBoard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PlayingBloc, PlayingState>(
-      listener: (BuildContext context, PlayingState state) {
-        if (state.playingStatus == PlayingStatus.complete) {
-          _completePuzzleTimer = Timer(AppConstants.kMS500, () {
-            _onPuzzleCompletionDialog(context);
-          });
-        }
-      },
-      child: ResponsiveLayoutBuilder(
-        small: (_, Widget? child) => _PuzzleBoard(
-          size: BoardSize.small,
-          child: child,
+    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    final puzzle = context.select((PuzzleBloc bloc) => bloc.state.puzzle);
+
+    final size = puzzle.getDimension();
+    if (size == 0) return const Center(child: CircularProgressIndicator());
+
+    return PuzzleKeyboardHandler(
+      child: BlocListener<PuzzleBloc, PuzzleState>(
+        listener: (context, state) {
+          if (state.puzzleStatus == PuzzleStatus.complete) {
+            AppLogger.log('PuzzleBoard: PuzzleStatus.complete');
+            context.read<TimerBloc>().add(const TimerStopped());
+          }
+        },
+        child: theme.puzzleLayoutDelegate.boardBuilder(
+          size,
+          puzzle.tiles
+              .map((tile) => _PuzzleTile(
+                    key: Key('puzzle_tile_${tile.value}'),
+                    tile: tile,
+                  ))
+              .toList(),
         ),
-        medium: (_, Widget? child) => _PuzzleBoard(
-          size: BoardSize.medium,
-          child: child,
-        ),
-        large: (_, Widget? child) => _PuzzleBoard(
-          size: BoardSize.large,
-          child: child,
-        ),
-        child: (_) => Stack(children: widget.tiles),
       ),
     );
   }
 }
 
-class _PuzzleBoard extends StatelessWidget {
-  final double size;
-  final Widget? child;
+class _PuzzleTile extends StatelessWidget {
+  const _PuzzleTile({super.key, required this.tile});
 
-  const _PuzzleBoard({
-    this.child,
-    required this.size,
-  });
+  /// The tile to be displayed.
+  final Tile tile;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(dimension: size, child: child);
+    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+
+    return tile.isWhitespace
+        ? theme.puzzleLayoutDelegate.whitespaceTileBuilder(tile)
+        : theme.puzzleLayoutDelegate.tileBuilder(tile);
   }
 }

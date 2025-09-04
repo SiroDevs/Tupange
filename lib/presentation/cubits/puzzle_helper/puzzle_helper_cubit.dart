@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../core/solver/puzzle_solver.dart';
-import '../../blocs/playing/playing_bloc.dart';
-import '../audio/audio_player_cubit.dart';
+import '../../../core/app/cubit/audio_player_cubit.dart';
+import '../../../core/puzzle_solver/puzzle_solver.dart';
+import '../../blocs/puzzle/puzzle_bloc.dart';
 
 part 'puzzle_helper_state.dart';
 
@@ -16,7 +16,7 @@ class PuzzleHelperCubit extends Cubit<PuzzleHelperState> {
   final AudioPlayerCubit audioPlayerCubit;
 
   PuzzleHelperCubit(
-    PlayingBloc puzzleBloc,
+    PuzzleBloc puzzleBloc,
     this.audioPlayerCubit, {
     final bool optimized = false,
   }) : super(PuzzleHelperState(optimized: optimized)) {
@@ -45,7 +45,7 @@ class PuzzleHelperCubit extends Cubit<PuzzleHelperState> {
     // start auto solver
     _start();
 
-    _puzzleSolver.puzzleBloc.onAutoSolvingstarted();
+    _puzzleSolver.puzzleBloc.onAutoSolvingStarted();
 
     // emit state
     emit(state.copyWith(isAutoSolving: true));

@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-import '../../../core/l10n/l10n.dart';
-import '../../../core/layout/utils/responsive_layout_builder.dart';
-import '../../blocs/playing/playing_bloc.dart';
-import '../../blocs/readying/readying_bloc.dart';
+import '../../../../../core/l10n/l10n.dart';
+import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
+import '../../layout/utils/responsive_layout_builder.dart';
+import '../../blocs/puzzle/puzzle_bloc.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
-import '../general/stylized_button.dart';
-import '../general/stylized_container.dart';
-import '../general/stylized_text.dart';
+import '../../cubits/puzzle_helper/puzzle_init_cubit.dart';
+import '../stylized_button.dart';
+import '../stylized_container.dart';
+import '../stylized_text.dart';
 
 class PuzzleControl extends StatelessWidget {
   const PuzzleControl({super.key});
 
-  void _onstart(BuildContext context, bool hasstarted) {
+  void _onStart(BuildContext context, bool hasStarted) {
     context.read<TimerBloc>().add(const TimerReset());
-    context.read<ReadyingBloc>().add(CountdownReset(
-          secondsToBegin: hasstarted ? 5 : 3,
+    context.read<PlanetPuzzleBloc>().add(PlanetCountdownReset(
+          secondsToBegin: hasStarted ? 5 : 3,
         ));
   }
 
@@ -32,10 +32,10 @@ class PuzzleControl extends StatelessWidget {
   }
 
   void _onRestart(BuildContext context) {
-    _onstart(context, true);
+    _onStart(context, true);
     context
-        .read<PlayingBloc>()
-        .add(const PlayingInitialized(shufflePuzzle: false));
+        .read<PuzzleBloc>()
+        .add(const PuzzleInitialized(shufflePuzzle: false));
   }
 
   @override
@@ -44,9 +44,9 @@ class PuzzleControl extends StatelessWidget {
         context.select((PuzzleInitCubit cubit) => cubit.state);
     final isReady = puzzleInitState is PuzzleInitReady;
 
-    final status = context.select((ReadyingBloc bloc) => bloc.state.status);
-    final hasstarted = status == ReadyingStatus.started;
-    final isLoading = status == ReadyingStatus.loading;
+    final status = context.select((PlanetPuzzleBloc bloc) => bloc.state.status);
+    final hasStarted = status == PlanetPuzzleStatus.started;
+    final isLoading = status == PlanetPuzzleStatus.loading;
 
     final puzzleHelperState =
         context.select((PuzzleHelperCubit cubit) => cubit.state);
@@ -58,7 +58,7 @@ class PuzzleControl extends StatelessWidget {
             ? context.l10n.pleaseWait
             : isLoading
                 ? context.l10n.getReady
-                : hasstarted
+                : hasStarted
                     ? context.l10n.autoSolve
                     : context.l10n.start;
 
@@ -73,12 +73,13 @@ class PuzzleControl extends StatelessWidget {
           key: Key(isLarge.toString()),
           mainAxisSize: MainAxisSize.min,
           children: [
+            // auto solve / pause (pause auto solve) / start
             StylizedButton(
-              key: Key('puzzle_control_${hasstarted}_${isLoading}_$isReady'),
+              key: Key('puzzle_control_${hasStarted}_${isLoading}_$isReady'),
               onPressed: () {
                 if (!isReady || isLoading) return;
 
-                if (hasstarted) {
+                if (hasStarted) {
                   _onAutoSolve(
                     context,
                     isAutoSolving
@@ -86,7 +87,7 @@ class PuzzleControl extends StatelessWidget {
                         : PuzzleAutoSolveState.start,
                   );
                 } else {
-                  _onstart(context, hasstarted);
+                  _onStart(context, hasStarted);
                 }
               },
               child: StylizedContainer(
@@ -107,11 +108,11 @@ class PuzzleControl extends StatelessWidget {
             // restart
             StylizedButton(
               onPressed: () {
-                if (!hasstarted || isAutoSolving) return;
+                if (!hasStarted || isAutoSolving) return;
                 _onRestart(context);
               },
               child: StylizedContainer(
-                color: !hasstarted || isAutoSolving
+                color: !hasStarted || isAutoSolving
                     ? Colors.grey
                     : Colors.greenAccent,
                 child: StylizedText(

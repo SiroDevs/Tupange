@@ -15,13 +15,13 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   TimerBloc({required ticker})
       : _ticker = ticker,
         super(const TimerState()) {
-    on<Timerstarted>(_onTimerstarted);
+    on<TimerStarted>(_onTimerStarted);
     on<TimerTicked>(_onTimerTicked);
     on<TimerStopped>(_onTimerStopped);
     on<TimerReset>(_onTimerReset);
   }
 
-  void _onTimerstarted(Timerstarted event, Emitter<TimerState> emit) {
+  void _onTimerStarted(TimerStarted event, Emitter<TimerState> emit) {
     _tickerSubscription?.cancel();
     _tickerSubscription = _ticker
         .tick()

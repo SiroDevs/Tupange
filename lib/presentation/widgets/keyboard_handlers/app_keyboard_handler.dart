@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../blocs/audio/audio_control_bloc.dart';
+import '../../../core/app/bloc/audio_control_bloc.dart';
 
 class AppKeyboardHandler extends StatefulWidget {
   final Widget child;
 
-  const AppKeyboardHandler({super.key, required this.child});
+  const AppKeyboardHandler({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   @override
-  AppKeyboardHandlerState createState() => AppKeyboardHandlerState();
+  _AppKeyboardHandlerState createState() => _AppKeyboardHandlerState();
 }
 
-class AppKeyboardHandlerState extends State<AppKeyboardHandler> {
+class _AppKeyboardHandlerState extends State<AppKeyboardHandler> {
   final FocusNode _focusNode = FocusNode();
 
   @override

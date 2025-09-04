@@ -1,4 +1,7 @@
-part of 'info_card.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../../../core/l10n/l10n.dart';
+import 'info_pair.dart';
 
 class InfoData {
   final String title;
@@ -12,6 +15,9 @@ class InfoData {
 
 abstract class AppShortcutData {
   static List<InfoData> data(BuildContext context) => [
+        // app shortcuts
+        /// [m] key -> mute/unmute music
+        /// [s] key -> mute/unmute sound effect
         InfoData(
           title: context.l10n.appShortcuts,
           infoPairs: [
@@ -25,6 +31,14 @@ abstract class AppShortcutData {
             ),
           ],
         ),
+
+        // dashboard shortcuts
+        /// [Space] key -> play/pause planet orbital animation
+        /// [LeftArrow] key -> decrease difficulty level
+        /// [RightArrow] key -> increase difficulty level
+        /// [i] key -> show info card
+        /// [1 - 9] num key -> choose a planet (Mercury - Pluto)
+        /// [esc] key -> close dialog
         InfoData(
           title: context.l10n.dashboardShortcuts,
           infoPairs: [
@@ -48,11 +62,25 @@ abstract class AppShortcutData {
               description: context.l10n.dashboardShortcutInfo,
             ),
             InfoPair(
+              titleText: '1 - 9',
+              description: context.l10n.dashboardShortcutChooseAPlanet,
+            ),
+            InfoPair(
               titleText: 'ESC',
               description: context.l10n.dashboardShortcutClose,
             ),
           ],
         ),
+
+        // puzzle page shortcuts
+        /// [Space] Start / Auto Solve / Stop
+        /// [R] key -> restart
+        /// [V] key -> toggle visibility of helpers (numbers)
+        /// [UpArrow] key -> move whitespace up
+        /// [DownArrow] key -> move whitespace down
+        /// [LeftArrow] key -> move whitespace left
+        /// [RightArrow] key -> move whitespace right
+        /// [esc] key -> move back to solar system
         InfoData(
           title: context.l10n.puzzleShortcuts,
           infoPairs: [
@@ -91,23 +119,9 @@ abstract class AppShortcutData {
             ),
             InfoPair(
               titleText: 'ESC',
-              description: context.l10n.backToHome,
+              description: context.l10n.backToSolarSystem,
             ),
           ],
         ),
       ];
-}
-
-class InfoPair {
-  final IconData titleIcon;
-  final String titleText;
-  final String description;
-  final bool showIcon;
-
-  const InfoPair({
-    this.titleIcon = FontAwesomeIcons.info,
-    this.titleText = '',
-    required this.description,
-    this.showIcon = false,
-  });
 }

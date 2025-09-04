@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../presentation/widgets/general/app_dialog.dart';
-import '../utils/constants/app_constants.dart';
+import '../../presentation/widgets/app_dialog.dart';
+import '../utils/constants.dart';
 
+/// Displays the [AppDialog] above the current contents of the app.
 Future<T?> showAppDialog<T>({
   required BuildContext context,
   required Widget child,
-  bool sameSize = false,
+    bool sameSize = false,
   bool barrierDismissible = true,
   String barrierLabel = '',
 }) =>
@@ -25,12 +26,12 @@ Future<T?> showAppDialog<T>({
           ),
         );
       },
-      transitionDuration: AppConstants.kMS300,
+      transitionDuration: kMS300,
       barrierDismissible: barrierDismissible,
       barrierLabel: barrierLabel,
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) => AppDialog(
-        sameSize: sameSize,
         child: child,
+        sameSize: sameSize,
       ),
     );

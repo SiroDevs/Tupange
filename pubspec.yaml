@@ -61,11 +61,20 @@ flutter:
     - assets/audio/
     - assets/icons/
     - assets/images/
-    - assets/images/animals/
-    - assets/images/countries/
-    - assets/images/planets/
+    # - assets/images/animals/
+    # - assets/images/countries/
+    # - assets/images/planets/
+    - assets/planets/earth/
+    - assets/planets/jupiter/
+    - assets/planets/mars/
+    - assets/planets/mercury/
+    - assets/planets/neptune/
+    - assets/planets/pluto/
+    - assets/planets/saturn/
+    - assets/planets/uranus/
+    - assets/planets/venus/
 
   fonts:
-    - family: Comic Sans MS
+    - family: ComicSans
       fonts:
-        - asset: assets/fonts/ComicSansMS.ttf
+        - asset: assets/fonts/ComicSans.ttf

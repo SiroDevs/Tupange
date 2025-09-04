@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/tile.dart';
-import '../../blocs/playing/playing_bloc.dart';
-import '../../blocs/readying/readying_bloc.dart';
+import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
+import '../../blocs/puzzle/puzzle_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/puzzle_init/puzzle_init_cubit.dart';
+import '../../cubits/puzzle_helper/puzzle_init_cubit.dart';
 
 class PuzzleKeyboardHandler extends StatefulWidget {
   final Widget child;
@@ -18,10 +18,10 @@ class PuzzleKeyboardHandler extends StatefulWidget {
   });
 
   @override
-  PuzzleKeyboardHandlerState createState() => PuzzleKeyboardHandlerState();
+  _PuzzleKeyboardHandlerState createState() => _PuzzleKeyboardHandlerState();
 }
 
-class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
+class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -30,10 +30,10 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
     super.dispose();
   }
 
-  void _onstart(bool hasstarted) {
+  void _onStart(bool hasStarted) {
     context.read<TimerBloc>().add(const TimerReset());
-    context.read<ReadyingBloc>().add(CountdownReset(
-          secondsToBegin: hasstarted ? 5 : 3,
+    context.read<PlanetPuzzleBloc>().add(PlanetCountdownReset(
+          secondsToBegin: hasStarted ? 5 : 3,
         ));
   }
 
@@ -46,14 +46,14 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   }
 
   void _onRestart() {
-    _onstart(true);
+    _onStart(true);
     context
-        .read<PlayingBloc>()
-        .add(const PlayingInitialized(shufflePuzzle: false));
+        .read<PuzzleBloc>()
+        .add(const PuzzleInitialized(shufflePuzzle: false));
   }
 
   /// For the puzzle, the following keyboard events are important
-  /// [Space] start / Auto Solve / Stop
+  /// [Space] Start / Auto Solve / Stop
   /// [R] key -> restart
   /// [V] key -> toggle visibility of helpers (numbers)
   /// [UpArrow] key -> move whitespace up
@@ -66,22 +66,22 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
       final physicalKey = event.data.physicalKey;
 
       final puzzleInitState = context.read<PuzzleInitCubit>().state;
-      final planetPlayingState = context.read<ReadyingBloc>().state;
+      final planetPuzzleState = context.read<PlanetPuzzleBloc>().state;
 
       final isAutoSolving =
           context.read<PuzzleHelperCubit>().state.isAutoSolving;
 
       final isReady = puzzleInitState is PuzzleInitReady;
-      final hasstarted = planetPlayingState.status == ReadyingStatus.started;
-      final isLoading = planetPlayingState.status == ReadyingStatus.loading;
+      final hasStarted = planetPuzzleState.status == PlanetPuzzleStatus.started;
+      final isLoading = planetPuzzleState.status == PlanetPuzzleStatus.loading;
 
-      final puzzleBloc = context.read<PlayingBloc>();
+      final puzzleBloc = context.read<PuzzleBloc>();
 
       final puzzle = puzzleBloc.state.puzzle;
       final puzzleIncomplete =
-          puzzleBloc.state.playingStatus == PlayingStatus.incomplete;
+          puzzleBloc.state.puzzleStatus == PuzzleStatus.incomplete;
 
-      final canPress = hasstarted && puzzleIncomplete && !isAutoSolving;
+      final canPress = hasStarted && puzzleIncomplete && !isAutoSolving;
 
       Tile? tile;
 
@@ -91,34 +91,34 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
         /// 2. puzzle is loading
         if (!isReady || isLoading) return;
 
-        if (hasstarted && puzzleIncomplete) {
+        if (hasStarted && puzzleIncomplete) {
           _onAutoSolve(
             isAutoSolving
                 ? PuzzleAutoSolveState.stop
                 : PuzzleAutoSolveState.start,
           );
         } else {
-          _onstart(hasstarted);
+          _onStart(hasStarted);
         }
       } else if (physicalKey == PhysicalKeyboardKey.keyR) {
-        if (!hasstarted || isAutoSolving) return;
+        if (!hasStarted || isAutoSolving) return;
         _onRestart();
       } else if (physicalKey == PhysicalKeyboardKey.keyV) {
         context.read<PuzzleHelperCubit>().onHelpToggle();
       } else if (physicalKey == PhysicalKeyboardKey.arrowUp) {
-        tile = puzzle.getTileRelativeToGameWhitespaceTile(const Offset(0, -1));
+        tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(0, -1));
       } else if (physicalKey == PhysicalKeyboardKey.arrowDown) {
-        tile = puzzle.getTileRelativeToGameWhitespaceTile(const Offset(0, 1));
+        tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(0, 1));
       } else if (physicalKey == PhysicalKeyboardKey.arrowRight) {
-        tile = puzzle.getTileRelativeToGameWhitespaceTile(const Offset(1, 0));
+        tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(1, 0));
       } else if (physicalKey == PhysicalKeyboardKey.arrowLeft) {
-        tile = puzzle.getTileRelativeToGameWhitespaceTile(const Offset(-1, 0));
+        tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(-1, 0));
       } else if (physicalKey == PhysicalKeyboardKey.escape) {
         Navigator.pop(context);
       }
 
       if (tile != null && canPress) {
-        context.read<PlayingBloc>().add(TileTapped(tile));
+        context.read<PuzzleBloc>().add(TileTapped(tile));
       }
     }
   }

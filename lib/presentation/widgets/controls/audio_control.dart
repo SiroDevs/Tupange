@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-
-import '../../blocs/audio/audio_control_bloc.dart';
-import '../general/stylized_button.dart';
-import '../general/stylized_container.dart';
-import '../general/stylized_icon.dart';
+import '../../../core/app/bloc/audio_control_bloc.dart';
+import '../stylized_button.dart';
+import '../stylized_container.dart';
+import '../stylized_icon.dart';
 
 class AudioControl extends StatelessWidget {
   final bool isSmall;
-  const AudioControl({super.key, this.isSmall = false});
+  const AudioControl({Key? key, this.isSmall = false}) : super(key: key);
 
   void _onMusicToggle(BuildContext context) {
     context.read<AudioControlBloc>().add(const AudioControlMusicToggle());
@@ -74,28 +73,6 @@ class AudioControl extends StatelessWidget {
             ),
           ),
         ),
-
-        // isSmall ? const Gap(4.0) : const Gap(18.0),
-
-        // StylizedButton(
-        //   onPressed: () => InfoCard.show(context: context),
-        //   child: StylizedContainer(
-        //     padding: isSmall
-        //         ? const EdgeInsets.all(8.0)
-        //         : const EdgeInsets.symmetric(
-        //             horizontal: 18.0,
-        //             vertical: 12.0,
-        //           ),
-        //     color:  Colors.greenAccent,
-        //     child: StylizedIcon(
-        //       icon: FontAwesomeIcons.info,
-        //       size: 18.0,
-        //       strokeWidth: 4.0,
-        //       offset: 1.0,
-        //     ),
-        //   ),
-        // ),
-
       ],
     );
   }

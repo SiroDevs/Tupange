@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'presentation/blocs/audio/audio_control_bloc.dart';
-import 'presentation/cubits/audio/audio_player_cubit.dart';
-import 'presentation/blocs/auth/auth_bloc.dart';
-import 'core/l10n/l10n.dart';
-import 'domain/repository/auth_repository.dart';
-import 'core/utils/constants/app_constants.dart';
-import 'presentation/navigator/main_navigator.dart';
+import 'core/utils/constants.dart';
+import 'core/app/bloc/audio_control_bloc.dart';
+import 'core/app/cubit/audio_player_cubit.dart';
 import 'presentation/widgets/keyboard_handlers/app_keyboard_handler.dart';
+import 'presentation/cubits/loading/assetcache_cubit.dart';
+import 'presentation/views/loading/loading_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -20,44 +18,14 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  final navigatorKey = MainNavigatorState.navigationKey;
-  NavigatorState get navigator =>
-      MainNavigatorState.navigationKey.currentState!;
-  late final AuthRepository _authRepo;
   @override
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.white,
       statusBarBrightness: Brightness.dark,
     ));
-    _authRepo = AuthRepository();
     super.initState();
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authRepo,
-      child: BlocProvider(
-        create: (_) => AuthBloc(authRepo: _authRepo),
-        child: const AppView(),
-      ),
-    );
-  }
-}
-
-class AppView extends StatefulWidget {
-  final Widget? dashboard;
-  const AppView({super.key, this.dashboard});
-
-  @override
-  State<AppView> createState() => AppViewState();
-}
-
-class AppViewState extends State<AppView> {
-  final navigatorKey = MainNavigatorState.navigationKey;
-  NavigatorState get navigator =>
-      MainNavigatorState.navigationKey.currentState!;
 
   @override
   Widget build(BuildContext context) {
@@ -65,26 +33,23 @@ class AppViewState extends State<AppView> {
       providers: [
         BlocProvider(create: (_) => AudioControlBloc()),
         BlocProvider(
-          create: (context) => AudioPlayerCubit(
-            context.read<AudioControlBloc>(),
-          ),
+          create: (context) =>
+              AudioPlayerCubit(context.read<AudioControlBloc>()),
         ),
+        BlocProvider(create: (_) => AssetcacheCubit()),
       ],
       child: AppKeyboardHandler(
         child: MaterialApp(
-          home: widget.dashboard,
-          debugShowCheckedModeBanner: false,
-          navigatorKey: navigatorKey,
-          theme: ThemeData(fontFamily: AppConstants.kFontFamily),
-          supportedLocales: const [Locale('sw')],
-          initialRoute: MainNavigatorState.initialRoute,
-          onGenerateRoute: MainNavigatorState.onGenerateRoute,
+          supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
           ],
+          title: 'Tupange',
+          theme: ThemeData(fontFamily: kFontFamily),
+          home: const LoadingPage(),
         ),
       ),
     );

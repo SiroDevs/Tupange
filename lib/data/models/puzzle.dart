@@ -6,7 +6,11 @@ import 'package:equatable/equatable.dart';
 
 import 'tile.dart';
 
-enum PuzzleLevel { easy, medium, hard }
+enum PuzzleLevel {
+  easy,
+  medium,
+  hard,
+}
 
 // A 3x3 puzzle board visualization:
 //
@@ -51,14 +55,14 @@ class Puzzle extends Equatable {
   }
 
   /// Gets the single whitespace tile object in the puzzle.
-  Tile getGameWhitespaceTile() {
+  Tile getWhitespaceTile() {
     return tiles.singleWhere((tile) => tile.isWhitespace);
   }
 
   /// Gets the tile relative to the whitespace tile in the puzzle
   /// defined by [relativeOffset].
-  Tile? getTileRelativeToGameWhitespaceTile(Offset relativeOffset) {
-    final whitespaceTile = getGameWhitespaceTile();
+  Tile? getTileRelativeToWhitespaceTile(Offset relativeOffset) {
+    final whitespaceTile = getWhitespaceTile();
     return tiles.singleWhereOrNull(
       (tile) =>
           tile.currentPosition.x ==
@@ -70,7 +74,7 @@ class Puzzle extends Equatable {
 
   /// Gets the number of tiles that are currently in their correct position.
   int getNumberOfCorrectTiles() {
-    final whitespaceTile = getGameWhitespaceTile();
+    final whitespaceTile = getWhitespaceTile();
     var numberOfCorrectTiles = 0;
     for (final tile in tiles) {
       if (tile != whitespaceTile) {
@@ -90,7 +94,7 @@ class Puzzle extends Equatable {
   /// Determines if the tapped tile can move in the direction of the whitespace
   /// tile.
   bool isTileMovable(Tile tile) {
-    final whitespaceTile = getGameWhitespaceTile();
+    final whitespaceTile = getWhitespaceTile();
     if (tile == whitespaceTile) {
       return false;
     }
@@ -167,7 +171,7 @@ class Puzzle extends Equatable {
   // Recursively stores a list of all tiles that need to be moved and passes the
   // list to _swapTiles to individually swap them.
   Puzzle moveTiles(Tile tile, List<Tile> tilesToSwap) {
-    final whitespaceTile = getGameWhitespaceTile();
+    final whitespaceTile = getWhitespaceTile();
     final deltaX = whitespaceTile.currentPosition.x - tile.currentPosition.x;
     final deltaY = whitespaceTile.currentPosition.y - tile.currentPosition.y;
 
@@ -193,7 +197,7 @@ class Puzzle extends Equatable {
     for (final tileToSwap in tilesToSwap.reversed) {
       final tileIndex = tiles.indexOf(tileToSwap);
       final tile = tiles[tileIndex];
-      final whitespaceTile = getGameWhitespaceTile();
+      final whitespaceTile = getWhitespaceTile();
       final whitespaceTileIndex = tiles.indexOf(whitespaceTile);
 
       // Swap current board positions of the moving tile and the whitespace.

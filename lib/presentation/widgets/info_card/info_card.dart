@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/helpers/modal_helpers.dart';
-import '../../../core/layout/utils/responsive_layout_builder.dart';
-import '../../../core/l10n/l10n.dart';
-import '../general/stylized_icon.dart';
-import '../general/stylized_text.dart';
-
-part 'info_data.dart';
+import '../../layout/utils/responsive_layout_builder.dart';
+import '../stylized_icon.dart';
+import '../stylized_text.dart';
+import 'info_data.dart';
+import 'info_pair.dart';
 
 abstract class InfoCard {
   static bool _isVisible = false;
@@ -28,17 +26,17 @@ abstract class InfoCard {
 class _InfoCard extends StatelessWidget {
   final List<InfoData> _data;
 
-  const _InfoCard(this._data);
+  const _InfoCard(this._data, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.80),
-        borderRadius: BorderRadius.circular(15.0),
+        color: Colors.black.withOpacity(0.80),
+        borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
           width: 2.0,
-          color: Colors.white,
+          color: Colors.amber,
         ),
       ),
       child: SingleChildScrollView(
@@ -69,15 +67,20 @@ class _InfoCard extends StatelessWidget {
 
 class _ShortcutColumn extends StatelessWidget {
   final InfoData infoData;
-  const _ShortcutColumn(this.infoData);
+  const _ShortcutColumn(this.infoData, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // header
         _ShortcutScreenHeader(infoData.title),
+
+        // gap
         const Gap(28),
+
+        // body
         Column(
           mainAxisSize: MainAxisSize.min,
           children: infoData.infoPairs
@@ -94,7 +97,7 @@ class _ShortcutColumn extends StatelessWidget {
 
 class _ShortcutScreenHeader extends StatelessWidget {
   final String _header;
-  const _ShortcutScreenHeader(this._header);
+  const _ShortcutScreenHeader(this._header, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +115,7 @@ class _ShortcutScreenHeader extends StatelessWidget {
 
 class _ShortcutListTile extends StatelessWidget {
   final InfoPair _infopair;
-  const _ShortcutListTile(this._infopair);
+  const _ShortcutListTile(this._infopair, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -3,33 +3,32 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/constants/app_assets.dart';
-import '../../../core/utils/constants/app_constants.dart';
 import '../../../data/models/position.dart';
-import '../../../data/models/bubble.dart';
+import '../../../data/models/star.dart';
+import '../../../core/utils/constants.dart';
 
 class Background extends StatefulWidget {
   final Widget child;
 
-  const Background({super.key, required this.child});
+  const Background({Key? key, required this.child}) : super(key: key);
 
   @override
   State<Background> createState() => _BackgroundState();
 }
 
 class _BackgroundState extends State<Background> with WidgetsBindingObserver {
-  final List<Bubble> bubbles = [];
+  final List<Star> stars = [];
   final _random = math.Random();
 
   Size? _lastSize;
-  List<Position>? _bubblePositions;
-  late List<double> _bubbleSizes;
-  late List<double> _bubbleRotations;
+  List<Position>? _starPositions;
+  late List<double> _starSizes;
+  late List<double> _starRotations;
 
   List<Position> _generatePositions(int n, {required Size currentSize}) {
-    if (_lastSize == null || _bubblePositions == null) {
+    if (_lastSize == null || _starPositions == null) {
       // as no last size is available, generate new positions
-      _bubblePositions = List<Position>.generate(
+      _starPositions = List<Position>.generate(
         n,
         (i) => Position(
           x: _random.nextInt(currentSize.width.toInt()),
@@ -37,57 +36,58 @@ class _BackgroundState extends State<Background> with WidgetsBindingObserver {
         ),
       );
     } else {
-      _bubblePositions = List<Position>.generate(
+      // as this is a re-size of window, redistribute the existing positions, to fit well in the new resized window
+      _starPositions = List<Position>.generate(
         n,
         (i) => Position(
-          x: _bubblePositions![i].x * currentSize.width ~/ _lastSize!.width,
-          y: _bubblePositions![i].y * currentSize.height ~/ _lastSize!.height,
+          x: _starPositions![i].x * currentSize.width ~/ _lastSize!.width,
+          y: _starPositions![i].y * currentSize.height ~/ _lastSize!.height,
         ),
       );
     }
 
-    return _bubblePositions!;
+    return _starPositions!;
   }
 
-  List<Bubble> _makeBubbles(int n) {
+  List<Star> _makeStars(int n) {
     final size = MediaQuery.of(context).size;
 
-    // get positions for all n bubbles
+    // get positions for all n stars
     final positions = _generatePositions(n, currentSize: size);
 
     _lastSize = size;
 
     return List.generate(
       n,
-      (i) => Bubble(
+      (i) => Star(
         value: i,
         pos: positions[i],
-        size: _bubbleSizes[i],
-        rotation: _bubbleRotations[i],
+        size: _starSizes[i],
+        rotation: _starRotations[i],
       ),
     );
   }
 
   Timer? _debounce;
 
-  void _buildBubbles({bool isFirstTime = false}) {
+  void _buildStars({bool isFirstTime = false}) {
     if (_debounce?.isActive == true) _debounce?.cancel();
-    _debounce = Timer(AppConstants.kMS150, () {
+    _debounce = Timer(kMS150, () {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        if (!isFirstTime) bubbles.clear();
-        setState(() => bubbles.addAll(_makeBubbles(AppConstants.kNoBubbles)));
+        if (!isFirstTime) stars.clear();
+        setState(() => stars.addAll(_makeStars(kNoStars)));
       });
     });
   }
 
-  void _initBubbleVariables() {
-    _bubbleSizes = List.generate(
-      AppConstants.kNoBubbles,
-      (i) => math.max(_random.nextDouble(), AppConstants.kBubblePercentage) * AppConstants.kBubbleSize,
+  void _initStarVariables() {
+    _starSizes = List.generate(
+      kNoStars,
+      (i) => math.max(_random.nextDouble(), kMinStarPercentage) * kBaseStarSize,
     );
 
-    _bubbleRotations = List.generate(
-      AppConstants.kNoBubbles,
+    _starRotations = List.generate(
+      kNoStars,
       (i) => _random.nextDouble() * math.pi,
     );
   }
@@ -96,8 +96,8 @@ class _BackgroundState extends State<Background> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _initBubbleVariables();
-    _buildBubbles(isFirstTime: true);
+    _initStarVariables();
+    _buildStars(isFirstTime: true);
   }
 
   @override
@@ -109,24 +109,28 @@ class _BackgroundState extends State<Background> with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    _buildBubbles();
+    _buildStars();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(AppAssets.nairobiImg),
-              fit: BoxFit.cover,
-            ),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: kBackgroundGradient,
           ),
+        ),
         child: SafeArea(
           child: Stack(
             alignment: Alignment.center,
             children: [
-              ...bubbles.map<Widget>((s) => s.widget),
+              // stars
+              ...stars.map<Widget>((s) => s.widget).toList(),
+
+              // widget
               widget.child,
             ],
           ),
