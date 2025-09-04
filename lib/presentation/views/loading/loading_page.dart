@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../../core/l10n/l10n.dart';
 import '../../../core/utils/constants.dart';
-import '../../../core/app/cubit/audio_player_cubit.dart';
+import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
 import '../../layout/utils/app_assets.dart';
 import '../../layout/utils/responsive_layout_builder.dart';

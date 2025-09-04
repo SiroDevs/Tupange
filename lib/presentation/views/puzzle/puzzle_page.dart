@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/puzzle.dart';
-import '../../../core/app/cubit/audio_player_cubit.dart';
+import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
 import '../../../data/models/ticker.dart';
 import '../../cubits/dashboard/level_selection_cubit.dart';

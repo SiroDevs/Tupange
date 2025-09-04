@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../core/app/cubit/audio_player_cubit.dart';
+import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../widgets/shake_animator.dart';
 import '../../../data/models/position.dart';
 import '../../../data/models/puzzle.dart';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/constants.dart';
-import '../../../core/app/cubit/audio_player_cubit.dart';
+import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/helpers/modal_helpers.dart';
 import '../../../core/utils/app_logger.dart';
 import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';

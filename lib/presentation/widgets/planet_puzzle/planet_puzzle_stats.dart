@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/l10n/l10n.dart';
-import '../../../core/app/cubit/audio_player_cubit.dart';
+import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
 import '../../blocs/planet_puzzle/planet_puzzle_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';

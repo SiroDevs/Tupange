@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../core/app/cubit/audio_player_cubit.dart';
-import '../../../core/puzzle_solver/puzzle_solver.dart';
+import '../../../core/audio/cubit/audio_player_cubit.dart';
+import '../../../core/solver/puzzle_solver.dart';
 import '../../blocs/puzzle/puzzle_bloc.dart';
 
 part 'puzzle_helper_state.dart';
