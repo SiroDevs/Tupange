@@ -5,8 +5,8 @@ import '../../../data/models/puzzle.dart';
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
 import '../../../data/models/ticker.dart';
-import '../../cubits/home/level_selection_cubit.dart';
-import '../../cubits/home/planet_selection_cubit.dart';
+import '../../cubits/game/game_selection_cubit.dart';
+import '../../cubits/level/level_selection_cubit.dart';
 import '../../blocs/readying/readying_bloc.dart';
 import '../../theme/bloc/theme_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
@@ -53,7 +53,7 @@ class PlayingScreen extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ThemeBloc(
-            planet: context.read<PlanetSelectionCubit>().planet,
+            game: context.read<GameSelectionCubit>().game,
           ),
         ),
         BlocProvider(

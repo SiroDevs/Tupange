@@ -63,7 +63,7 @@ class PuzzleInitCubit extends Cubit<PuzzleInitState> {
 
   void onInit(int tileKey) {
     final hasStarted =
-        _planetPlayingBloc.state.status == PlanetPuzzleStatus.started;
+        _planetPlayingBloc.state.status == GameStatus.started;
 
     AppLogger.log('puzzle_init_cubit: onInit: hasStarted: $hasStarted');
 

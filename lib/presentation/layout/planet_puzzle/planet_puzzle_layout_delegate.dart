@@ -5,11 +5,11 @@ import '../../../core/utils/app_logger.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../blocs/playing/playing_bloc.dart';
 import '../../theme/themes/puzzle_theme.dart';
-import '../../widgets/planet_puzzle/planet_puzzle_board.dart';
-import '../../widgets/planet_puzzle/planet_puzzle_info.dart';
-import '../../widgets/planet_puzzle/planet_puzzle_stats.dart';
-import '../../widgets/planet_puzzle/planet_puzzle_tile.dart';
-import '../../widgets/planet_puzzle/planet_whitespace_tile.dart';
+import '../../widgets/game/game_board.dart';
+import '../../widgets/game/game_info.dart';
+import '../../widgets/game/game_stats.dart';
+import '../../widgets/game/game_tile.dart';
+import '../../widgets/game/game_whitespace_tile.dart';
 import '../../widgets/controls/puzzle_control.dart';
 import '../delegates/puzzle_layout_delegate.dart';
 import '../utils/responsive_gap.dart';
@@ -22,7 +22,7 @@ abstract class BoardSize {
   static double large = 512;
 }
 
-class PlanetPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
+class GameLayoutDelegate extends PuzzleLayoutDelegate {
   double _getPercentageOfPuzzleSolved(PlayingState puzzleState) {
     final tiles = puzzleState.puzzle.tiles;
 
@@ -43,7 +43,7 @@ class PlanetPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
   @override
   Widget backgroundBuilder(PuzzleTheme theme, PlayingState puzzleState) {
     final percentageSolved = _getPercentageOfPuzzleSolved(puzzleState);
-    AppLogger.log('PlanetPuzzleLayoutDelegate :: $percentageSolved');
+    AppLogger.log('GameLayoutDelegate :: $percentageSolved');
 
     final landscapeWidget = _LandscapeWidget(theme: theme);
 
@@ -77,7 +77,7 @@ class PlanetPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
           medium: 32,
           large: 96,
         ),
-        PlanetPuzzleBoard(tiles: tiles),
+        GameBoard(tiles: tiles),
         const ResponsiveGap(
           small: 48,
           medium: 32,
@@ -94,22 +94,22 @@ class PlanetPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
 
   @override
   Widget infoBuilder() {
-    return const PlanetPuzzleInfo();
+    return const GameInfo();
   }
 
   @override
   Widget statsBuilder() {
-    return const PlanetPuzzleStats();
+    return const GameStats();
   }
 
   @override
   Widget tileBuilder(Tile tile) {
-    return PlanetPuzzleTile(key: ValueKey(tile.value), tile: tile);
+    return GameTile(key: ValueKey(tile.value), tile: tile);
   }
 
   @override
   Widget whitespaceTileBuilder(Tile tile) {
-    return PlanetWhitespaceTile(tile: tile);
+    return GameWhitespaceTile(tile: tile);
   }
 
   @override

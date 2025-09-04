@@ -693,7 +693,7 @@ mixin _$HomeState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Orbit> orbits) loaded,
+    required TResult Function() loaded,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(List<Category> categories, List<Game> games)
@@ -704,7 +704,7 @@ mixin _$HomeState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Orbit> orbits)? loaded,
+    TResult? Function()? loaded,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(List<Category> categories, List<Game> games)? fetched,
@@ -714,7 +714,7 @@ mixin _$HomeState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Orbit> orbits)? loaded,
+    TResult Function()? loaded,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(List<Category> categories, List<Game> games)? fetched,
@@ -817,7 +817,7 @@ class _$HomeStateImpl implements _HomeState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Orbit> orbits) loaded,
+    required TResult Function() loaded,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(List<Category> categories, List<Game> games)
@@ -831,7 +831,7 @@ class _$HomeStateImpl implements _HomeState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Orbit> orbits)? loaded,
+    TResult? Function()? loaded,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(List<Category> categories, List<Game> games)? fetched,
@@ -844,7 +844,7 @@ class _$HomeStateImpl implements _HomeState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Orbit> orbits)? loaded,
+    TResult Function()? loaded,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(List<Category> categories, List<Game> games)? fetched,
@@ -910,8 +910,6 @@ abstract class _$$HomeLoadedStateImplCopyWith<$Res> {
   factory _$$HomeLoadedStateImplCopyWith(_$HomeLoadedStateImpl value,
           $Res Function(_$HomeLoadedStateImpl) then) =
       __$$HomeLoadedStateImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<Orbit> orbits});
 }
 
 /// @nodoc
@@ -924,91 +922,59 @@ class __$$HomeLoadedStateImplCopyWithImpl<$Res>
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? orbits = null,
-  }) {
-    return _then(_$HomeLoadedStateImpl(
-      null == orbits
-          ? _value._orbits
-          : orbits // ignore: cast_nullable_to_non_nullable
-              as List<Orbit>,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$HomeLoadedStateImpl implements HomeLoadedState {
-  const _$HomeLoadedStateImpl(final List<Orbit> orbits) : _orbits = orbits;
-
-  final List<Orbit> _orbits;
-  @override
-  List<Orbit> get orbits {
-    if (_orbits is EqualUnmodifiableListView) return _orbits;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_orbits);
-  }
+  const _$HomeLoadedStateImpl();
 
   @override
   String toString() {
-    return 'HomeState.loaded(orbits: $orbits)';
+    return 'HomeState.loaded()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$HomeLoadedStateImpl &&
-            const DeepCollectionEquality().equals(other._orbits, _orbits));
+        (other.runtimeType == runtimeType && other is _$HomeLoadedStateImpl);
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_orbits));
-
-  /// Create a copy of HomeState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$HomeLoadedStateImplCopyWith<_$HomeLoadedStateImpl> get copyWith =>
-      __$$HomeLoadedStateImplCopyWithImpl<_$HomeLoadedStateImpl>(
-          this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Orbit> orbits) loaded,
+    required TResult Function() loaded,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(List<Category> categories, List<Game> games)
         fetched,
     required TResult Function(String feedback) failure,
   }) {
-    return loaded(orbits);
+    return loaded();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Orbit> orbits)? loaded,
+    TResult? Function()? loaded,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(List<Category> categories, List<Game> games)? fetched,
     TResult? Function(String feedback)? failure,
   }) {
-    return loaded?.call(orbits);
+    return loaded?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Orbit> orbits)? loaded,
+    TResult Function()? loaded,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(List<Category> categories, List<Game> games)? fetched,
@@ -1016,7 +982,7 @@ class _$HomeLoadedStateImpl implements HomeLoadedState {
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(orbits);
+      return loaded();
     }
     return orElse();
   }
@@ -1066,16 +1032,7 @@ class _$HomeLoadedStateImpl implements HomeLoadedState {
 }
 
 abstract class HomeLoadedState implements HomeState {
-  const factory HomeLoadedState(final List<Orbit> orbits) =
-      _$HomeLoadedStateImpl;
-
-  List<Orbit> get orbits;
-
-  /// Create a copy of HomeState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$HomeLoadedStateImplCopyWith<_$HomeLoadedStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory HomeLoadedState() = _$HomeLoadedStateImpl;
 }
 
 /// @nodoc
@@ -1120,7 +1077,7 @@ class _$HomeLoadingStateImpl implements HomeLoadingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Orbit> orbits) loaded,
+    required TResult Function() loaded,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(List<Category> categories, List<Game> games)
@@ -1134,7 +1091,7 @@ class _$HomeLoadingStateImpl implements HomeLoadingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Orbit> orbits)? loaded,
+    TResult? Function()? loaded,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(List<Category> categories, List<Game> games)? fetched,
@@ -1147,7 +1104,7 @@ class _$HomeLoadingStateImpl implements HomeLoadingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Orbit> orbits)? loaded,
+    TResult Function()? loaded,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(List<Category> categories, List<Game> games)? fetched,
@@ -1250,7 +1207,7 @@ class _$HomeSuccessStateImpl implements HomeSuccessState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Orbit> orbits) loaded,
+    required TResult Function() loaded,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(List<Category> categories, List<Game> games)
@@ -1264,7 +1221,7 @@ class _$HomeSuccessStateImpl implements HomeSuccessState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Orbit> orbits)? loaded,
+    TResult? Function()? loaded,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(List<Category> categories, List<Game> games)? fetched,
@@ -1277,7 +1234,7 @@ class _$HomeSuccessStateImpl implements HomeSuccessState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Orbit> orbits)? loaded,
+    TResult Function()? loaded,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(List<Category> categories, List<Game> games)? fetched,
@@ -1434,7 +1391,7 @@ class _$HomeFetchedStateImpl implements HomeFetchedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Orbit> orbits) loaded,
+    required TResult Function() loaded,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(List<Category> categories, List<Game> games)
@@ -1448,7 +1405,7 @@ class _$HomeFetchedStateImpl implements HomeFetchedState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Orbit> orbits)? loaded,
+    TResult? Function()? loaded,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(List<Category> categories, List<Game> games)? fetched,
@@ -1461,7 +1418,7 @@ class _$HomeFetchedStateImpl implements HomeFetchedState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Orbit> orbits)? loaded,
+    TResult Function()? loaded,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(List<Category> categories, List<Game> games)? fetched,
@@ -1604,7 +1561,7 @@ class _$HomeFailureStateImpl implements HomeFailureState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Orbit> orbits) loaded,
+    required TResult Function() loaded,
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(List<Category> categories, List<Game> games)
@@ -1618,7 +1575,7 @@ class _$HomeFailureStateImpl implements HomeFailureState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Orbit> orbits)? loaded,
+    TResult? Function()? loaded,
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(List<Category> categories, List<Game> games)? fetched,
@@ -1631,7 +1588,7 @@ class _$HomeFailureStateImpl implements HomeFailureState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Orbit> orbits)? loaded,
+    TResult Function()? loaded,
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(List<Category> categories, List<Game> games)? fetched,

@@ -9,16 +9,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../../../../../core/l10n/l10n.dart';
-import 'app_logger.dart';
-import '../constants/app_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../data/models/planet.dart';
+import '../../../../../core/l10n/l10n.dart';
 import '../../data/models/position.dart';
-import '../constants/app_assets.dart';
+import '../constants/app_constants.dart';
+import 'app_logger.dart';
 
 const _paddingOffset = 5.0;
 const _roundOffset = 15.0;
@@ -39,37 +36,6 @@ abstract class Utils {
     }
 
     return false;
-  }
-
-  static String planetName(PlanetType type, BuildContext context) {
-    switch (type) {
-      case PlanetType.mercury:
-        return "mercury";
-
-      case PlanetType.venus:
-        return "venus";
-
-      case PlanetType.earth:
-        return "earth";
-
-      case PlanetType.mars:
-        return "mars";
-
-      case PlanetType.jupiter:
-        return "jupiter";
-
-      case PlanetType.saturn:
-        return "saturn";
-
-      case PlanetType.uranus:
-        return "uranus";
-
-      case PlanetType.neptune:
-        return "neptune";
-
-      case PlanetType.pluto:
-        return "pluto";
-    }
   }
 
   static Future<Widget> buildPageAsync(Widget page) {
@@ -218,99 +184,6 @@ abstract class Utils {
   }
 
   static String get planetRotationAnimationName => 'rotation';
-
-  static String getPlanetImageFor(PlanetType type) {
-    switch (type) {
-      case PlanetType.mercury:
-        return AppAssets.mercuryImage;
-
-      case PlanetType.venus:
-        return AppAssets.venusImage;
-
-      case PlanetType.earth:
-        return AppAssets.earthImage;
-
-      case PlanetType.mars:
-        return AppAssets.marsImage;
-
-      case PlanetType.jupiter:
-        return AppAssets.jupiterImage;
-
-      case PlanetType.saturn:
-        return AppAssets.saturnImage;
-
-      case PlanetType.uranus:
-        return AppAssets.uranusImage;
-
-      case PlanetType.neptune:
-        return AppAssets.neptuneImage;
-
-      case PlanetType.pluto:
-        return AppAssets.plutoImage;
-    }
-  }
-
-  static String getPlanetThumbFor(PlanetType type) {
-    switch (type) {
-      case PlanetType.mercury:
-        return AppAssets.mercuryThumb;
-
-      case PlanetType.venus:
-        return AppAssets.venusThumb;
-
-      case PlanetType.earth:
-        return AppAssets.earthThumb;
-
-      case PlanetType.mars:
-        return AppAssets.marsThumb;
-
-      case PlanetType.jupiter:
-        return AppAssets.jupiterThumb;
-
-      case PlanetType.saturn:
-        return AppAssets.saturnThumb;
-
-      case PlanetType.uranus:
-        return AppAssets.uranusThumb;
-
-      case PlanetType.neptune:
-        return AppAssets.neptuneThumb;
-
-      case PlanetType.pluto:
-        return AppAssets.plutoThumb;
-    }
-  }
-
-  static String getPlanetAnimationFor(PlanetType type) {
-    switch (type) {
-      case PlanetType.mercury:
-        return AppAssets.mercuryAnimation;
-
-      case PlanetType.venus:
-        return AppAssets.venusAnimation;
-
-      case PlanetType.earth:
-        return AppAssets.earthAnimation;
-
-      case PlanetType.mars:
-        return AppAssets.marsAnimation;
-
-      case PlanetType.jupiter:
-        return AppAssets.jupiterAnimation;
-
-      case PlanetType.saturn:
-        return AppAssets.saturnAnimation;
-
-      case PlanetType.uranus:
-        return AppAssets.uranusAnimation;
-
-      case PlanetType.neptune:
-        return AppAssets.neptuneAnimation;
-
-      case PlanetType.pluto:
-        return AppAssets.plutoAnimation;
-    }
-  }
 
   static String getFormattedElapsedSeconds(int elapsedSeconds) {
     final duration = Duration(seconds: elapsedSeconds);

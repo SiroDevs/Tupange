@@ -1,6 +1,6 @@
 part of 'readying_bloc.dart';
 
-enum PlanetPuzzleStatus {
+enum GameStatus {
   notStarted,
   loading,
   started,
@@ -19,11 +19,11 @@ class ReadyingState extends Equatable {
   final int secondsToBegin;
 
   /// The status of the current puzzle.
-  PlanetPuzzleStatus get status => isCountdownRunning && secondsToBegin > 0
-      ? PlanetPuzzleStatus.loading
+  GameStatus get status => isCountdownRunning && secondsToBegin > 0
+      ? GameStatus.loading
       : (secondsToBegin == 0
-          ? PlanetPuzzleStatus.started
-          : PlanetPuzzleStatus.notStarted);
+          ? GameStatus.started
+          : GameStatus.notStarted);
 
   @override
   List<Object> get props => [isCountdownRunning, secondsToBegin];

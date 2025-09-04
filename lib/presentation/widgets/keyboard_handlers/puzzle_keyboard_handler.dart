@@ -72,8 +72,8 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
           context.read<PuzzleHelperCubit>().state.isAutoSolving;
 
       final isReady = puzzleInitState is PuzzleInitReady;
-      final hasStarted = planetPlayingState.status == PlanetPuzzleStatus.started;
-      final isLoading = planetPlayingState.status == PlanetPuzzleStatus.loading;
+      final hasStarted = planetPlayingState.status == GameStatus.started;
+      final isLoading = planetPlayingState.status == GameStatus.loading;
 
       final puzzleBloc = context.read<PlayingBloc>();
 

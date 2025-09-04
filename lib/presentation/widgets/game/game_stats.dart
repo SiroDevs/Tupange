@@ -11,8 +11,8 @@ import '../../blocs/playing/playing_bloc.dart';
 import '../animated_text.dart';
 import '../stylized_text.dart';
 
-class PlanetPuzzleStats extends StatelessWidget {
-  const PlanetPuzzleStats({super.key});
+class GameStats extends StatelessWidget {
+  const GameStats({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class PlanetPuzzleStats extends StatelessWidget {
           context.read<AudioPlayerCubit>().beginCountDown();
         }
 
-        if (state.status == PlanetPuzzleStatus.started) {
+        if (state.status == GameStatus.started) {
           context.read<TimerBloc>().add(const TimerStarted());
         }
 
@@ -96,7 +96,7 @@ class _PuzzleStats extends StatelessWidget {
       }
     }
 
-    if (state.status == PlanetPuzzleStatus.notStarted) {
+    if (state.status == GameStatus.notStarted) {
       textToShow = context.l10n.notStarted;
     }
 

@@ -4,7 +4,7 @@ part of 'home_bloc.dart';
 class HomeState with _$HomeState {
   const factory HomeState.initial() = _HomeState;
 
-  const factory HomeState.loaded(List<Orbit> orbits) = HomeLoadedState;
+  const factory HomeState.loaded() = HomeLoadedState;
 
   const factory HomeState.loading() = HomeLoadingState;
 

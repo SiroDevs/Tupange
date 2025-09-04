@@ -4,19 +4,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/l10n/l10n.dart';
-import '../../../core/utils/utils.dart';
+import '../../cubits/game/game_selection_cubit.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/home/planet_selection_cubit.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
 import '../stylized_icon.dart';
 import '../stylized_text.dart';
 
-class PlanetPuzzleInfo extends StatelessWidget {
-  const PlanetPuzzleInfo({super.key});
+class GameInfo extends StatelessWidget {
+  const GameInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final planet = context.read<PlanetSelectionCubit>().planet;
+    final game = context.read<GameSelectionCubit>().game;
 
     return ResponsiveLayoutBuilder(
       small: (_, Widget? child) => Padding(
@@ -42,7 +41,7 @@ class PlanetPuzzleInfo extends StatelessWidget {
             children: [
               // title
               Text(
-                Utils.planetName(planet.type, context),
+                game.title!,
                 style: TextStyle(
                   fontSize: isLarge ? 48.0 : 32.0,
                   color: Colors.white,

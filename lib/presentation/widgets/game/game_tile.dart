@@ -18,16 +18,16 @@ import '../../blocs/playing/playing_bloc.dart';
 import '../shake_animator.dart';
 import '../stylized_text.dart';
 
-class PlanetPuzzleTile extends StatefulWidget {
+class GameTile extends StatefulWidget {
   final Tile tile;
 
-  const PlanetPuzzleTile({super.key, required this.tile});
+  const GameTile({super.key, required this.tile});
 
   @override
-  State<PlanetPuzzleTile> createState() => _PlanetPuzzleTileState();
+  State<GameTile> createState() => _GameTileState();
 }
 
-class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
+class _GameTileState extends State<GameTile> {
   final childVn = ValueNotifier<Widget?>(null);
   late ThemeBloc themeBloc;
   late PuzzleInitCubit puzzleInitCubit;
@@ -116,13 +116,13 @@ class _PlanetPuzzleTileState extends State<PlanetPuzzleTile> {
     final isAutoSolving = puzzleHelperState.isAutoSolving;
     final showHelp = puzzleHelperState.showHelp;
 
-    AppLogger.log('PlanetPuzzleTile: updated: isAutoSolving: $isAutoSolving');
+    AppLogger.log('GameTile: updated: isAutoSolving: $isAutoSolving');
 
     final status = context.select((ReadyingBloc bloc) => bloc.state.status);
-    final hasStarted = status == PlanetPuzzleStatus.started;
+    final hasStarted = status == GameStatus.started;
 
     final movementDuration =
-        status == PlanetPuzzleStatus.loading ? AppConstants.kMS800 : AppConstants.kMS350;
+        status == GameStatus.loading ? AppConstants.kMS800 : AppConstants.kMS350;
 
     final canPress = hasStarted && puzzleIncomplete && !isAutoSolving;
 

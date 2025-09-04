@@ -7,7 +7,7 @@ import '../../../data/models/game.dart';
 import '../../../core/utils/app_utils.dart';
 import '../../screens/playing/playing_screen.dart';
 import '../category/category_selection_cubit.dart';
-import '../home/level_selection_cubit.dart';
+import '../level/level_selection_cubit.dart';
 
 part 'game_selection_state.dart';
 

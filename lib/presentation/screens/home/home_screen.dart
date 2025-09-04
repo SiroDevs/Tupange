@@ -17,12 +17,11 @@ import '../../../data/models/puzzle.dart';
 import '../../blocs/home/home_bloc.dart';
 import '../../cubits/category/category_selection_cubit.dart';
 import '../../cubits/game/game_selection_cubit.dart';
-import '../../cubits/home/planet_orbital_animation_cubit.dart';
 import '../../widgets/controls/audio_control.dart';
 import '../../widgets/progress/custom_snackbar.dart';
 import '../../widgets/progress/general_progress.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
-import '../../cubits/home/level_selection_cubit.dart';
+import '../../cubits/level/level_selection_cubit.dart';
 import '../../widgets/stylized_button.dart';
 import '../../widgets/stylized_container.dart';
 import '../../widgets/stylized_icon.dart';
@@ -40,12 +39,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (c) => HomeBloc(c.read<PlanetOrbitalAnimationCubit>())
-            ..add(FetchData()),
+          create: (c) => HomeBloc()..add(FetchData()),
         ),
         BlocProvider(create: (_) => LevelSelectionCubit()),
       ],

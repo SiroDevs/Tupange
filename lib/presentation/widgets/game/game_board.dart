@@ -10,27 +10,27 @@ import '../../../core/utils/app_logger.dart';
 import '../../blocs/readying/readying_bloc.dart';
 import '../../blocs/playing/playing_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
+import '../../cubits/game/game_selection_cubit.dart';
 import '../../layout/planet_puzzle/planet_puzzle_layout_delegate.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
-import '../../cubits/home/level_selection_cubit.dart';
-import '../../cubits/home/planet_selection_cubit.dart';
+import '../../cubits/level/level_selection_cubit.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
-import 'planet_puzzle_completion_dialog.dart';
+import 'game_completion_dialog.dart';
 
-class PlanetPuzzleBoard extends StatefulWidget {
+class GameBoard extends StatefulWidget {
   final List<Widget> tiles;
 
-  const PlanetPuzzleBoard({super.key, required this.tiles});
+  const GameBoard({super.key, required this.tiles});
 
   @override
-  State<PlanetPuzzleBoard> createState() => _PlanetPuzzleBoardState();
+  State<GameBoard> createState() => _GameBoardState();
 }
 
-class _PlanetPuzzleBoardState extends State<PlanetPuzzleBoard> {
+class _GameBoardState extends State<GameBoard> {
   Timer? _completePuzzleTimer;
 
   void _onPuzzleCompletionDialog(BuildContext context) async {
-    AppLogger.log('PlanetPuzzleBoard: _onPuzzleCompletionDialog');
+    AppLogger.log('GameBoard: _onPuzzleCompletionDialog');
 
     // play completion audio
     context.read<AudioPlayerCubit>().completion();
@@ -49,12 +49,12 @@ class _PlanetPuzzleBoardState extends State<PlanetPuzzleBoard> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: context.read<LevelSelectionCubit>()),
-          BlocProvider.value(value: context.read<PlanetSelectionCubit>()),
+          BlocProvider.value(value: context.read<GameSelectionCubit>()),
           BlocProvider.value(value: context.read<PuzzleHelperCubit>()),
           BlocProvider.value(value: context.read<TimerBloc>()),
           BlocProvider.value(value: context.read<PlayingBloc>()),
         ],
-        child: PlanetPuzzleCompletionDialog(),
+        child: GameCompletionDialog(),
       ),
     );
   }

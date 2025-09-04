@@ -5,10 +5,10 @@ import 'package:gap/gap.dart';
 
 import '../../../../core/l10n/l10n.dart';
 import '../../../core/utils/utils.dart';
-import '../../../data/models/planet.dart';
+import '../../../data/models/game.dart';
 import '../../blocs/timer/timer_bloc.dart';
-import '../../cubits/home/planet_selection_cubit.dart';
-import '../../cubits/home/level_selection_cubit.dart';
+import '../../cubits/game/game_selection_cubit.dart';
+import '../../cubits/level/level_selection_cubit.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
 import '../../blocs/playing/playing_bloc.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
@@ -17,8 +17,8 @@ import '../stylized_container.dart';
 import '../stylized_text.dart';
 import '../stylized_icon.dart';
 
-class PlanetPuzzleCompletionDialog extends StatelessWidget {
-  PlanetPuzzleCompletionDialog({super.key});
+class GameCompletionDialog extends StatelessWidget {
+  GameCompletionDialog({super.key});
 
   final globalKey = GlobalKey();
 
@@ -38,14 +38,14 @@ class PlanetPuzzleCompletionDialog extends StatelessWidget {
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(12.0)),
           child: ResponsiveLayoutBuilder(
-            small: (_, __) => _PlanetPuzzleCompletionDialogSmall(
-              key: const Key('PlanetPuzzleCompletionDialogSmall'),
+            small: (_, __) => _GameCompletionDialogSmall(
+              key: const Key('GameCompletionDialogSmall'),
               globalKey: globalKey,
             ),
             medium: (_, Widget? child) => child!,
             large: (_, Widget? child) => child!,
-            child: (_) => _PlanetPuzzleCompletionDialogLarge(
-              key: const Key('PlanetPuzzleCompletionDialogLarge'),
+            child: (_) => _GameCompletionDialogLarge(
+              key: const Key('GameCompletionDialogLarge'),
               globalKey: globalKey,
             ),
           ),
@@ -55,10 +55,10 @@ class PlanetPuzzleCompletionDialog extends StatelessWidget {
   }
 }
 
-class _PlanetPuzzleCompletionDialogSmall extends StatelessWidget {
+class _GameCompletionDialogSmall extends StatelessWidget {
   final GlobalKey globalKey;
 
-  const _PlanetPuzzleCompletionDialogSmall({
+  const _GameCompletionDialogSmall({
     Key? key,
     required this.globalKey,
   }) : super(key: key);
@@ -67,7 +67,7 @@ class _PlanetPuzzleCompletionDialogSmall extends StatelessWidget {
   Widget build(BuildContext context) {
     final secondsElapsed = context.read<TimerBloc>().state.secondsElapsed;
     final totalMoves = context.read<PlayingBloc>().state.numberOfMoves;
-    final planet = context.read<PlanetSelectionCubit>().planet;
+    final game = context.read<GameSelectionCubit>().game;
     final autoSolverSteps = context.read<PuzzleHelperCubit>().autoSolverSteps;
     final level = context.read<LevelSelectionCubit>().puzzleSize;
     final isAutoSolverUsed = autoSolverSteps != 0;
@@ -83,7 +83,7 @@ class _PlanetPuzzleCompletionDialogSmall extends StatelessWidget {
           child: Transform.scale(
             scale: 1.5,
             child: Image.asset(
-              Utils.getPlanetImageFor(planet.type),
+              game.image!,
             ),
           ),
         ),
@@ -125,7 +125,7 @@ class _PlanetPuzzleCompletionDialogSmall extends StatelessWidget {
 
               Text(
                 context.l10n.successMessage(
-                  planet.name,
+                  game.title!,
                   Utils.getSuccessExtraText(
                     totalSteps: totalMoves,
                     autoSolverSteps: autoSolverSteps,
@@ -194,7 +194,7 @@ class _PlanetPuzzleCompletionDialogSmall extends StatelessWidget {
               const Gap(32),
 
               // buttons
-              ShareButtons(planet: planet, globalKey: globalKey),
+              ShareButtons(game: game, globalKey: globalKey),
             ],
           ),
         ),
@@ -204,12 +204,12 @@ class _PlanetPuzzleCompletionDialogSmall extends StatelessWidget {
 }
 
 class ShareButtons extends StatelessWidget {
-  final Planet planet;
+  final Game game;
   final GlobalKey globalKey;
 
   const ShareButtons({
     Key? key,
-    required this.planet,
+    required this.game,
     required this.globalKey,
   }) : super(key: key);
 
@@ -220,7 +220,7 @@ class ShareButtons extends StatelessWidget {
       children: [
         StylizedButton(
           onPressed: () {
-            Utils.onFacebookTap(planet.name, context);
+            Utils.onFacebookTap(game.title!, context);
           },
           child: const StylizedContainer(
             padding: EdgeInsets.all(8.0),
@@ -236,7 +236,7 @@ class ShareButtons extends StatelessWidget {
         // twitter
         StylizedButton(
           onPressed: () {
-            Utils.onTwitterTap(planet.name, context);
+            Utils.onTwitterTap(game.title!, context);
           },
           child: const StylizedContainer(
             padding: EdgeInsets.all(8.0),
@@ -331,19 +331,19 @@ class WinStarWidget extends StatelessWidget {
   }
 }
 
-class _PlanetPuzzleCompletionDialogLarge extends StatelessWidget {
+class _GameCompletionDialogLarge extends StatelessWidget {
   final GlobalKey globalKey;
 
-  const _PlanetPuzzleCompletionDialogLarge({
-    Key? key,
+  const _GameCompletionDialogLarge({
+    super.key,
     required this.globalKey,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final secondsElapsed = context.read<TimerBloc>().state.secondsElapsed;
     final totalMoves = context.read<PlayingBloc>().state.numberOfMoves;
-    final planet = context.read<PlanetSelectionCubit>().planet;
+    final game = context.read<GameSelectionCubit>().game;
     final autoSolverSteps = context.read<PuzzleHelperCubit>().autoSolverSteps;
     final level = context.read<LevelSelectionCubit>().puzzleSize;
     final isAutoSolverUsed = autoSolverSteps != 0;
@@ -365,9 +365,7 @@ class _PlanetPuzzleCompletionDialogLarge extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Image.asset(
-                        Utils.getPlanetImageFor(planet.type),
-                      ),
+                      child: Image.asset(game.image!),
                     ),
                     Positioned.fill(
                       child: Container(
@@ -399,7 +397,7 @@ class _PlanetPuzzleCompletionDialogLarge extends StatelessWidget {
 
                         Text(
                           context.l10n.successMessage(
-                            planet.name,
+                            game.title!,
                             Utils.getSuccessExtraText(
                               totalSteps: totalMoves,
                               autoSolverSteps: autoSolverSteps,
@@ -484,7 +482,7 @@ class _PlanetPuzzleCompletionDialogLarge extends StatelessWidget {
                 const Gap(32.0),
 
                 // buttons
-                ShareButtons(planet: planet, globalKey: globalKey),
+                ShareButtons(game: game, globalKey: globalKey),
               ],
             ),
           ),

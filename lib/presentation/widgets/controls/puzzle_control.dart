@@ -45,8 +45,8 @@ class PuzzleControl extends StatelessWidget {
     final isReady = puzzleInitState is PuzzleInitReady;
 
     final status = context.select((ReadyingBloc bloc) => bloc.state.status);
-    final hasStarted = status == PlanetPuzzleStatus.started;
-    final isLoading = status == PlanetPuzzleStatus.loading;
+    final hasStarted = status == GameStatus.started;
+    final isLoading = status == GameStatus.loading;
 
     final puzzleHelperState =
         context.select((PuzzleHelperCubit cubit) => cubit.state);

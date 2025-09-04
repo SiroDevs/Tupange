@@ -4,23 +4,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/tile.dart';
 import '../../../core/utils/app_logger.dart';
 import '../../blocs/readying/readying_bloc.dart';
-import 'planet_puzzle_tile.dart';
+import 'game_tile.dart';
 
-class PlanetWhitespaceTile extends StatelessWidget {
+class GameWhitespaceTile extends StatelessWidget {
   final Tile tile;
 
-  const PlanetWhitespaceTile({Key? key, required this.tile}) : super(key: key);
+  const GameWhitespaceTile({super.key, required this.tile});
 
   @override
   Widget build(BuildContext context) {
     final status = context.select((ReadyingBloc bloc) => bloc.state.status);
-    final hasStarted = status == PlanetPuzzleStatus.started;
+    final hasStarted = status == GameStatus.started;
 
-    AppLogger.log('PlanetWhitespaceTile: hasStarted $hasStarted');
+    AppLogger.log('GameWhitespaceTile: hasStarted $hasStarted');
 
     return hasStarted
         ? const SizedBox.shrink()
-        : PlanetPuzzleTile(
+        : GameTile(
             key: ValueKey(tile.value),
             tile: tile,
           );
