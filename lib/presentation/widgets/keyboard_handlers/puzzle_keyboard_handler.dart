@@ -49,7 +49,7 @@ class PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
     _onstart(true);
     context
         .read<PlayingBloc>()
-        .add(const PuzzleInitialized(shufflePuzzle: false));
+        .add(const PlayingInitialized(shufflePuzzle: false));
   }
 
   /// For the puzzle, the following keyboard events are important

@@ -12,8 +12,8 @@ abstract class PlayingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PuzzleInitialized extends PlayingEvent {
-  const PuzzleInitialized({required this.shufflePuzzle});
+class PlayingInitialized extends PlayingEvent {
+  const PlayingInitialized({required this.shufflePuzzle});
 
   final bool shufflePuzzle;
 
@@ -30,6 +30,6 @@ class TileTapped extends PlayingEvent {
   List<Object> get props => [tile];
 }
 
-class PuzzleReset extends PlayingEvent {
-  const PuzzleReset();
+class PlayingReset extends PlayingEvent {
+  const PlayingReset();
 }

@@ -33,7 +33,7 @@ class PuzzleStats extends StatelessWidget {
         }
 
         if (state.secondsToBegin >= 1 && state.secondsToBegin <= 3) {
-          context.read<PlayingBloc>().add(const PuzzleReset());
+          context.read<PlayingBloc>().add(const PlayingReset());
         }
       },
       child: ResponsiveLayoutBuilder(

@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../core/utils/app_utils.dart';
-import '../../../data/models/position.dart';
+import '../../../core/utils/gaming_utils..dart';
 import '../../../data/models/puzzle.dart';
 import '../../../data/models/tile.dart';
 import '../../cubits/audio/audio_player_cubit.dart';
@@ -34,9 +34,9 @@ class PlayingBloc extends Bloc<PlayingEvent, PlayingState> {
 
   PlayingBloc(this._size, this._audioPlayerCubit, {this.random})
       : super(const PlayingState()) {
-    on<PuzzleInitialized>(_onPuzzleInitialized);
+    on<PlayingInitialized>(_onPlayingInitialized);
     on<TileTapped>(_onTileTapped);
-    on<PuzzleReset>(_onPuzzleReset);
+    on<PlayingReset>(_onPlayingReset);
   }
 
   ShakeAnimatorController getShakeControllerFor(int tileKey) {
@@ -67,11 +67,15 @@ class PlayingBloc extends Bloc<PlayingEvent, PlayingState> {
     _shakeControllers[tile.value]!.shake(direction);
   }
 
-  void _onPuzzleInitialized(
-    PuzzleInitialized event,
+  void _onPlayingInitialized(
+    PlayingInitialized event,
     Emitter<PlayingState> emit,
   ) {
-    final puzzle = _generatePuzzle(_size, shuffle: event.shufflePuzzle);
+    final puzzle = GamingUtils.generatePuzzle(
+      _size,
+      shuffle: event.shufflePuzzle,
+      random: random,
+    );
     emit(
       PlayingState(
         puzzle: puzzle,
@@ -123,7 +127,6 @@ class PlayingBloc extends Bloc<PlayingEvent, PlayingState> {
     } else {
       _notifyShakeAnimation(tappedTile);
 
-      // play error sound
       _audioPlayerCubit.tileTappedAudio(tappedTile.value, isError: true);
 
       emit(
@@ -134,87 +137,16 @@ class PlayingBloc extends Bloc<PlayingEvent, PlayingState> {
     }
   }
 
-  void _onPuzzleReset(
-    PuzzleReset event,
+  void _onPlayingReset(
+    PlayingReset event,
     Emitter<PlayingState> emit,
   ) {
-    final puzzle = _generatePuzzle(_size);
+    final puzzle = GamingUtils.generatePuzzle(_size);
     emit(
       PlayingState(
         puzzle: puzzle.sort(),
         numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
       ),
     );
-  }
-
-  Puzzle _generatePuzzle(int size, {bool shuffle = true}) {
-    final correctPositions = <Position>[];
-    final currentPositions = <Position>[];
-    final whitespacePosition = Position(x: size, y: size);
-
-    for (var y = 0; y < size; y++) {
-      for (var x = 0; x < size; x++) {
-        if (x == size && y == size) {
-          correctPositions.add(whitespacePosition);
-          currentPositions.add(whitespacePosition);
-        } else {
-          final position = Position(x: x, y: y);
-          correctPositions.add(position);
-          currentPositions.add(position);
-        }
-      }
-    }
-
-    if (shuffle) {
-      currentPositions.shuffle(random);
-    }
-
-    var tiles = _getTileListFromPositions(
-      size: size,
-      currentPositions: currentPositions,
-      correctPositions: correctPositions,
-    );
-    var puzzle = Puzzle(tiles: tiles);
-
-    if (shuffle) {
-      while (!puzzle.isSolvable() || puzzle.getNumberOfCorrectTiles() != 0) {
-        currentPositions.shuffle(random);
-        tiles = _getTileListFromPositions(
-          size: size,
-          currentPositions: currentPositions,
-          correctPositions: correctPositions,
-        );
-        puzzle = Puzzle(tiles: tiles);
-      }
-    }
-
-    return puzzle;
-  }
-
-  List<Tile> _getTileListFromPositions({
-    required int size,
-    required List<Position> currentPositions,
-    required List<Position> correctPositions,
-  }) {
-    final whitespacePosition = Position(x: size - 1, y: size - 1);
-    final n = size * size;
-    return [
-      for (int i = 0; i < n; i++)
-        if (i == n - 1)
-          Tile(
-            value: i,
-            correctPosition: whitespacePosition,
-            currentPosition: currentPositions[i],
-            isWhitespace: true,
-            puzzleSize: size,
-          )
-        else
-          Tile(
-            value: i,
-            correctPosition: correctPositions[i],
-            currentPosition: currentPositions[i],
-            puzzleSize: size,
-          )
-    ];
   }
 }

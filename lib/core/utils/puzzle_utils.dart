@@ -1,10 +1,8 @@
-import 'package:tupange/core/l10n/l10n.dart';
 import 'package:universal_html/html.dart' as html;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/models/game.dart';
 import '../../data/models/position.dart';
 import 'app_utils.dart';
 
@@ -27,14 +25,6 @@ abstract class PuzzleUtils {
     }
 
     return false;
-  }
-
-  static List<String> getFactsFor(Game game, BuildContext context) {
-    return [
-      context.l10n.mercuryFact1,
-      context.l10n.mercuryFact2,
-      context.l10n.mercuryFact3
-    ];
   }
 
   static Image getImagePath(String image) {

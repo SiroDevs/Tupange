@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/game.dart';
 import '../../../core/utils/constants/app_constants.dart';
 import '../../../core/utils/app_utils.dart';
-import '../../screens/puzzle/puzzle_page.dart';
+import '../../screens/playing/playing_page.dart';
 import '../category/category_selection_cubit.dart';
 import '../level/level_selection_cubit.dart';
 
@@ -40,7 +40,7 @@ class GameSelectionCubit extends Cubit<GameSelectionState> {
           BlocProvider.value(value: _categorySelectionCubit),
           BlocProvider.value(value: this),
         ],
-        child: const PuzzlePage(key: Key('puzzle-page')),
+        child: const PlayingPage(key: Key('puzzle-page')),
       ),
     );
 

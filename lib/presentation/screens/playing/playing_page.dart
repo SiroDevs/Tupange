@@ -17,8 +17,8 @@ import '../../widgets/background/background.dart';
 import 'widgets/puzzle_header.dart';
 import 'widgets/puzzle_sections.dart';
 
-class PuzzlePage extends StatelessWidget {
-  const PuzzlePage({super.key});
+class PlayingPage extends StatelessWidget {
+  const PlayingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class PuzzlePage extends StatelessWidget {
           create: (context) => PlayingBloc(
             context.read<LevelSelectionCubit>().puzzleSize,
             context.read<AudioPlayerCubit>(),
-          )..add(const PuzzleInitialized(shufflePuzzle: false)),
+          )..add(const PlayingInitialized(shufflePuzzle: false)),
         ),
         BlocProvider(
           create: (context) => PuzzleHelperCubit(

@@ -35,7 +35,7 @@ class PuzzleControl extends StatelessWidget {
     _onstart(context, true);
     context
         .read<PlayingBloc>()
-        .add(const PuzzleInitialized(shufflePuzzle: false));
+        .add(const PlayingInitialized(shufflePuzzle: false));
   }
 
   @override
