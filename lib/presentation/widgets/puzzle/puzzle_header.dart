@@ -36,7 +36,7 @@ class PuzzleHeader extends StatelessWidget {
               StylizedButton(
                 key: ValueKey(isSmall),
                 onPressed: () {
-                  context.read<AudioPlayerCubit>().onBackToSolarSystem();
+                  context.read<AudioPlayerCubit>().onBackToHome();
                   Navigator.pop(context);
                 },
                 child: StylizedContainer(

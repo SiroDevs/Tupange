@@ -32,7 +32,6 @@ dependencies:
   loading_indicator: ^3.1.1 # Collection of animated loading indicators
   path: ^1.9.0 # Utilities for handling file system paths
   path_provider: ^2.1.5 # Platform-agnostic paths to commonly used directories
-  rive: ^0.13.20 # Render and control Rive animations
   shared_preferences: ^2.3.3 # Local key-value storage for small data
   sqflite: ^2.4.1 # SQLite plugin for Flutter
   styled_widget: ^0.4.1 # Utility to style widgets using method chaining

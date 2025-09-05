@@ -32,7 +32,7 @@ class _CartCard extends StatelessWidget {
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: isMobile ? 2 : 4,
-        childAspectRatio: 3,
+        childAspectRatio: isMobile ? 2 : 3,
       ),
       itemCount: games.length,
       itemBuilder: (context, index) {
@@ -61,7 +61,7 @@ class _CartCard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(16),
             child: Text(
-              'Mpango: ${category.title!.toUpperCase()}',
+              'Category: ${category.title!.toUpperCase()}',
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),

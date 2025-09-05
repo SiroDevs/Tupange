@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 import '../../../core/audio/cubit/audio_player_cubit.dart';
+import '../../../core/constants/app_assets.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/helpers/modal_helpers.dart';
 import '../../../core/l10n/l10n.dart';
@@ -45,8 +46,31 @@ class HomeScreen extends StatelessWidget {
           create: (c) => HomeBloc()..add(FetchData()),
         ),
         BlocProvider(create: (_) => LevelSelectionCubit()),
+        BlocProvider(
+          create: (ctx) => CategorySelectionCubit(
+            ctx.read<LevelSelectionCubit>(),
+          ),
+        ),
+        BlocProvider(
+          create: (ctx) => GameSelectionCubit(
+            ctx.read<LevelSelectionCubit>(),
+            ctx.read<CategorySelectionCubit>(),
+            context,
+          ),
+        ),
       ],
-      child: const HomeView(),
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AppAssets.nairobiImg),
+              fit: BoxFit.cover,
+            ),
+          ),
+          padding: EdgeInsets.only(top: 30),
+          child: HomeView(),
+        ),
+      ),
     );
   }
 }

@@ -94,11 +94,8 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
     _audioBloc.stream.listen(_onAudioControlStateChanged);
   }
 
-  void onBackToSolarSystem() {
-    // stop count down sound effect
+  void onBackToHome() {
     _countDownBeginPlayer.stop();
-
-    // visibility sound effect
     _visibilityPlayer.stop();
   }
 
@@ -116,12 +113,10 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
       _countDownBeginPlayer.setVolume(0.0);
     }
 
-    // music related settings
-    // app theme music
     if (audioControlState.isMusicEnabled) {
-      _themeMusicPlayer.setVolume(_maxThemeVolume);
+      playThemeMusic();
     } else {
-      _themeMusicPlayer.setVolume(0.0);
+      unawaited(_themeMusicPlayer.pause());
     }
   }
 
@@ -160,12 +155,14 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
   }
 
   void onVisibilityShown() {
-    if (_isSoundEffectEnabled)
+    if (_isSoundEffectEnabled) {
       unawaited(_visibilityPlayer.replay(_visibilitySource));
+    }
   }
 
   void completion() {
-    if (_isSoundEffectEnabled)
+    if (_isSoundEffectEnabled) {
       unawaited(_completionPlayer.replay(_completionSource));
+    }
   }
 }

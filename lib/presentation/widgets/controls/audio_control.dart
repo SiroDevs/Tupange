@@ -9,7 +9,7 @@ import '../stylized_icon.dart';
 
 class AudioControl extends StatelessWidget {
   final bool isSmall;
-  const AudioControl({Key? key, this.isSmall = false}) : super(key: key);
+  const AudioControl({super.key, this.isSmall = false});
 
   void _onMusicToggle(BuildContext context) {
     context.read<AudioControlBloc>().add(const AudioControlMusicToggle());

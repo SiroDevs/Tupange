@@ -31,7 +31,7 @@ Future<T?> showAppDialog<T>({
       barrierLabel: barrierLabel,
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) => AppDialog(
-        child: child,
         sameSize: sameSize,
+        child: child,
       ),
     );

@@ -13,7 +13,6 @@ import '../../widgets/background/background.dart';
 import '../../widgets/stylized_button.dart';
 import '../../widgets/stylized_container.dart';
 import '../../widgets/stylized_text.dart';
-import '../../cubits/loading/assetcache_cubit.dart';
 import 'widgets/loading.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -40,16 +39,9 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AudioPlayerCubit, AudioPlayerState>(
-      listener: (context, state) {
-        final bool isReady = state is AudioPlayerReady;
-        if (isReady) {
-          context.read<AssetcacheCubit>().startCache(context);
-        }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         final bool isReady = state is AudioPlayerReady;
-        final bool isInitialized =
-            context.select((AssetcacheCubit cubit) => cubit.state).isDone;
 
         return Background(
           child: Padding(
@@ -59,14 +51,14 @@ class LoadingScreen extends StatelessWidget {
                 // body
                 ResponsiveLayoutBuilder(
                   small: (_, __) => _LoadingScreenSmall(
-                    isInitialized: isInitialized,
+                    isInitialized: true,
                     isReady: isReady,
                     onStartPressed: () => _move(context),
                   ),
                   medium: (_, Widget? child) => child!,
                   large: (_, Widget? child) => child!,
                   child: (_) => _LoadingScreenLarge(
-                    isInitialized: isInitialized,
+                    isInitialized: true,
                     isReady: isReady,
                     onStartPressed: () => _move(context),
                   ),

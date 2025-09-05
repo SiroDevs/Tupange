@@ -38,7 +38,7 @@ class HeaderWidget extends StatelessWidget {
                     : const Key('header_widget_normal'),
                 color: const Color(0xffffcc33),
                 child: StylizedText(
-                  text: context.l10n.dashboardHeading,
+                  text: context.l10n.selectionHeading,
                   fontSize: isSmall ? 24.0 : 32.0,
                   strokeWidth: isSmall ? 5.0 : 6.0,
                 ),
@@ -74,6 +74,7 @@ class HeaderWidget extends StatelessWidget {
             large: (_, __) => const SizedBox.shrink(),
             child: (_) => const AudioControl(),
           ),
+          const Gap(32),
         ],
       ),
     );

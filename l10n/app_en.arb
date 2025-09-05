@@ -19,8 +19,8 @@
     "@start": {
         "description": "Start Button text"
     },
-    "dashboardHeading": "Tap on a Item to begin",
-    "@dashboardHeading": {
+    "selectionHeading": "Pick a Category, Puzzle ..",
+    "@selectionHeading": {
         "description": "Instruction to start the game"
     },
     "easy": "Easy",

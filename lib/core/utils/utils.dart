@@ -183,7 +183,7 @@ abstract class Utils {
     return hslDark.toColor();
   }
 
-  static String get planetRotationAnimationName => 'rotation';
+  static String get rotationAnimationName => 'rotation';
 
   static String getFormattedElapsedSeconds(int elapsedSeconds) {
     final duration = Duration(seconds: elapsedSeconds);

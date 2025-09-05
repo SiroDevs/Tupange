@@ -1,69 +1,42 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 import '../../blocs/readying/readying_bloc.dart';
 import '../../../core/utils/app_logger.dart';
 import '../../../core/constants/app_constants.dart';
-import '../../../core/utils/utils.dart';
 
 part 'puzzle_init_state.dart';
 
 class PuzzleInitCubit extends Cubit<PuzzleInitState> {
-  final ReadyingBloc _planetPlayingBloc;
+  final ReadyingBloc _playingBloc;
   final int _puzzleSize;
 
   int get _lastTileKey => _puzzleSize * _puzzleSize - 1;
 
-  PuzzleInitCubit(this._puzzleSize, this._planetPlayingBloc)
+  PuzzleInitCubit(this._puzzleSize, this._playingBloc)
       : super(const PuzzleInitLoading());
 
   final Map<int, GlobalKey> _globalKeyMap = {};
-  final Map<int, SimpleAnimation> _riveController = {};
-
-  RiveAnimationController getRiveControllerFor(int tileKey) {
-    if (tileKey == 0) {
-      // we call this function when we need to load the rive widgets
-      emit(const PuzzleInitLoading());
-    }
-
-    if (_riveController.containsKey(tileKey)) return _riveController[tileKey]!;
-
-    final controller = SimpleAnimation(
-      Utils.planetRotationAnimationName,
-      autoplay: false,
-    );
-    _riveController[tileKey] = controller;
-
-    return controller;
-  }
 
   GlobalKey getGlobalKey(int tileKey) {
     if (_globalKeyMap.containsKey(tileKey)) return _globalKeyMap[tileKey]!;
 
     final globalKey = GlobalKey(debugLabel: 'GlobalKey for $tileKey');
     _globalKeyMap[tileKey] = globalKey;
+    onInit(tileKey);
     return globalKey;
   }
 
   void _startAnimating() async {
-    // for performance reasons
     await Future.delayed(AppConstants.kMS250);
-
-    _riveController.forEach((_, controller) {
-      controller.reset();
-      if (!controller.isActive) {
-        controller.isActive = true;
-      }
-    });
 
     if (!isClosed) emit(const PuzzleInitReady());
   }
 
   void onInit(int tileKey) {
     final hasStarted =
-        _planetPlayingBloc.state.status == GameStatus.started;
+        _playingBloc.state.status == GameStatus.started;
 
     AppLogger.log('puzzle_init_cubit: onInit: hasStarted: $hasStarted');
 
@@ -72,7 +45,6 @@ class PuzzleInitCubit extends Cubit<PuzzleInitState> {
     }
 
     if (hasStarted && tileKey == _lastTileKey - 1) {
-      // during the game, if screen is resized
       _startAnimating();
     }
   }
