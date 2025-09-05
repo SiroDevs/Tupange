@@ -9,8 +9,7 @@ class HeaderWidget extends StatelessWidget {
       PuzzleLevel.medium: context.l10n.medium,
     };
 
-    /// add hard level, only for non optimized puzzle
-    if (!Utils.isOptimizedPuzzle()) {
+    if (!AppUtils.isOptimizedPuzzle()) {
       map[PuzzleLevel.hard] = context.l10n.hard;
     }
 
@@ -24,7 +23,6 @@ class HeaderWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // header title
           ResponsiveLayoutBuilder(
             small: (_, Widget? child) => child!,
             medium: (_, Widget? child) => child!,
@@ -46,15 +44,13 @@ class HeaderWidget extends StatelessWidget {
             },
           ),
 
-          // gap
-          const Gap(32.0),
+          const Gap(30),
 
-          // level selection
           BlocBuilder<LevelSelectionCubit, LevelSelectionState>(
             builder: (context, state) {
               return Semantics(
                 label: context.l10n.levelSelectionLabel,
-                child: _SegmentedControl(
+                child: SegmentedControl(
                   groupValue: state.level,
                   children: _getLevelWidgets(context),
                   onValueChanged:
@@ -64,80 +60,16 @@ class HeaderWidget extends StatelessWidget {
             },
           ),
 
-          // gap
-          const Gap(32),
+          const Gap(25),
 
-          // music control for medium & small screens
           ResponsiveLayoutBuilder(
             small: (_, Widget? child) => child!,
             medium: (_, Widget? child) => child!,
             large: (_, __) => const SizedBox.shrink(),
             child: (_) => const AudioControl(),
           ),
-          const Gap(32),
         ],
       ),
-    );
-  }
-}
-
-class _SegmentedControl extends StatelessWidget {
-  final PuzzleLevel groupValue;
-  final Map<PuzzleLevel, String> children;
-  final ValueChanged<PuzzleLevel> onValueChanged;
-
-  const _SegmentedControl({
-    required this.groupValue,
-    required this.children,
-    required this.onValueChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ResponsiveLayoutBuilder(
-      small: (_, Widget? child) => SizedBox(
-        width: 350.0,
-        child: child!,
-      ),
-      medium: (_, Widget? child) => SizedBox(
-        width: 400.0,
-        child: child!,
-      ),
-      large: (_, Widget? child) => SizedBox(
-        width: 400.0,
-        child: child!,
-      ),
-      child: (layoutSize) {
-        final isSmall = layoutSize == ResponsiveLayoutSize.small;
-
-        return Row(
-          key: isSmall
-              ? const Key('segmented_control_small')
-              : const Key('segmented_control_normal'),
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: children.entries.map<Widget>(
-            (value) {
-              final isSelected = groupValue == value.key;
-
-              return StylizedButton(
-                onPressed: () {
-                  onValueChanged(value.key);
-                },
-                child: StylizedContainer(
-                  color: isSelected ? Colors.blueAccent : Colors.grey,
-                  child: StylizedText(
-                    strokeWidth: 4.0,
-                    offset: 1.0,
-                    text: value.value,
-                    fontSize: isSmall ? 15.0 : 18.0,
-                  ),
-                ),
-              );
-            },
-          ).toList(),
-        );
-      },
     );
   }
 }

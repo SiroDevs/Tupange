@@ -28,11 +28,14 @@ class _CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var categoryItems = GridView.builder(
+    final width = MediaQuery.of(context).size.width;
+    final isFitForGrid = width <= AppBreakpoints.medium;
+    final axisCount = (width / 450).round();
+    var cartItemsBigScreen = GridView.builder(
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: isMobile ? 2 : 4,
-        childAspectRatio: isMobile ? 2 : 3,
+        crossAxisCount: axisCount,
+        childAspectRatio: 3,
       ),
       itemCount: games.length,
       itemBuilder: (context, index) {
@@ -46,28 +49,58 @@ class _CartCard extends StatelessWidget {
           },
         );
       },
-    );
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.80),
-        borderRadius: BorderRadius.circular(15.0),
-        border: Border.all(
-          width: 2.0,
-          color: Colors.white,
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(16),
-            child: Text(
-              'Category: ${category.title!.toUpperCase()}',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+    ).expanded();
+    var cartItemsMobile = ListView.separated(
+      shrinkWrap: true,
+      itemCount: games.length,
+      itemBuilder: (context, index) {
+        var game = games[index];
+        return _GameItem(
+          game: game,
+          onSelected: () {
+            ctx.read<AudioPlayerCubit>().clickAudio();
+            ctx.read<GameSelectionCubit>().onSelected(game);
+            Navigator.pop(context);
+          },
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider();
+      },
+    ).expanded();
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.black.withValues(alpha: 0.80),
+            borderRadius: BorderRadius.circular(15.0),
+            border: Border.all(
+              width: 2.0,
+              color: Colors.white,
             ),
           ),
-          categoryItems.expanded(),
-        ],
-      ),
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  category.title!.toUpperCase(),
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+              if (orientation == Orientation.portrait) ...[
+                isMobile
+                    ? isFitForGrid
+                        ? cartItemsBigScreen
+                        : cartItemsMobile
+                    : cartItemsBigScreen,
+              ] else ...[
+                isFitForGrid ? cartItemsBigScreen : cartItemsMobile,
+              ],
+            ],
+          ),
+        );
+      },
     );
   }
 }

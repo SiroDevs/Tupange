@@ -39,6 +39,7 @@ class HomeViewState extends State<HomeView> {
           children: [
             const Gap(35),
             const HeaderWidget(),
+            const Gap(15),
             ResponsiveLayoutBuilder(
               small: (_, Widget? child) => HomeSmall(child: child!),
               medium: (_, Widget? child) => HomeMedium(child: child!),

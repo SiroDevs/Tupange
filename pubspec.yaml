@@ -1,7 +1,7 @@
 name: tupange
-description: A slide puzzle arrange in swahili
+description: A slide puzzle arrange
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1
 
 environment:
   sdk: ^3.6.0

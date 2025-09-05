@@ -27,7 +27,7 @@ class AudioPlayerCubit extends Cubit<AudioPlayerState> {
 
   // audio players
   // theme music player
-  final _themeMusicSource = AssetSource(AppAssets.planetThemeMusic);
+  final _themeMusicSource = AssetSource(AppAssets.themeMusic);
   final AudioPlayer _themeMusicPlayer = getAudioPlayer();
 
   // button click player

@@ -30,57 +30,62 @@ class HomeDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeigth = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-    double aspectRatio = 3;
-    if (isMobile) {
-      aspectRatio = (screenHeigth - 350) / screenWidth;
-    } else {
-      aspectRatio = (screenWidth / screenHeigth) * 1.7;
-    }
-    
-    return SizedBox(
-      child: LayoutBuilder(
-        builder: (ctx, dimens) {
-          return CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: aspectRatio,
-              enlargeCenterPage: true,
-              enableInfiniteScroll: false,
-              initialPage: 0,
-              autoPlay: true,
-            ),
-            items: categories.map((category) {
-              return Builder(
-                builder: (BuildContext ctx) {
-                  return MenuCarousel(
-                    category: category,
-                    height: dimens.maxHeight,
-                    onPressed: () {
-                      context.read<AudioPlayerCubit>().clickAudio();
-                      context
-                          .read<CategorySelectionCubit>()
-                          .onSelected(category);
-                      var selectedGames = games
-                          .where(
-                            (game) => game.category == category.id,
-                          )
-                          .toList();
-                      if (selectedGames.isNotEmpty) {
-                        CartCard.show(
-                          ctx: context,
-                          category: category,
-                          games: selectedGames,
-                        );
-                      }
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return SizedBox(
+          height: height * 0.6,
+          child: LayoutBuilder(
+            builder: (ctx, dimens) {
+              final height2 = dimens.maxHeight;
+              double aspectRatio;
+              if (orientation == Orientation.portrait) {
+                aspectRatio = width / height2;
+              } else {
+                aspectRatio = height2 / width;
+              }
+              return CarouselSlider(
+                options: CarouselOptions(
+                  aspectRatio: aspectRatio,
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                  initialPage: 0,
+                  autoPlay: true,
+                ),
+                items: categories.map((category) {
+                  return Builder(
+                    builder: (BuildContext ctx) {
+                      return MenuCarousel(
+                        category: category,
+                        height: height2 * 1.5,
+                        onPressed: () {
+                          context.read<AudioPlayerCubit>().clickAudio();
+                          context
+                              .read<CategorySelectionCubit>()
+                              .onSelected(category);
+
+                          var selectedGames = games
+                              .where((game) => game.category == category.id)
+                              .toList();
+
+                          if (selectedGames.isNotEmpty) {
+                            CartCard.show(
+                              ctx: context,
+                              category: category,
+                              games: selectedGames,
+                            );
+                          }
+                        },
+                      );
                     },
                   );
-                },
+                }).toList(),
               );
-            }).toList(),
-          );
-        },
-      ),
+            },
+          ),
+        );
+      },
     );
   }
 }

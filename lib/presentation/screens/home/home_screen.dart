@@ -7,11 +7,11 @@ import 'package:styled_widget/styled_widget.dart';
 
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/constants/app_assets.dart';
+import '../../../core/constants/app_breakpoints.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/helpers/modal_helpers.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../core/utils/app_utils.dart';
-import '../../../core/utils/utils.dart';
 import '../../../data/models/category.dart';
 import '../../../data/models/game.dart';
 import '../../../data/models/puzzle.dart';
@@ -34,6 +34,7 @@ part 'widgets/cart_card.dart';
 part 'widgets/header_widget.dart';
 part 'widgets/menu_carousel.dart';
 part 'widgets/scroll_buttons.dart';
+part 'widgets/segmented_control.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
