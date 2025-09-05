@@ -4,7 +4,7 @@
 
 Tupange is a fun, interactive puzzle game where users rearrange shuffled image pieces to complete puzzles in the shortest time possible and with the fewest moves.
 
-Players selects the diffictulty level, a category and an item from a category and race against themselves to solve the puzzle.
+Players selects the difficulty level, a category and an item from a category and race against themselves to solve the puzzle.
 
 ---
 
