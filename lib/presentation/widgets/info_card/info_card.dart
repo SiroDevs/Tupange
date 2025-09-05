@@ -32,7 +32,7 @@ class _InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.80),
+        color: Colors.black.withValues(alpha: 0.80),
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
           width: 2.0,

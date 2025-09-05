@@ -14,7 +14,6 @@ abstract class PreferencesRepository {
 
   Future<void> updateThemeMode(ThemeMode themeMode);
 
-
   bool getPrefBool(String settingsKey);
   int getPrefInt(String settingsKey);
   String getPrefString(String settingsKey);
@@ -87,29 +86,29 @@ class PreferencesRepositoryImp implements PreferencesRepository {
   }
 
   @override
-  void setPrefBool(String settingsKey, bool settingsValue) {
+  void setPrefBool(String settingsKey, bool settingsValue) async {
     if (!settingsValue) {
       sharedPrefs.remove(settingsKey);
       return;
     }
-    sharedPrefs.setBool(settingsKey, settingsValue);
+    await sharedPrefs.setBool(settingsKey, settingsValue);
   }
 
   @override
-  void setPrefInt(String settingsKey, int settingsValue) {
+  void setPrefInt(String settingsKey, int settingsValue) async {
     if (settingsValue.isNegative) {
       sharedPrefs.remove(settingsKey);
       return;
     }
-    sharedPrefs.setInt(settingsKey, settingsValue);
+    await sharedPrefs.setInt(settingsKey, settingsValue);
   }
 
   @override
-  void setPrefString(String settingsKey, String settingsValue) {
+  void setPrefString(String settingsKey, String settingsValue) async {
     if (settingsValue.isEmpty) {
       sharedPrefs.remove(settingsKey);
       return;
     }
-    sharedPrefs.setString(settingsKey, settingsValue);
+    await sharedPrefs.setString(settingsKey, settingsValue);
   }
 }

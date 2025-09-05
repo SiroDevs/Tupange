@@ -186,7 +186,7 @@ class _MainBody extends StatelessWidget {
                       key: const Key('initializing'),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.90),
+                        color: Colors.white.withValues(alpha: 0.90),
                         fontSize: isLarge ? 28.0 : 22.0,
                         letterSpacing: 1.4,
                       ),
@@ -196,7 +196,7 @@ class _MainBody extends StatelessWidget {
                       key: const Key('ready'),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.90),
+                        color: Colors.white.withValues(alpha: 0.90),
                         fontSize: isLarge ? 28.0 : 22.0,
                         letterSpacing: 1.4,
                       ),

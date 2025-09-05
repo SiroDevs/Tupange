@@ -31,25 +31,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     emit(const HomeLoadingState());
-    bool isDataLoaded = _prefsRepo.getPrefBool(PrefConstants.isDataLoadedKey);
-    if (!isDataLoaded) _initDatabase();
 
-    List<Category> categories = await _dbRepo.fetchCategories();
-    List<Game> games = await _dbRepo.fetchGames();
-    if (categories.isEmpty || games.isEmpty) {
-      _initDatabase();
-      categories = await _dbRepo.fetchCategories();
-      games = await _dbRepo.fetchGames();
+    bool isDataLoaded = _prefsRepo.getPrefBool(PrefConstants.isDataLoadedKey);
+    if (!isDataLoaded) {
+      await _initDatabase();
     }
+
+    final categories = await _dbRepo.fetchCategories();
+    final games = await _dbRepo.fetchGames();
 
     emit(HomeFetchedState(categories, games));
   }
 
-  void _initDatabase() async {
+  Future<void> _initDatabase() async {
     for (final category in RawData.categories) {
       await _dbRepo.saveCategory(category: category);
     }
-
     for (final game in RawData.games) {
       await _dbRepo.saveGame(game: game);
     }

@@ -59,9 +59,9 @@ class _GameCompletionDialogSmall extends StatelessWidget {
   final GlobalKey globalKey;
 
   const _GameCompletionDialogSmall({
-    Key? key,
+    super.key,
     required this.globalKey,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class _GameCompletionDialogSmall extends StatelessWidget {
 
         Positioned.fill(
           child: Container(
-            color: Colors.black.withOpacity(0.60),
+            color: Colors.black.withValues(alpha: 0.60),
           ),
         ),
 
@@ -191,10 +191,10 @@ class _GameCompletionDialogSmall extends StatelessWidget {
                 fontSize: 24.0,
               ),
 
-              const Gap(32),
+              // const Gap(32),
 
               // buttons
-              ShareButtons(game: game, globalKey: globalKey),
+              // ShareButtons(game: game, globalKey: globalKey),
             ],
           ),
         ),
@@ -208,10 +208,10 @@ class ShareButtons extends StatelessWidget {
   final GlobalKey globalKey;
 
   const ShareButtons({
-    Key? key,
+    super.key,
     required this.game,
     required this.globalKey,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -324,7 +324,7 @@ class WinStarWidget extends StatelessWidget {
         return StylizedIcon(
           size: 32.0,
           icon: FontAwesomeIcons.star,
-          color: index >= star ? Colors.white.withOpacity(0.20) : Colors.white,
+          color: index >= star ? Colors.white.withValues(alpha: 0.20) : Colors.white,
         );
       }).toList(),
     );
@@ -371,7 +371,7 @@ class _GameCompletionDialogLarge extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.black.withOpacity(0.45),
+                          color: Colors.black.withValues(alpha: 0.45),
                         ),
                       ),
                     ),
@@ -466,26 +466,26 @@ class _GameCompletionDialogLarge extends StatelessWidget {
             ),
           ),
 
-          const Gap(24.0),
+          // const Gap(24.0),
 
-          // share
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // share title text
-                StylizedText(
-                  text: context.l10n.share,
-                  fontSize: 32.0,
-                ),
+          // // share
+          // Expanded(
+          //   child: Column(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       // share title text
+          //       StylizedText(
+          //         text: context.l10n.share,
+          //         fontSize: 32.0,
+          //       ),
 
-                const Gap(32.0),
+          //       const Gap(32.0),
 
-                // buttons
-                ShareButtons(game: game, globalKey: globalKey),
-              ],
-            ),
-          ),
+          //       // buttons
+          //       ShareButtons(game: game, globalKey: globalKey),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

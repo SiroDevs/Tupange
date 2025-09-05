@@ -38,7 +38,7 @@ class _StylizedContainerState extends State<StylizedContainer> {
         height: size.height * 0.50,
         width: size.width,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.60),
+          color: Colors.white.withValues(alpha: 0.60),
           borderRadius: BorderRadius.circular(8.0),
         ),
       );
