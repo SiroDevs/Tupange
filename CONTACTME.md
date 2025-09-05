@@ -12,7 +12,7 @@ You can download **Tupange** directly from [App Store](https://apps.apple.com/ap
 
 ## 📧 Email
 Feel free to reach me at:  
-**[futuristicken@gmail.com](mailto:futuristicken@gmail.com)**
+**[futuristicken (at) gmail (dot) com](mailto:futuristicken@gmail.com)**
 
 ---
 
