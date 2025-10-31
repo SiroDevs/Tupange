@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'dart:developer' as logging show log;
 
-import 'package:tupange/core/l10n/l10n.dart';
 import 'package:universal_html/html.dart' as html;
 
 import 'package:flutter/foundation.dart';
@@ -13,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../constants/app_constants.dart';
 
 bool isDesktop = Platform.isWindows || Platform.isLinux || Platform.isMacOS;
@@ -81,7 +81,7 @@ $message
   }
 
   static String sharableText(String planetName, BuildContext context) {
-    return context.l10n.sharableText(planetName);
+    return AppLocalizations.of(context)!.sharableText(planetName);
   }
 
   static Future<void> openLink(String url, {VoidCallback? onError}) async {

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../core/l10n/l10n.dart';
 import '../../../core/utils/utils.dart';
 import '../../../data/models/game.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../cubits/game/game_selection_cubit.dart';
 import '../../cubits/level/level_selection_cubit.dart';
@@ -65,6 +65,7 @@ class _GameCompletionDialogSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l10n = AppLocalizations.of(context)!;
     final secondsElapsed = context.read<TimerBloc>().state.secondsElapsed;
     final totalMoves = context.read<PlayingBloc>().state.numberOfMoves;
     final game = context.read<GameSelectionCubit>().game;
@@ -101,18 +102,17 @@ class _GameCompletionDialogSmall extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // heading
               FittedBox(
                 fit: BoxFit.fitWidth,
                 child: StylizedText(
-                  text: context.l10n.congrats,
+                  text: l10n.congrats,
                   strokeWidth: 4.0,
                   offset: 1.0,
                 ),
               ),
 
               Text(
-                context.l10n.congratsSubTitle,
+                l10n.congratsSubTitle,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Colors.white,
@@ -124,7 +124,7 @@ class _GameCompletionDialogSmall extends StatelessWidget {
               const Gap(32.0),
 
               Text(
-                context.l10n.successMessage(
+                l10n.successMessage(
                   game.title!,
                   Utils.getSuccessExtraText(
                     totalSteps: totalMoves,
@@ -155,7 +155,7 @@ class _GameCompletionDialogSmall extends StatelessWidget {
 
               StylizedText(
                 textAlign: TextAlign.center,
-                text: context.l10n.scoreBoard,
+                text: l10n.scoreBoard,
                 fontSize: 24.0,
                 strokeWidth: 5.0,
                 offset: 2.0,
@@ -165,7 +165,7 @@ class _GameCompletionDialogSmall extends StatelessWidget {
 
               ScoreTile(
                 icon: FontAwesomeIcons.hashtag,
-                text: context.l10n.totalMoves(totalMoves),
+                text: l10n.totalMoves(totalMoves),
               ),
 
               const Gap(8.0),
@@ -179,15 +179,13 @@ class _GameCompletionDialogSmall extends StatelessWidget {
 
               ScoreTile(
                 icon: FontAwesomeIcons.laptopCode,
-                text: isAutoSolverUsed
-                    ? context.l10n.usedAutosolve
-                    : context.l10n.noAutosolve,
+                text: isAutoSolverUsed ? l10n.usedAutosolve : l10n.noAutosolve,
               ),
 
               const Gap(38.0),
 
               StylizedText(
-                text: context.l10n.share,
+                text: l10n.share,
                 fontSize: 24.0,
               ),
 
@@ -324,7 +322,9 @@ class WinStarWidget extends StatelessWidget {
         return StylizedIcon(
           size: 32.0,
           icon: FontAwesomeIcons.star,
-          color: index >= star ? Colors.white.withValues(alpha: 0.20) : Colors.white,
+          color: index >= star
+              ? Colors.white.withValues(alpha: 0.20)
+              : Colors.white,
         );
       }).toList(),
     );
@@ -341,6 +341,8 @@ class _GameCompletionDialogLarge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l10n = AppLocalizations.of(context)!;
+
     final secondsElapsed = context.read<TimerBloc>().state.secondsElapsed;
     final totalMoves = context.read<PlayingBloc>().state.numberOfMoves;
     final game = context.read<GameSelectionCubit>().game;
@@ -380,12 +382,12 @@ class _GameCompletionDialogLarge extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         StylizedText(
-                          text: context.l10n.congrats,
+                          text: l10n.congrats,
                           fontSize: 48.0,
                         ),
 
                         Text(
-                          context.l10n.congratsSubTitle,
+                          l10n.congratsSubTitle,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14.0,
@@ -396,7 +398,7 @@ class _GameCompletionDialogLarge extends StatelessWidget {
                         const Gap(32.0),
 
                         Text(
-                          context.l10n.successMessage(
+                          l10n.successMessage(
                             game.title!,
                             Utils.getSuccessExtraText(
                               totalSteps: totalMoves,
@@ -428,7 +430,7 @@ class _GameCompletionDialogLarge extends StatelessWidget {
 
                         StylizedText(
                           textAlign: TextAlign.center,
-                          text: context.l10n.scoreBoard,
+                          text: l10n.scoreBoard,
                           fontSize: 24.0,
                           strokeWidth: 5.0,
                           offset: 2.0,
@@ -438,7 +440,7 @@ class _GameCompletionDialogLarge extends StatelessWidget {
 
                         ScoreTile(
                           icon: FontAwesomeIcons.hashtag,
-                          text: context.l10n.totalMoves(totalMoves),
+                          text: l10n.totalMoves(totalMoves),
                         ),
 
                         const Gap(8.0),
@@ -455,8 +457,8 @@ class _GameCompletionDialogLarge extends StatelessWidget {
                         ScoreTile(
                           icon: FontAwesomeIcons.laptopCode,
                           text: isAutoSolverUsed
-                              ? context.l10n.usedAutosolve
-                              : context.l10n.noAutosolve,
+                              ? l10n.usedAutosolve
+                              : l10n.noAutosolve,
                         ),
                       ],
                     ),
@@ -475,7 +477,7 @@ class _GameCompletionDialogLarge extends StatelessWidget {
           //     children: [
           //       // share title text
           //       StylizedText(
-          //         text: context.l10n.share,
+          //         text: l10n.share,
           //         fontSize: 32.0,
           //       ),
 

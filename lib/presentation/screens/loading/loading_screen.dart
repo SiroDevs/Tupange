@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../../core/l10n/l10n.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
 import '../../../core/constants/app_assets.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
-import '../home/home_screen.dart';
 import '../../widgets/background/background.dart';
 import '../../widgets/stylized_button.dart';
 import '../../widgets/stylized_container.dart';
 import '../../widgets/stylized_text.dart';
+import '../home/home_screen.dart';
 import 'widgets/loading.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -157,6 +157,8 @@ class _MainBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l10n = AppLocalizations.of(context)!;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -164,7 +166,7 @@ class _MainBody extends StatelessWidget {
         Column(
           children: [
             StylizedText(
-              text: context.l10n.appTitle,
+              text: l10n.appTitle,
               fontSize: isLarge ? 68.0 : 48.0,
               textColor: Utils.darkenColor(Colors.blue),
               strokeColor: Colors.white,
@@ -182,7 +184,7 @@ class _MainBody extends StatelessWidget {
               switchOutCurve: Curves.easeInOut,
               child: !isInitialized
                   ? Text(
-                      context.l10n.loadingScreenInitializing,
+                      l10n.loadingScreenInitializing,
                       key: const Key('initializing'),
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -192,7 +194,7 @@ class _MainBody extends StatelessWidget {
                       ),
                     )
                   : Text(
-                      context.l10n.loadingScreenReady,
+                      l10n.loadingScreenReady,
                       key: const Key('ready'),
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -227,7 +229,7 @@ class _MainBody extends StatelessWidget {
           child: StylizedContainer(
             color: isReady && isInitialized ? Colors.greenAccent : Colors.grey,
             child: StylizedText(
-              text: context.l10n.start,
+              text: l10n.start,
               fontSize: isLarge ? 32.0 : 24.0,
             ),
           ),

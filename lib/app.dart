@@ -7,7 +7,7 @@ import 'core/audio/bloc/audio_control_bloc.dart';
 import 'core/audio/cubit/audio_player_cubit.dart';
 import 'core/auth/auth_bloc.dart';
 import 'core/constants/app_constants.dart';
-import 'core/l10n/l10n.dart';
+import 'l10n/app_localizations.dart';
 import 'domain/repository/auth_repository.dart';
 import 'presentation/navigator/main_navigator.dart';
 import 'presentation/widgets/keyboard_handlers/app_keyboard_handler.dart';

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:floor/floor.dart';
+import 'package:froom/froom.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import '../../models/category.dart';
@@ -17,13 +17,13 @@ part 'app_database.g.dart';
     Game,
   ],
 )
-abstract class AppDatabase extends FloorDatabase {
+abstract class AppDatabase extends FroomDatabase {
   CategoriesDao get categoriesDao;
   GamesDao get gamesDao;
 }
 
 Future<AppDatabase> buildInMemoryDatabase() {
-  return $FloorAppDatabase
+  return $FroomAppDatabase
       .inMemoryDatabaseBuilder()
       .build();
 }

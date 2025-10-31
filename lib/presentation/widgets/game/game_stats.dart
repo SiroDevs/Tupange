@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/l10n/l10n.dart';
 import '../../../core/audio/cubit/audio_player_cubit.dart';
 import '../../../core/utils/utils.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../blocs/readying/readying_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
@@ -55,20 +55,21 @@ class _PuzzleStats extends StatelessWidget {
   final PlayingState puzzleState;
 
   const _PuzzleStats({
-    Key? key,
     required this.layoutSize,
     required this.puzzleState,
-  }) : super(key: key);
+  });
 
   String _getDurationLabel(Duration duration, BuildContext context) {
+    AppLocalizations l10n = AppLocalizations.of(context)!;
     final hours = duration.inHours.toString();
     final minutes = duration.inMinutes.remainder(60).toString();
     final seconds = duration.inSeconds.remainder(60).toString();
-    return context.l10n.puzzleDurationLabelText(hours, minutes, seconds);
+    return l10n.puzzleDurationLabelText(hours, minutes, seconds);
   }
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l10n = AppLocalizations.of(context)!;
     final state = context.select((ReadyingBloc bloc) => bloc.state);
     final secondsElapsed = context.select(
       (TimerBloc bloc) => bloc.state.secondsElapsed,
@@ -82,7 +83,7 @@ class _PuzzleStats extends StatelessWidget {
     if (!state.isCountdownRunning || state.secondsToBegin > 3) {
       // show: '00:00:00 | 0 Moves',
       final timeText = Utils.getFormattedElapsedSeconds(secondsElapsed);
-      textToShow = context.l10n.puzzleStats(
+      textToShow = l10n.puzzleStats(
         timeText,
         puzzleState.numberOfMoves,
       );
@@ -92,12 +93,12 @@ class _PuzzleStats extends StatelessWidget {
       if (state.secondsToBegin > 0) {
         textToShow = '${state.secondsToBegin}';
       } else {
-        textToShow = context.l10n.go;
+        textToShow = l10n.go;
       }
     }
 
     if (state.status == GameStatus.notStarted) {
-      textToShow = context.l10n.notStarted;
+      textToShow = l10n.notStarted;
     }
 
     final child = StylizedText(

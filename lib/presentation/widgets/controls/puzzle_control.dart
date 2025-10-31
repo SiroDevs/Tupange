@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../../core/l10n/l10n.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../blocs/readying/readying_bloc.dart';
 import '../../blocs/timer/timer_bloc.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
@@ -40,6 +40,8 @@ class PuzzleControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l10n = AppLocalizations.of(context)!;
+
     final puzzleInitState =
         context.select((PuzzleInitCubit cubit) => cubit.state);
     final isReady = puzzleInitState is PuzzleInitReady;
@@ -53,14 +55,14 @@ class PuzzleControl extends StatelessWidget {
     final isAutoSolving = puzzleHelperState.isAutoSolving;
 
     final text = isAutoSolving
-        ? context.l10n.stop
+        ? l10n.stop
         : !isReady
-            ? context.l10n.pleaseWait
+            ? l10n.pleaseWait
             : isLoading
-                ? context.l10n.getReady
+                ? l10n.getReady
                 : hasStarted
-                    ? context.l10n.autoSolve
-                    : context.l10n.start;
+                    ? l10n.autoSolve
+                    : l10n.start;
 
     return ResponsiveLayoutBuilder(
       small: (_, Widget? child) => child!,
@@ -116,7 +118,7 @@ class PuzzleControl extends StatelessWidget {
                     ? Colors.grey
                     : Colors.greenAccent,
                 child: StylizedText(
-                  text: context.l10n.restart,
+                  text: l10n.restart,
                   fontSize: isLarge ? 24.0 : 20.0,
                 ),
               ),

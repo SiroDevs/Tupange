@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import '../../../core/audio/cubit/audio_player_cubit.dart';
 
+import '../../../core/audio/cubit/audio_player_cubit.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
+import '../../layout/utils/responsive_layout_builder.dart';
 import '../controls/audio_control.dart';
 import '../stylized_button.dart';
 import '../stylized_container.dart';
 import '../stylized_icon.dart';
 import '../stylized_text.dart';
-import '../../../../../core/l10n/l10n.dart';
-import '../../layout/utils/responsive_layout_builder.dart';
-import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 
 class PuzzleHeader extends StatelessWidget {
-  const PuzzleHeader({Key? key}) : super(key: key);
+  const PuzzleHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l10n = AppLocalizations.of(context)!;
     return ResponsiveLayoutBuilder(
       small: (_, Widget? child) => child!,
       medium: (_, Widget? child) => child!,
@@ -51,7 +52,7 @@ class PuzzleHeader extends StatelessWidget {
                       ),
                       isSmall ? const Gap(12.0) : const Gap(24.0),
                       StylizedText(
-                        text: context.l10n.home,
+                        text: l10n.home,
                         strokeWidth: isSmall ? 5.0 : 6.0,
                         offset: isSmall ? 1.0 : 2.0,
                         fontSize: isSmall ? 16.0 : 22.0,
@@ -76,7 +77,7 @@ class PuzzleHeader extends StatelessWidget {
                   BlocBuilder<PuzzleHelperCubit, PuzzleHelperState>(
                     builder: (_, state) {
                       return Semantics(
-                        label: context.l10n.visibilityButtonSemanticLabel,
+                        label: l10n.visibilityButtonSemanticLabel,
                         child: StylizedButton(
                           onPressed: () {
                             context.read<PuzzleHelperCubit>().onHelpToggle();

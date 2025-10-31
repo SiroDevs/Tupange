@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math' as math;
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:universal_html/html.dart' as html;
@@ -12,8 +11,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../../core/l10n/l10n.dart';
 import '../../data/models/position.dart';
+import '../../l10n/app_localizations.dart';
 import '../constants/app_constants.dart';
 import 'app_logger.dart';
 
@@ -78,7 +77,7 @@ abstract class Utils {
   }
 
   static String sharableText(String planetName, BuildContext context) {
-    return context.l10n.sharableText(planetName);
+    return AppLocalizations.of(context)!.sharableText(planetName);
   }
 
   static Future<void> openLink(String url, {VoidCallback? onError}) async {

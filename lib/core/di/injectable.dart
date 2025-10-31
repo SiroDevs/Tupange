@@ -33,7 +33,7 @@ abstract class RegisterModule {
   @prod
   @singleton
   @preResolve
-  Future<AppDatabase> provideAppDatabase() async => await $FloorAppDatabase
+  Future<AppDatabase> provideAppDatabase() async => await $FroomAppDatabase
       .databaseBuilder(await DbConstants.databaseFile)
       .build();
 

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../core/l10n/l10n.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../cubits/game/game_selection_cubit.dart';
 import '../../cubits/puzzle_helper/puzzle_helper_cubit.dart';
 import '../../layout/utils/responsive_layout_builder.dart';
@@ -15,6 +15,8 @@ class GameInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l10n = AppLocalizations.of(context)!;
+
     final game = context.read<GameSelectionCubit>().game;
 
     return ResponsiveLayoutBuilder(
@@ -55,7 +57,7 @@ class GameInfo extends StatelessWidget {
               // puzzle optimize label
               context.read<PuzzleHelperCubit>().state.optimized
                   ? Tooltip(
-                      message: context.l10n.optimizedDescription,
+                      message: l10n.optimizedDescription,
                       padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         color: Colors.black,
@@ -76,7 +78,7 @@ class GameInfo extends StatelessWidget {
                           ),
                           const Gap(12.0),
                           StylizedText(
-                            text: context.l10n.optimizedLabel,
+                            text: l10n.optimizedLabel,
                             textColor: Colors.redAccent,
                             strokeWidth: 4.0,
                             offset: 1.5,

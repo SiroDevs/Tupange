@@ -14,7 +14,7 @@ dependencies:
   collection: ^1.19.0
   cupertino_icons: ^1.0.8 # iOS-style icons for Cupertino widgets
   equatable: ^2.0.7 # Makes value comparisons easier for Dart objects
-  floor: ^1.5.0 # SQLite persistence layer using DAO and annotation processing
+  froom: ^2.0.0 # SQLite persistence layer using DAO and annotation processing
   flutter:
     sdk: flutter # Core Flutter SDK
   flutter_bloc: ^9.1.0 # Flutter widgets and extensions for using BLoC
@@ -27,7 +27,7 @@ dependencies:
   get: ^4.7.2
   get_it: ^8.0.2 # Simple service locator for dependency injection
   injectable: ^2.5.0 # Code generator for configuring `get_it` DI
-  intl: ^0.19.0 # Internationalization, formatting for dates/numbers/messages
+  intl: ^0.20.2 # Internationalization, formatting for dates/numbers/messages
   json_annotation: ^4.9.0 # Annotations for JSON serialization with `json_serializable`
   loading_indicator: ^3.1.1 # Collection of animated loading indicators
   path: ^1.9.0 # Utilities for handling file system paths
@@ -44,11 +44,11 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.4.13 # Tool for generating code
-  floor_generator: ^1.5.0 # Code generator for Floor ORM
+  froom_generator: ^2.0.0 # Code generator for Floor ORM
   flutter_lints: ^5.0.0 # Recommended lint rules for Flutter
   flutter_test:
     sdk: flutter # Testing framework for Flutter apps
-  freezed: ^2.5.7 # Code generator for Freezed data classes
+  freezed: ^2.5.4 # Code generator for Freezed data classes
   injectable_generator: ^2.6.2 # Code generator for Injectable DI
   json_serializable: ^6.8.0 # Code generator for JSON serialization
 

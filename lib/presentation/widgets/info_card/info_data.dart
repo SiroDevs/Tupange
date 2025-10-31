@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../../core/l10n/l10n.dart';
+import '../../../l10n/app_localizations.dart';
 import 'info_pair.dart';
 
 class InfoData {
@@ -16,89 +16,89 @@ class InfoData {
 abstract class AppShortcutData {
   static List<InfoData> data(BuildContext context) => [
         InfoData(
-          title: context.l10n.appShortcuts,
+          title: AppLocalizations.of(context)!.appShortcuts,
           infoPairs: [
             InfoPair(
               titleText: 'M',
-              description: context.l10n.appShortcutMusic,
+              description: AppLocalizations.of(context)!.appShortcutMusic,
             ),
             InfoPair(
               titleText: 'S',
-              description: context.l10n.appShortcutSoundEffect,
+              description: AppLocalizations.of(context)!.appShortcutSoundEffect,
             ),
           ],
         ),
         InfoData(
-          title: context.l10n.dashboardShortcuts,
+          title: AppLocalizations.of(context)!.dashboardShortcuts,
           infoPairs: [
             InfoPair(
               showIcon: true,
               titleIcon: Icons.space_bar_rounded,
-              description: context.l10n.dashboardShortcutOrbitalAnimation,
+              description: AppLocalizations.of(context)!.dashboardShortcutOrbitalAnimation,
             ),
             InfoPair(
               showIcon: true,
               titleIcon: FontAwesomeIcons.arrowLeft,
-              description: context.l10n.dashboardShortcutDiffDec,
+              description: AppLocalizations.of(context)!.dashboardShortcutDiffDec,
             ),
             InfoPair(
               showIcon: true,
               titleIcon: FontAwesomeIcons.arrowRight,
-              description: context.l10n.dashboardShortcutDiffInc,
+              description: AppLocalizations.of(context)!.dashboardShortcutDiffInc,
             ),
             InfoPair(
               titleText: 'i',
-              description: context.l10n.dashboardShortcutInfo,
+              description: AppLocalizations.of(context)!.dashboardShortcutInfo,
             ),
             InfoPair(
               titleText: '1 - 9',
-              description: context.l10n.dashboardShortcutChooseAPlanet,
+              description: AppLocalizations.of(context)!.dashboardShortcutChooseAPlanet,
             ),
             InfoPair(
               titleText: 'ESC',
-              description: context.l10n.dashboardShortcutClose,
+              description: AppLocalizations.of(context)!.dashboardShortcutClose,
             ),
           ],
         ),
         InfoData(
-          title: context.l10n.puzzleShortcuts,
+          title: AppLocalizations.of(context)!.puzzleShortcuts,
           infoPairs: [
             InfoPair(
               showIcon: true,
               titleIcon: Icons.space_bar_rounded,
-              description: context.l10n.puzzleShortcutControl,
+              description: AppLocalizations.of(context)!.puzzleShortcutControl,
             ),
             InfoPair(
               titleText: 'R',
-              description: context.l10n.puzzleShortcutRestart,
+              description: AppLocalizations.of(context)!.puzzleShortcutRestart,
             ),
             InfoPair(
               titleText: 'V',
-              description: context.l10n.puzzleShortcutHintVisibility,
+              description: AppLocalizations.of(context)!.puzzleShortcutHintVisibility,
             ),
             InfoPair(
               showIcon: true,
               titleIcon: FontAwesomeIcons.arrowUp,
-              description: context.l10n.whitespaceUp,
+              description: AppLocalizations.of(context)!.whitespaceUp,
             ),
             InfoPair(
               showIcon: true,
               titleIcon: FontAwesomeIcons.arrowDown,
-              description: context.l10n.whitespaceDown,
+              description: AppLocalizations.of(context)!.whitespaceDown,
             ),
             InfoPair(
               showIcon: true,
               titleIcon: FontAwesomeIcons.arrowLeft,
-              description: context.l10n.whitespaceLeft,
+              description: AppLocalizations.of(context)!.whitespaceLeft,
             ),
             InfoPair(
               showIcon: true,
               titleIcon: FontAwesomeIcons.arrowRight,
-              description: context.l10n.whitespaceRight,
+              description: AppLocalizations.of(context)!.whitespaceRight,
             ),
             InfoPair(
               titleText: 'ESC',
-              description: context.l10n.backToHome,
+              description: AppLocalizations.of(context)!.backToHome,
             ),
           ],
         ),
